@@ -40,7 +40,7 @@ The project dir tree:
 ### Environment Requirements
 
 - Python ~> 2.7
-- Ansible ~> 2.4
+- Ansible ~> 2.7
 - Flask ~>0.12.2
 
 ### Config and run demo
