@@ -2,6 +2,8 @@
 
 import sys
 import os
+import requests
+import json
 sys.path.append('../')
 from utils.ansible_runner import Runner
 from view_model.k8s_repository import K8sRepository
@@ -64,3 +66,9 @@ class K8sObserver(object):
         result = r.get_playbook_result()
         return K8sRepository.create_k8s_pods_view_model(result)
 
+    @staticmethod
+    def get_information_from_topology():
+        url = "http://10.60.38.181:31009/api/topology?snapshot=hide&storage=hide&pseudo=hide&namespace="
+        src_data = requests.get(url)
+        json_data = json.loads(src_data.text)
+        return json_data

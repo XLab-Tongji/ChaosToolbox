@@ -4,6 +4,7 @@ sys.path.append('')
 
 from flask import Flask, jsonify
 from common_options import get_info
+from chaosblade import chaosblade
 from flask_httpauth import HTTPBasicAuth
 from utils.config import Config
 from flask import make_response
@@ -30,4 +31,4 @@ def not_found(error):
 
 
 app.register_blueprint(get_info.get_info)
-
+app.register_blueprint(chaosblade.chaosblade)

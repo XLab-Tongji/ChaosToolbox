@@ -5,5 +5,5 @@
     k8s_facts:
       api_version: v1
       kind: Pod
-      namespace: sock-shop
+      namespace: "{{ namespace }}"
     register: pod_list
