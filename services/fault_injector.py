@@ -29,14 +29,14 @@ Spare_hosts = {
 
 Default_cmd = {
     "cpu": "./blade create cpu fullload",
-    "network": "./blade create network delay --interface enp3s0 --time 1000 --timeout 600",
+    "network": "./blade create network delay --interface enp2s0 --time 1000 --timeout 600",
     "disk": "./blade create disk burn --read",
     "mem": "./blade create mem load --mem-percent 80"
 }
 
 Cmd = {
     "cpu": "./blade create cpu fullload",
-    "network": "./blade create network delay --interface enp3s0 ",
+    "network": "./blade create network delay --interface enp2s0 ",
     "disk": "./blade create disk burn --",
     "mem": "./blade create mem load --mem-percent "
 }
