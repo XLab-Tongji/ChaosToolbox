@@ -17,9 +17,10 @@ expect {
     #already has public key in ~/.ssh/known_hosts
     "password:" {
         send "$password\r"
+        except eof
         }
     "Now try logging into the machine" {
         #it has authorized, do nothing!
+        except eof
         }
     }
-expect eof
