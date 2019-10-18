@@ -11,9 +11,9 @@ expect {
         send "yes\r"
         expect {
             "password:"{send "$password\r"}
-            eof {exit 1;}
+            eof
             }
-        eof {exit 2;}
+        eof
         }
     #already has public key in ~/.ssh/known_hosts
     "password:" {
