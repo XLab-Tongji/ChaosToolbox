@@ -9,11 +9,11 @@ expect {
     #first connect, no public key in ~/.ssh/known_hosts
     "Are you sure you want to continue connecting (yes/no)?" {
         send "yes\r"
-        expect "root@10.60.38.181\'s password:"
+        expect "password:"
         send "$password\r"
         }
     #already has public key in ~/.ssh/known_hosts
-    "root@10.60.38.181\'s password:" {
+    "password:" {
         send "$password\r"
         }
     "Now try logging into the machine" {
