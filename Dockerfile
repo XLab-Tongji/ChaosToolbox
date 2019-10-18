@@ -3,7 +3,7 @@ FROM ansible/ansible:ubuntu1604
 
 RUN sudo apt-get update \
     && apt-get install -y --no-install-recommends --fix-missing tcl tk expect \
-    && git clone -b ansible_operator_hm https://github.com/XLab-Tongji/Ansible_Operator.git ~/Ansible_Operator \
+    && git clone -b ansible_operator_hm https://github.com/baiyanquan/2019-XLab-KubernetesTools.git ~/Ansible_Operator \
     && chmod 777 ~/Ansible_Operator/auto_ssh.sh \
     && rm /etc/ansible/hosts \
     && cp ~/Ansible_Operator/hosts /etc/ansible/ \
