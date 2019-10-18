@@ -14,16 +14,16 @@ RUN sudo apt-get update \
     && pip2 install requests \
     && git -C /root/Ansible_Operator pull \
     && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 10.60.38.181 2331\
-    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.31\
-    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.41\
-    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.32\
-    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.42\
-    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.33\
-    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.43\
-    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.34\
-    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.44\
-    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.35\
-    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.45\
+    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.31 22\
+    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.41 22\
+    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.32 22\
+    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.42 22\
+    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.33 22\
+    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.43 22\
+    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.34 22\
+    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.44 22\
+    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.35 22\
+    && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.45 22\
     && chmod 777 ~/Ansible_Operator/run.sh
 
 
