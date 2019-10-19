@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fruits</title>
+</head>
+<body>
+<table border="1px">
+    <thread>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Options</td>
+        </tr>
+    </thread>
+    <tbody>
+    {% for e in fruits %}
+        <tr>
+            <td>{{ e.id }}</td>
+            <td>{{ e.name }}</td>
+            <td>{{ e.price }}</td>
+            <td>
+                <a href="/f_update/{{ e.id }}">修改</a>|<a href="/f_delete/{{ e.id }}">删除</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+<a href="/f_add">添加水果</a>
+
+</body>
+</html>
