@@ -13,5 +13,5 @@
 
 ### Practice
 
-- Flask-Blueprint
+- [Flask Blueprint Demo](https://github.com/baiyanquan/2019-XLab-KubernetesTools/tree/1651708_ShidanCheng/Flask_Blueprint_Demo)
 
