@@ -161,3 +161,26 @@ ansible <pattern_goes_here> -m <module_name> -a <arguments>
 ansible webservers -m service -a "name=httpd state=restarted"
 ```
 
+### 6 PlayBook
+
+​		playbook基础组件：
+
+- Hosts：运行执行任务（task）的目标主机
+- remote_user：在远程主机上执行任务的用户
+- tasks：任务列表
+- handlers：任务，与tasks不同的是只有在接收到通知时才会被触发
+- templates：使用模版语言的文本文件，使用jinja2语法
+- variables：变量，变量替换{{ variable_name }}
+
+​		测试playbook
+
+```
+ansible-playbook --check xxxx.yaml
+```
+
+​		运行playbook
+
+```
+ansible-playbook xxxx.yaml
+```
+
