@@ -1,9 +1,0 @@
-- hosts: Lab409-master
-  remote_user: root
-  tasks:
-  - name: Get a list of all pods from any namespace
-    k8s_facts:
-      api_version: v1
-      kind: Pod
-      namespace: "{{ namespace }}"
-    register: pod_list
