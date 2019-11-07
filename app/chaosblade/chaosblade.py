@@ -3,6 +3,9 @@ from flask import request
 from flask import abort
 from services.fault_injector import FaultInjector
 from utils.log_record import Logger
+from apscheduler.schedulers.background import BackgroundScheduler
+from datetime import datetime, timedelta
+import time
 
 chaosblade = Blueprint('chaosblade', __name__)
 
@@ -15,6 +18,25 @@ def chaos_inject_cpu():
         'host': request.json['host'],
     }
     return jsonify(FaultInjector.chaos_inject_cpu(dto))
+
+
+@chaosblade.route('/tool/api/v1.0/chaosblade/inject-cpu/with_time', methods=['POST'])
+def chaos_inject_cpu_with_time():
+    if not request.json or 'host' not in request.json or 'second' not in request.json:
+        abort(400)
+    dto_time = {
+        'time': request.json['second']
+    }
+    dto = {
+        'host': request.json['host']
+    }
+    scheduler = BackgroundScheduler()
+    now = datetime.now()
+    delta = timedelta(seconds=int(dto_time['time'].encode('raw_unicode_escape')))
+    scheduler.add_job(func=lambda: FaultInjector.chaos_inject_random(dto), trigger='date', next_run_time=(now+delta))
+    scheduler.start()
+    time.sleep(delta.total_seconds() + 1)
+    return "success"
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/inject-mem', methods=['POST'])
