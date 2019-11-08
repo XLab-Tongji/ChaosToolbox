@@ -32,3 +32,8 @@ def get_pods(namespace):
 @get_info.route('/tool/api/v1.0/get-information-from-topology', methods=['GET'])
 def get_information_from_topology():
     return jsonify(K8sObserver.get_information_from_topology())
+
+
+@get_info.route('/tool/api/v1.0/batch-deliver-ssh', methods=['GET'])
+def batch_deliver_ssh():
+    return jsonify(K8sObserver.batch_deliver_ssh())

@@ -12,7 +12,6 @@ from flask import make_response
 auth = HTTPBasicAuth()
 app = Flask(__name__)
 
-
 @auth.get_password
 def get_password(username):
     if username == Config.user_name:

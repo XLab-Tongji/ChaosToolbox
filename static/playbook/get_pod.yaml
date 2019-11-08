@@ -1,3 +1,4 @@
+---
 - hosts: Lab409-master
   remote_user: root
   tasks:

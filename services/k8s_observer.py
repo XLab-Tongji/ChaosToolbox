@@ -72,3 +72,14 @@ class K8sObserver(object):
         src_data = requests.get(url)
         json_data = json.loads(src_data.text)
         return json_data
+
+
+    @staticmethod
+    def batch_deliver_ssh():
+        r = Runner()
+        r.run_playbook(
+            playbooks=[K8sObserver.fetch_playbook_path('batch_deliver_ssh.yaml')],
+        )
+        result=r.get_playbook_result()
+        return result
+

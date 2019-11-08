@@ -2,4 +2,4 @@
 
 cd ~/Ansible_Operator
 git pull
-python ./manage.py
+python ./app.py

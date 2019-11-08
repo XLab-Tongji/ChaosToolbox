@@ -154,7 +154,7 @@ class Runner(object):
 
     def run_playbook(self, playbooks=None, extra_vars=None):
         if extra_vars: self.variable_manager.extra_vars = extra_vars
-        playbook = PlaybookExecutor(playbooks=playbooks if playbooks else ['/Users/likun/Desktop/lab409/get_svc.yaml'],
+        playbook = PlaybookExecutor(playbooks=playbooks if playbooks else ['./static/playbook/get_svc.yaml'],
                                     inventory=self.inventory,
                                     variable_manager=self.variable_manager,
                                     loader=self.loader,
