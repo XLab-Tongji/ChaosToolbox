@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*
 
+
 class Config(object):
     def __init__(self):
         pass
@@ -12,20 +13,22 @@ class Config(object):
     # prometheus config
 
     PROMETHEUS_CONFIG1 = {
-        'url': 'http://10.60.38.181:2337',
+        'url': 'http://10.60.38.181:31003',
         'auth_user': 'admin',
         'auth_password': 'admin',
         'query_api': '/api/v1/query_range'
     }
 
     PROMETHEUS_CONFIG2 = {
-        'url': 'http://10.60.38.181:2337',
+        'url': 'http://10.60.38.181:31003',
         'auth_user': 'admin',
         'auth_password': 'admin',
         'query_api': '/api/v1/query_range'
     }
 
     PROMETHEUS_RESOLUTION = '10'  # default: 10s
+
+    PROMETHEUS_TIMEOUT = '100'
 
     QUERY_CONFIG1 = {
         'entity_type':'container',

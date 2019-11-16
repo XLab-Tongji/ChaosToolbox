@@ -24,18 +24,22 @@ class PrometheusObserver(object):
         return entityMetrics
 
     @staticmethod
-    def query_entity_metric_values(metricnames, querylist, prometheusConfig, resolution, end_time, start_time):
+    def query_entity_metric_values(metricnames, querylist, prometheusConfig, resolution, end_time, start_time, timeout):
         csvset = dict()
         for index in range(len(metricnames)):
             list = metricnames[index].split('/')
             query = querylist[index % len(querylist)] % list[1]
             response = requests.get(prometheusConfig['url'] + prometheusConfig['query_api'],
                                     params={
-                                        'query': query, 'start': start_time,
-                                        'end': end_time, 'step': resolution},
+                                        'query': query,
+                                        'start': start_time,
+                                        'end': end_time,
+                                        'step': resolution,
+                                        'timeout': timeout},
                                     auth=(prometheusConfig['auth_user'], prometheusConfig['auth_password']))
 
             results = response.json()['data']['result']
+            print(results)
             if results != []:
                 for value in results[0]['values']:
                     if index == 0:
@@ -81,7 +85,8 @@ class PrometheusObserver(object):
             prometheusConfig=Config.PROMETHEUS_CONFIG1,
             resolution=Config.PROMETHEUS_RESOLUTION,
             start_time=start_time,
-            end_time=end_time
+            end_time=end_time,
+            timeout=Config.PROMETHEUS_TIMEOUT
         )
 
         metricnames2 = PrometheusObserver.build_entity_metrics(Config.QUERY_CONFIG2)
@@ -91,7 +96,8 @@ class PrometheusObserver(object):
             prometheusConfig=Config.PROMETHEUS_CONFIG2,
             resolution=Config.PROMETHEUS_RESOLUTION,
             start_time=start_time,
-            end_time=end_time
+            end_time=end_time,
+            timeout=Config.PROMETHEUS_TIMEOUT
         )
 
         datasetHeader = []
@@ -101,3 +107,11 @@ class PrometheusObserver(object):
         # 生成数据集
         logging.info("Querying metric values succeeded, rows of data: %s", len(csvset1))
         return PrometheusRepository.create_prometheus_stream_view_model(datasetHeader, csvset1, csvset2)
+
+
+if __name__ == '__main__':
+    dto = {
+        'to': '2019-10-11 15:32:00',
+        'from': '2019-10-11 15:22:30'
+    }
+    result = PrometheusObserver.run(dto)
