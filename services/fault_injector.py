@@ -14,7 +14,7 @@ username = 'guest'
 pwd = 'guest'
 user_pwd = pika.PlainCredentials(username, pwd)
 connection = pika.BlockingConnection(pika.ConnectionParameters(
-    host='localhost', credentials=user_pwd
+    host='10.60.38.173', credentials=user_pwd
 ))
 channel = connection.channel()
 channel.queue_declare(queue='blade_mq')
@@ -41,7 +41,7 @@ Spare_hosts = {
 
 Default_cmd = {
     "cpu": "./blade create cpu fullload",
-    "network": "./blade create network delay --interface enp3s0 --time 1000 --timeout 600",
+    "network": "./blade create network delay --interface enp3s0 --time 1000",
     "disk": "./blade create disk burn --read",
     "mem": "./blade create mem load --mem-percent 80"
 }
@@ -66,11 +66,16 @@ class FaultInjector(object):
         find = 0
         target_inject = ''
         target_host = ''
+        timeout = ''
         if dto['host'] == 'random':
             i = random.randint(0, len(Hosts) - 1)
             target_host = Hosts[i]
         else:
             target_host = dto['host']
+        if dto['timeout'] == 'default':
+            timeout = ' --timeout 300'
+        elif dto['timeout'] != 'no':
+            timeout = ' --timeout ' + dto['timeout']
         target_inject = Cmd["cpu"]
         for i in range(0, len(has_injected)):
             if has_injected[i]["host"] == target_host \
@@ -81,7 +86,7 @@ class FaultInjector(object):
             r.run_ad_hoc(
                 hosts=target_host,
                 module='shell',
-                args=target_inject
+                args=target_inject + timeout
             )
             result = r.get_adhoc_result()
             print (result)
@@ -107,12 +112,9 @@ class FaultInjector(object):
                 }
                 inject_info.append(the_inject_info)
                 Logger.log('info', 'SUCCESS - ' + str(the_inject_info))
-                channel.basic_publish(exchange='', routing_key="blade_mq",
-                                      body="The host" + target_host + "'s cpu has been injected")
                 try:
-                    requests.post(url=target_url, params={"content": str(the_inject_info)}, verify=False, timeout=2)
-                except Timeout:
-                    pass
+                    channel.basic_publish(exchange='', routing_key="blade_mq",
+                                          body='SUCCESS - ' + str(the_inject_info))
                 finally:
                     return result
             else:
@@ -131,6 +133,7 @@ class FaultInjector(object):
         find = 0
         target_inject = ''
         target_host = ''
+        timeout = ''
         if dto['host'] == 'random':
             i = random.randint(0, len(Hosts) - 1)
             target_host = Hosts[i]
@@ -140,6 +143,10 @@ class FaultInjector(object):
             target_inject = Default_cmd["mem"]
         else:
             target_inject = Cmd["mem"] + dto['percent']
+        if dto['timeout'] == 'default':
+            timeout = ' --timeout 300'
+        elif dto['timeout'] != 'no':
+            timeout = ' --timeout ' + dto['timeout']
         for i in range(0, len(has_injected)):
             if has_injected[i]["host"] == target_host \
                     and has_injected[i]["inject_type"] == "mem":
@@ -149,7 +156,7 @@ class FaultInjector(object):
             r.run_ad_hoc(
                 hosts=target_host,
                 module='shell',
-                args=target_inject
+                args=target_inject + timeout
             )
             result = r.get_adhoc_result()
             if len(result["success"]) > 0:
@@ -174,12 +181,9 @@ class FaultInjector(object):
                 }
                 inject_info.append(the_inject_info)
                 Logger.log('info', str('SUCCESS - ') + str(the_inject_info))
-                channel.basic_publish(exchange='', routing_key="blade_mq",
-                                      body="The host" + target_host + "'s mem has been injected")
                 try:
-                    requests.post(url=target_url, params={"content": str(the_inject_info)}, verify=False, timeout=2)
-                except Timeout:
-                    pass
+                    channel.basic_publish(exchange='', routing_key="blade_mq",
+                                          body='SUCCESS - ' + str(the_inject_info))
                 finally:
                     return result
             else:
@@ -198,6 +202,7 @@ class FaultInjector(object):
         find = 0
         target_inject = ''
         target_host = ''
+        timeout = ''
         if dto['host'] == 'random':
             i = random.randint(0, len(Hosts) - 1)
             target_host = Hosts[i]
@@ -207,6 +212,10 @@ class FaultInjector(object):
             target_inject = Default_cmd["disk"]
         else:
             target_inject = Cmd["disk"] + dto['type']
+        if dto['timeout'] == 'default':
+            timeout = ' --timeout 300'
+        elif dto['timeout'] != 'no':
+            timeout = ' --timeout ' + dto['timeout']
         for i in range(0, len(has_injected)):
             if has_injected[i]["host"] == target_host \
                     and has_injected[i]["inject_type"] == "disk":
@@ -216,7 +225,7 @@ class FaultInjector(object):
             r.run_ad_hoc(
                 hosts=target_host,
                 module='shell',
-                args=target_inject
+                args=target_inject + timeout
             )
             result = r.get_adhoc_result()
             print (result)
@@ -242,12 +251,9 @@ class FaultInjector(object):
                 }
                 inject_info.append(the_inject_info)
                 Logger.log('info', str('SUCCESS - ') + str(the_inject_info))
-                channel.basic_publish(exchange='', routing_key="blade_mq",
-                                      body="The host" + target_host + "'s disk has been injected")
                 try:
-                    requests.post(url=target_url, params={"content": str(the_inject_info)}, verify=False, timeout=2)
-                except Timeout:
-                    pass
+                    channel.basic_publish(exchange='', routing_key="blade_mq",
+                                          body='SUCCESS - ' + str(the_inject_info))
                 finally:
                     return result
             else:
@@ -313,9 +319,8 @@ class FaultInjector(object):
                 inject_info.append(the_inject_info)
                 Logger.log('info', str('SUCCESS - ') + str(the_inject_info))
                 try:
-                    requests.post(url=target_url, params={"content": str(the_inject_info)}, verify=False, timeout=2)
-                except Timeout:
-                    pass
+                    channel.basic_publish(exchange='', routing_key="blade_mq",
+                                          body='SUCCESS - ' + str(the_inject_info))
                 finally:
                     return result
             else:
@@ -334,6 +339,7 @@ class FaultInjector(object):
         find = 0
         target_inject = ''
         target_host = ''
+        timeout = ''
         if dto['host'] == 'random':
             i = random.randint(0, len(Hosts) - 1)
             target_host = Hosts[i]
@@ -341,6 +347,10 @@ class FaultInjector(object):
             target_host = dto['host']
         j = random.randint(0, len(Cmd) - 1)
         target_inject = Default_cmd[Default_cmd.keys()[j]]
+        if dto['timeout'] == 'default':
+            timeout = ' --timeout 300'
+        elif dto['timeout'] != 'no':
+            timeout = ' --timeout ' + dto['timeout']
         for i in range(0, len(has_injected)):
             if has_injected[i]["host"] == target_host \
                     and has_injected[i]["inject_type"] == target_inject:
@@ -350,7 +360,7 @@ class FaultInjector(object):
             r.run_ad_hoc(
                 hosts=target_host,
                 module='shell',
-                args=target_inject
+                args=target_inject + timeout
             )
             result = r.get_adhoc_result()
             if len(result["success"]) > 0:
@@ -376,9 +386,8 @@ class FaultInjector(object):
                 inject_info.append(the_inject_info)
                 Logger.log('info', str('SUCCESS - ') + str(the_inject_info))
                 try:
-                    requests.post(url=target_url, params={"content": str(the_inject_info)}, verify=False, timeout=2)
-                except Timeout:
-                    pass
+                    channel.basic_publish(exchange='', routing_key="blade_mq",
+                                          body='SUCCESS - ' + str(the_inject_info))
                 finally:
                     return result
             else:
@@ -396,8 +405,8 @@ class FaultInjector(object):
         return inject_info
 
     @staticmethod
-    def view_chaos_status_inject(type):
-        target_host = "10.60.38.181"
+    def view_chaos_status_inject(type, dto):
+        target_host = dto['target_host']
         target_inject = "./blade status --type create"
         r = Runner()
         r.run_ad_hoc(
@@ -455,11 +464,9 @@ class FaultInjector(object):
                 }
                 Logger.log('info', str('SUCCESS - ') + str(the_stop_info))
                 try:
-                    requests.post(url=target_url, params={"content": str(the_stop_info)}, verify=False, timeout=2)
-                except Timeout:
-                    pass
+                    channel.basic_publish(exchange='', routing_key="blade_mq",
+                                          body=str('SUCCESS - ') + str(the_stop_info))
                 finally:
-                    inject_info.pop(key)
                     return result
             else:
                 the_stop_info = {
@@ -478,8 +485,7 @@ class FaultInjector(object):
             return 'Inject not found'
 
     @staticmethod
-    def stop_all_chaos_inject():
-        target_host = "10.60.38.181"
+    def stop_all_chaos_inject(target_host):
         target_inject = "./blade status --type create"
         r = Runner()
         r.run_ad_hoc(
@@ -509,6 +515,45 @@ class FaultInjector(object):
             )
             result = r.get_adhoc_result()
             result_list.append(result)
+        try:
+            channel.basic_publish(exchange='', routing_key="blade_mq",
+                                  body='SUCCESS - ' + "stop all injection")
+        finally:
+            return result_list
+
+    @staticmethod
+    def stop_all_chaos_inject_on_all_nodes():
+        destroy_list = []
+        result_list = []
+        for target_host in Hosts:
+            target_inject = "./blade status --type create"
+            r = Runner()
+            r.run_ad_hoc(
+                hosts=target_host,
+                module='shell',
+                args=target_inject
+            )
+            result = r.get_adhoc_result()
+            if len(result["success"]) > 0:
+                transform_ip = result["success"].keys()[0]
+                info = \
+                json.loads(result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
+                "result"]
+                for i in info:
+                    if i["Status"] == "Success":
+                        destroy_list.append(i["Uid"])
+
+            for item in destroy_list:
+                cmd = './blade destroy ' + item
+                r = Runner()
+                r.run_ad_hoc(
+                    hosts=target_host,
+                    module='shell',
+                    args=cmd
+                )
+                result = r.get_adhoc_result()
+                result_list.append(result)
+        channel.basic_publish(exchange='', routing_key="blade_mq", body='SUCCESS - ' + "stop all injection")
         return result_list
 
 
