@@ -21,7 +21,7 @@ def chaos_inject_cpu():
     return jsonify(FaultInjector.chaos_inject_cpu(dto))
 
 
-@chaosblade.route('/tool/api/v1.0/chaosblade/inject-cpu/with_time', methods=['POST'])
+@chaosblade.route('/tool/api/v1.0/chaosblade/inject-random/with_time', methods=['POST'])
 def chaos_inject_cpu_with_time():
     if not request.json or 'host' not in request.json or 'second' not in request.json:
         abort(400)
@@ -85,6 +85,19 @@ def chaos_inject_random():
         'timeout': request.json['timeout']
     }
     return jsonify(FaultInjector.chaos_inject_random(dto))
+
+
+@chaosblade.route('/tool/api/v1.0/chaosblade/inject-k8s', methods=['POST'])
+def chaos_inject_k8s():
+    if not request.json or 'host' not in request.json or 'pod' not in request.json or \
+            'timeout' not in request.json:
+        abort(400)
+    dto = {
+        'host': request.json['host'],
+        'pod': request.json['pod'],
+        'timeout': request.json['timeout']
+    }
+    return jsonify(FaultInjector.chaos_inject_k8s(dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/stop-specific-inject', methods=['POST'])

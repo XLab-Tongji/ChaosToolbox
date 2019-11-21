@@ -43,14 +43,16 @@ Default_cmd = {
     "cpu": "./blade create cpu fullload",
     "network": "./blade create network delay --interface enp3s0 --time 1000",
     "disk": "./blade create disk burn --read",
-    "mem": "./blade create mem load --mem-percent 80"
+    "mem": "./blade create mem load --mem-percent 80",
+    "k8s": "./blade create k8s delete --namespace sock-shop --pod"
 }
 
 Cmd = {
     "cpu": "./blade create cpu fullload",
     "network": "./blade create network delay --interface enp3s0 ",
     "disk": "./blade create disk burn --",
-    "mem": "./blade create mem load --mem-percent "
+    "mem": "./blade create mem load --mem-percent ",
+    "k8s": "./blade create k8s delete --namespace sock-shop --pod ",
 }
 
 inject_info = []
@@ -399,6 +401,71 @@ class FaultInjector(object):
             return result
         else:
             return "The host has been injected by the inject"
+
+    @staticmethod
+    def chaos_inject_k8s(dto):
+        find = 0
+        timeout = ''
+        if dto['host'] == 'random':
+            i = random.randint(0, len(Hosts) - 1)
+            target_host = Hosts[i]
+        else:
+            target_host = dto['host']
+        if dto['timeout'] == 'default':
+            timeout = ' --timeout 300'
+        elif dto['timeout'] != 'no':
+            timeout = ' --timeout ' + dto['timeout']
+        target_inject = Cmd["k8s"] + dto['pod']
+        for i in range(0, len(has_injected)):
+            if has_injected[i]["host"] == target_host \
+                    and has_injected[i]["inject_type"] == target_inject:
+                find = 1
+        if find == 0:
+            r = Runner()
+            r.run_ad_hoc(
+                hosts=target_host,
+                module='shell',
+                args=target_inject + timeout
+            )
+            result = r.get_adhoc_result()
+            print(result)
+            if len(result["success"]) > 0:
+                transform_ip = result["success"].keys()[0]
+                stdout = result["success"][transform_ip]["stdout"]
+                result_ = stdout.split(',', 3)[2]
+                tag_result = result_.split(':', 2)[1].replace('"', '').replace('}', '')
+                the_has_injected = {
+                    "host": target_host.encode('unicode_escape').decode('string_escape'),
+                    "inject_type": "k8s",
+                    "tag": tag_result.encode('unicode_escape').decode('string_escape')
+                }
+                has_injected.append(the_has_injected)
+                the_inject_info = {
+                    "position": "k8s",
+                    "ip": target_host,
+                    "start_time": result["success"][transform_ip]["start"],
+                    "cmd": result["success"][transform_ip]["cmd"],
+                    "cmd_id": json.loads(
+                        result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
+                        "result"].encode('unicode-escape').decode('string_escape')
+                }
+                inject_info.append(the_inject_info)
+                Logger.log('info', str('SUCCESS - ') + str(the_inject_info))
+                try:
+                    channel.basic_publish(exchange='', routing_key="blade_mq",
+                                          body='SUCCESS - ' + str(the_inject_info))
+                finally:
+                    return result
+            else:
+                the_inject_info = {
+                    "position": "k8s",
+                    "ip": target_host,
+                    "cmd": target_inject,
+                }
+                Logger.log('error', 'ERROR - ' + str(the_inject_info))
+            return result
+        else:
+            return "The pod has been injected"
 
     @staticmethod
     def view_chaos_inject():
