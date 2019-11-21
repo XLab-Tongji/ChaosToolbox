@@ -12,15 +12,16 @@ chaosblade = Blueprint('chaosblade', __name__)
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/inject-cpu', methods=['POST'])
 def chaos_inject_cpu():
-    if not request.json or 'host' not in request.json:
+    if not request.json or 'host' not in request.json or 'timeout' not in request.json:
         abort(400)
     dto = {
         'host': request.json['host'],
+        'timeout': request.json['timeout']
     }
     return jsonify(FaultInjector.chaos_inject_cpu(dto))
 
 
-@chaosblade.route('/tool/api/v1.0/chaosblade/inject-cpu/with_time', methods=['POST'])
+@chaosblade.route('/tool/api/v1.0/chaosblade/inject-random/with_time', methods=['POST'])
 def chaos_inject_cpu_with_time():
     if not request.json or 'host' not in request.json or 'second' not in request.json:
         abort(400)
@@ -41,22 +42,24 @@ def chaos_inject_cpu_with_time():
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/inject-mem', methods=['POST'])
 def chaos_inject_mem():
-    if not request.json or 'host' not in request.json or 'percent' not in request.json:
+    if not request.json or 'host' not in request.json or 'percent' not in request.json or 'timeout' not in request.json:
         abort(400)
     dto = {
         'host': request.json['host'],
-        'percent': request.json['percent']
+        'percent': request.json['percent'],
+        'timeout': request.json['timeout']
     }
     return jsonify(FaultInjector.chaos_inject_mem(dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/inject-disk', methods=['POST'])
 def chaos_inject_disk():
-    if not request.json or 'host' not in request.json or 'type' not in request.json:
+    if not request.json or 'host' not in request.json or 'type' not in request.json or 'timeout' not in request.json:
         abort(400)
     dto = {
         'host': request.json['host'],
-        'type': request.json['type']
+        'type': request.json['type'],
+        'timeout': request.json['timeout']
     }
     return jsonify(FaultInjector.chaos_inject_disk(dto))
 
@@ -75,12 +78,26 @@ def chaos_inject_network():
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/inject-random', methods=['POST'])
 def chaos_inject_random():
-    if not request.json or 'host' not in request.json:
+    if not request.json or 'host' not in request.json or 'timeout' not in request.json:
         abort(400)
     dto = {
         'host': request.json['host'],
+        'timeout': request.json['timeout']
     }
     return jsonify(FaultInjector.chaos_inject_random(dto))
+
+
+@chaosblade.route('/tool/api/v1.0/chaosblade/inject-k8s', methods=['POST'])
+def chaos_inject_k8s():
+    if not request.json or 'host' not in request.json or 'pod' not in request.json or \
+            'timeout' not in request.json:
+        abort(400)
+    dto = {
+        'host': request.json['host'],
+        'pod': request.json['pod'],
+        'timeout': request.json['timeout']
+    }
+    return jsonify(FaultInjector.chaos_inject_k8s(dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/stop-specific-inject', methods=['POST'])
@@ -95,7 +112,17 @@ def stop_specific_inject():
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/stop-all-inject', methods=['POST'])
 def stop_all_inject():
-    return jsonify(FaultInjector.stop_all_chaos_inject())
+    if not request.json or 'target_host' not in request.json:
+        abort(400)
+    dto = {
+        'target_host': request.json['target_host'],
+    }
+    return jsonify(FaultInjector.stop_all_chaos_inject(dto['target_host']))
+
+
+@chaosblade.route('/tool/api/v1.0/chaosblade/stop-all-inject-on-all-nodes', methods=['POST'])
+def stop_all_inject_on_all_nodes():
+    return jsonify(FaultInjector.stop_all_chaos_inject_on_all_nodes())
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/view-inject-info', methods=['GET'])
@@ -105,14 +132,29 @@ def view_inject_info():
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/view-all-create-error-inject-info', methods=['GET'])
 def view_all_create_error_inject_info():
-    return jsonify(FaultInjector.view_chaos_status_inject("Error"))
+    if not request.json or 'target_host' not in request.json:
+        abort(400)
+    dto = {
+        'target_host': request.json['target_host'],
+    }
+    return jsonify(FaultInjector.view_chaos_status_inject("Error", dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/view-all-create-success-inject-info', methods=['GET'])
 def view_all_create_success_inject_info():
-    return jsonify(FaultInjector.view_chaos_status_inject("Success"))
+    if not request.json or 'target_host' not in request.json:
+        abort(400)
+    dto = {
+        'target_host': request.json['target_host'],
+    }
+    return jsonify(FaultInjector.view_chaos_status_inject("Success", dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/view-all-create-destroy-inject-info', methods=['GET'])
 def view_all_create_destroy_inject_info():
-    return jsonify(FaultInjector.view_chaos_status_inject("Destroyed"))
+    if not request.json or 'target_host' not in request.json:
+        abort(400)
+    dto = {
+        'target_host': request.json['target_host'],
+    }
+    return jsonify(FaultInjector.view_chaos_status_inject("Destroyed", dto))

@@ -11,7 +11,7 @@ class Logger:
     @staticmethod
     def log(info_type, message):
 
-        LOG_FORMAT = "%(levelname)s - %(message)s"  # 日志格式化输出
+        LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"  # 日志格式化输出
         DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"  # 日期格式化输出
         logging.basicConfig(level=logging.INFO,
                             format=LOG_FORMAT,

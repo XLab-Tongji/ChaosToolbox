@@ -1,0 +1,153 @@
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 20:53:08.008348', 'cmd': u'./blade create cpu fullload', 'cmd_id': '565b5b5ce8c9304b', 'ip': u'192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 20:53:11] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 20:53:20] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 20:53:50] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 500 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 20:56:49.365231', 'cmd': u'./blade create cpu fullload', 'cmd_id': '558e9ab586aaa6e8', 'ip': u'192.168.199.42'}
+ERROR - Socket EOF; <socket._socketobject object at 0x10792ce50>
+ERROR - Transport indicated EOF.
+INFO - protocol.eof_received() elected to close: <socket._socketobject object at 0x10792ce50>
+INFO - _AsyncTransportBase._initate_abort(): Initiating abrupt asynchronous transport shutdown: state=1; error=None; <socket._socketobject object at 0x10792ce50>
+INFO - Deactivating transport: state=1; <socket._socketobject object at 0x10792ce50>
+ERROR - connection_lost: StreamLostError: ('Transport indicated EOF',)
+INFO - AMQP stack terminated, failed to connect, or aborted: opened=True, error-arg=StreamLostError: ('Transport indicated EOF',); pending-error=None
+INFO - Stack terminated due to StreamLostError: ('Transport indicated EOF',)
+INFO - Closing transport socket and unlinking: state=3; <socket._socketobject object at 0x10792ce50>
+ERROR - Unexpected connection close detected: StreamLostError: ('Transport indicated EOF',)
+INFO - 127.0.0.1 - - [07/Nov/2019 20:56:50] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 500 -
+INFO - 127.0.0.1 - - [07/Nov/2019 20:58:21] "GET / HTTP/1.1" 404 -
+INFO - 127.0.0.1 - - [07/Nov/2019 20:58:21] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
+INFO - 127.0.0.1 - - [07/Nov/2019 20:58:21] "GET /apple-touch-icon.png HTTP/1.1" 404 -
+INFO - 127.0.0.1 - - [07/Nov/2019 20:58:21] "GET /favicon.ico HTTP/1.1" 404 -
+INFO - 127.0.0.1 - - [07/Nov/2019 20:58:54] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 20:59:22.578834', 'cmd': u'./blade create cpu fullload', 'cmd_id': '8ed1fac28cc4c52f', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 20:59:26] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 20:59:50] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:00:19.986982', 'cmd': u'./blade destroy 8ed1fac28cc4c52f', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:00:22] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:00:39.657921', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '9fa0cae0769b372b', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:00:46] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:00:52] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:01:12.522987', 'cmd': u'./blade destroy 9fa0cae0769b372b', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:01:14] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'disk', 'start_time': u'2019-11-07 21:01:28.516235', 'cmd': u'./blade create disk burn --write', 'cmd_id': 'd5485eceb3a6c44b', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:01:32] "POST /tool/api/v1.0/chaosblade/inject-disk HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:01:37] "POST /tool/api/v1.0/chaosblade/inject-disk HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:01:43] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:02:05] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'disk', 'start_time': u'2019-11-07 21:03:47.723196', 'cmd': u'./blade destroy d5485eceb3a6c44b', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:03:51] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:04:46.797913', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': 'db0dd9858659e331', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:04:49] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:04:53] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:04:57.340820', 'cmd': u'./blade create cpu fullload', 'cmd_id': 'd4130a9590e73c67', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:05:01] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'disk', 'start_time': u'2019-11-07 21:05:11.565439', 'cmd': u'./blade create disk burn --write', 'cmd_id': '9411c12e9aac6450', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:05:15] "POST /tool/api/v1.0/chaosblade/inject-disk HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:05:23] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'disk', 'start_time': u'2019-11-07 21:05:48.361674', 'cmd': u'./blade destroy 9411c12e9aac6450', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:05:51] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:06:02] "POST /tool/api/v1.0/chaosblade/inject-disk HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:06:20.664150', 'cmd': u'./blade destroy d4130a9590e73c67', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:06:23] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:06:34.400364', 'cmd': u'./blade destroy db0dd9858659e331', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:06:37] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:12:42.738343', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': 'ba0a20f746485585', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:12:45] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:13:01.584724', 'cmd': u'./blade destroy ba0a20f746485585', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:13:03] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:13:11] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:15:49.862249', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '41f8921fb0f5c19c', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:15:52] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:16:16] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:16:24.775998', 'cmd': u'./blade destroy 41f8921fb0f5c19c', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:16:27] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:16:40] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO -  * Detected change in '/Users/apple/Documents/GitHub/2019-XLab-KubernetesTools/services/fault_injector.py', reloading
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:19:25.439735', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': 'f29afed881465593', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:19:27] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:19:38] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:20:06.585474', 'cmd': u'./blade destroy f29afed881465593', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:20:08] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:20:14] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:20:21] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:21:30.124011', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': 'fe4b56a68ce5aff5', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:21:32] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:21:48.422981', 'cmd': u'./blade destroy fe4b56a68ce5aff5', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:21:50] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:23:33.354758', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '596042fdf3cad3e5', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:23:35] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+ERROR - UID NOT FOUND - {'cmd': u'./blade destroy fe4b56a68ce5aff5'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:23:40] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:24:04.194597', 'cmd': u'./blade destroy 596042fdf3cad3e5', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:24:06] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:24:20.750355', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '544713736c956420', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:24:23] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:24:28.386005', 'cmd': u'./blade create cpu fullload', 'cmd_id': 'e7c268d4c8dd71b7', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:24:31] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'disk', 'start_time': u'2019-11-07 21:24:38.247165', 'cmd': u'./blade create disk burn --write', 'cmd_id': '055e8a0b0cf1ab24', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:24:41] "POST /tool/api/v1.0/chaosblade/inject-disk HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:25:02] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 500 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:31:31.940338', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '1aed18a5913ebc42', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:31:34] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:31:39.098795', 'cmd': u'./blade create cpu fullload', 'cmd_id': 'c5276c12396b3cbb', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:31:42] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+ERROR - UID NOT FOUND - {'cmd': u'./blade destroy e7c268d4c8dd71b7'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:32:06] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:32:39] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 500 -
+INFO -  * Detected change in '/Users/apple/Documents/GitHub/2019-XLab-KubernetesTools/services/fault_injector.py', reloading
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:36:33.645990', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '2e5922af4b92fe3b', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:36:36] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:36:40.235172', 'cmd': u'./blade create cpu fullload', 'cmd_id': '5fd3d52795a665bb', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:36:44] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:37:04] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 500 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:39:38.966404', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '2494caa00b974a91', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:39:41] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:39:45.685946', 'cmd': u'./blade create cpu fullload', 'cmd_id': '5342e33dcde96277', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:39:49] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:40:11.056023', 'cmd': u'./blade destroy 5342e33dcde96277', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:40:13] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:40:26] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 500 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:46:01.244046', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': 'e099c4b48f13121e', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:46:03] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:46:08.311117', 'cmd': u'./blade create cpu fullload', 'cmd_id': '11e3561e0540d170', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:46:11] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:46:34.686216', 'cmd': u'./blade destroy 11e3561e0540d170', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:46:37] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:46:49.165648', 'cmd': u'./blade destroy e099c4b48f13121e', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:46:51] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:47:06.257724', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '2291e0a405dc501b', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:47:08] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:47:13.660630', 'cmd': u'./blade create cpu fullload', 'cmd_id': 'e2040621f6d39894', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:47:17] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:47:28] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 500 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:54:49.208657', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '3e83f3c53815c30a', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:54:51] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:54:58.787875', 'cmd': u'./blade create cpu fullload', 'cmd_id': 'de2c14130316c550', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:55:02] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:55:24] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 500 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:56:45.729890', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '89ae38a56bb8c083', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:56:48] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:56:52.527972', 'cmd': u'./blade create cpu fullload', 'cmd_id': '7b123efa32e86ebd', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:56:56] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:57:19.353563', 'cmd': u'./blade destroy 89ae38a56bb8c083', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:57:21] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:57:34.115163', 'cmd': u'./blade destroy 7b123efa32e86ebd', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:57:36] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:57:45.568311', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '03d04502d31c3adf', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:57:48] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:57:51.410499', 'cmd': u'./blade create cpu fullload', 'cmd_id': '7f8c43401c263233', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:57:54] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-07 21:58:07.502723', 'cmd': u'./blade destroy 7f8c43401c263233', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:58:09] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:58:20.455455', 'cmd': u'./blade destroy 03d04502d31c3adf', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:58:22] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:58:28.362780', 'cmd': u'./blade create mem load --mem-percent 30', 'cmd_id': '64f345b6405db562', 'ip': u'192.168.199.42'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:58:30] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - 127.0.0.1 - - [07/Nov/2019 21:58:33] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'mem', 'start_time': u'2019-11-07 21:58:52.712053', 'cmd': u'./blade destroy 64f345b6405db562', 'ip': '192.168.199.32'}
+INFO - 127.0.0.1 - - [07/Nov/2019 21:58:55] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+INFO -  * Detected change in '/Users/apple/Documents/GitHub/2019-XLab-KubernetesTools/services/fault_injector.py', reloading
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-14 17:38:57.829160', 'cmd': u'./blade create cpu fullload', 'cmd_id': '679645158959b7c0', 'ip': u'192.168.199.42'}
+INFO - 192.168.199.37 - - [14/Nov/2019 17:39:02] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+INFO - SUCCESS - {'position': 'cpu', 'start_time': u'2019-11-14 17:40:28.113499', 'cmd': u'./blade destroy 679645158959b7c0', 'ip': '192.168.199.32'}
+INFO - 192.168.199.37 - - [14/Nov/2019 17:40:30] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
