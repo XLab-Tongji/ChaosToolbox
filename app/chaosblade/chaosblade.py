@@ -110,14 +110,14 @@ def stop_specific_inject():
     return jsonify(FaultInjector.stop_chaos_inject(dto))
 
 
-@chaosblade.route('/tool/api/v1.0/chaosblade/stop-all-inject', methods=['POST'])
+@chaosblade.route('/tool/api/v1.0/chaosblade/stop-all-inject-on-host', methods=['POST'])
 def stop_all_inject():
-    if not request.json or 'target_host' not in request.json:
+    if not request.json or 'host' not in request.json:
         abort(400)
     dto = {
-        'target_host': request.json['target_host'],
+        'host': request.json['host'],
     }
-    return jsonify(FaultInjector.stop_all_chaos_inject(dto['target_host']))
+    return jsonify(FaultInjector.stop_all_on_host(dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/stop-all-inject-on-all-nodes', methods=['POST'])
@@ -132,29 +132,29 @@ def view_inject_info():
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/view-all-create-error-inject-info', methods=['GET'])
 def view_all_create_error_inject_info():
-    if not request.json or 'target_host' not in request.json:
+    if not request.json or 'host' not in request.json:
         abort(400)
     dto = {
-        'target_host': request.json['target_host'],
+        'host': request.json['host'],
     }
-    return jsonify(FaultInjector.view_chaos_status_inject("Error", dto))
+    return jsonify(FaultInjector.view_inject_on_host_by_status("Error", dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/view-all-create-success-inject-info', methods=['GET'])
 def view_all_create_success_inject_info():
-    if not request.json or 'target_host' not in request.json:
+    if not request.json or 'host' not in request.json:
         abort(400)
     dto = {
-        'target_host': request.json['target_host'],
+        'host': request.json['host'],
     }
-    return jsonify(FaultInjector.view_chaos_status_inject("Success", dto))
+    return jsonify(FaultInjector.view_inject_on_host_by_status("Success", dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/view-all-create-destroy-inject-info', methods=['GET'])
 def view_all_create_destroy_inject_info():
-    if not request.json or 'target_host' not in request.json:
+    if not request.json or 'host' not in request.json:
         abort(400)
     dto = {
-        'target_host': request.json['target_host'],
+        'host': request.json['host'],
     }
-    return jsonify(FaultInjector.view_chaos_status_inject("Destroyed", dto))
+    return jsonify(FaultInjector.view_inject_on_host_by_status("Destroyed", dto))

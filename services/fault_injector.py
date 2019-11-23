@@ -54,7 +54,6 @@ Cmd = {
     "mem": "./blade create mem load --mem-percent ",
     "k8s": "./blade create k8s delete --namespace sock-shop --pod ",
 }
-
 inject_info = []
 has_injected = []
 
@@ -66,22 +65,17 @@ class FaultInjector(object):
     @staticmethod
     def chaos_inject_cpu(dto):
         find = 0
-        target_inject = ''
-        target_host = ''
         timeout = ''
-        if dto['host'] == 'random':
-            i = random.randint(0, len(Hosts) - 1)
-            target_host = Hosts[i]
-        else:
-            target_host = dto['host']
+        (target_host, is_exist) = get_target_host(dto)
+        if not is_exist:
+            return 'Host: ' + target_host + ' does not exist.'
         if dto['timeout'] == 'default':
             timeout = ' --timeout 300'
         elif dto['timeout'] != 'no':
             timeout = ' --timeout ' + dto['timeout']
-        target_inject = Cmd["cpu"]
+        target_inject = Cmd['cpu']
         for i in range(0, len(has_injected)):
-            if has_injected[i]["host"] == target_host \
-                    and has_injected[i]["inject_type"] == "cpu":
+            if has_injected[i]['host'] == target_host and has_injected[i]['inject_type'] == 'cpu':
                 find = 1
         if find == 0:
             r = Runner()
@@ -91,67 +85,28 @@ class FaultInjector(object):
                 args=target_inject + timeout
             )
             result = r.get_adhoc_result()
-            print (result)
-            if len(result["success"]) > 0:
-                transform_ip = result["success"].keys()[0]
-                stdout = result["success"][transform_ip]["stdout"]
-                result_ = stdout.split(',', 3)[2]
-                tag_result = result_.split(':', 2)[1].replace('"', '').replace('}', '')
-                the_has_injected = {
-                    "host": target_host.encode('unicode_escape').decode('string_escape'),
-                    "inject_type": "cpu",
-                    "tag": tag_result.encode('unicode_escape').decode('string_escape')
-                }
-                has_injected.append(the_has_injected)
-                the_inject_info = {
-                    "position": "cpu",
-                    "ip": target_host,
-                    "start_time": result["success"][transform_ip]["start"],
-                    "cmd": result["success"][transform_ip]["cmd"],
-                    "cmd_id": json.loads(
-                        result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
-                        "result"].encode('unicode-escape').decode('string_escape')
-                }
-                inject_info.append(the_inject_info)
-                Logger.log('info', 'SUCCESS - ' + str(the_inject_info))
-                try:
-                    channel.basic_publish(exchange='', routing_key="blade_mq",
-                                          body='SUCCESS - ' + str(the_inject_info))
-                finally:
-                    return result
-            else:
-                the_inject_info = {
-                    "position": "cpu",
-                    "ip": target_host,
-                    "cmd": target_inject,
-                }
-                Logger.log('error', 'ERROR - ' + str(the_inject_info))
-            return result
+            print result
+            return handle_inject_result('cpu', target_host, target_inject + timeout, result)
         else:
             return "The host's cpu has been injected"
 
     @staticmethod
     def chaos_inject_mem(dto):
         find = 0
-        target_inject = ''
-        target_host = ''
         timeout = ''
-        if dto['host'] == 'random':
-            i = random.randint(0, len(Hosts) - 1)
-            target_host = Hosts[i]
-        else:
-            target_host = dto['host']
+        (target_host, is_exist) = get_target_host(dto)
+        if not is_exist:
+            return 'Host: ' + target_host + ' does not exist.'
         if dto['percent'] == 'default':
-            target_inject = Default_cmd["mem"]
+            target_inject = Default_cmd['mem']
         else:
-            target_inject = Cmd["mem"] + dto['percent']
+            target_inject = Cmd['mem'] + dto['percent']
         if dto['timeout'] == 'default':
             timeout = ' --timeout 300'
         elif dto['timeout'] != 'no':
             timeout = ' --timeout ' + dto['timeout']
         for i in range(0, len(has_injected)):
-            if has_injected[i]["host"] == target_host \
-                    and has_injected[i]["inject_type"] == "mem":
+            if has_injected[i]['host'] == target_host and has_injected[i]['inject_type'] == 'mem':
                 find = 1
         if find == 0:
             r = Runner()
@@ -161,66 +116,28 @@ class FaultInjector(object):
                 args=target_inject + timeout
             )
             result = r.get_adhoc_result()
-            if len(result["success"]) > 0:
-                transform_ip = result["success"].keys()[0]
-                stdout = result["success"][transform_ip]["stdout"]
-                result_ = stdout.split(',', 3)[2]
-                tag_result = result_.split(':', 2)[1].replace('"', '').replace('}', '')
-                the_has_injected = {
-                    "host": target_host.encode('unicode_escape').decode('string_escape'),
-                    "inject_type": "mem",
-                    "tag": tag_result.encode('unicode_escape').decode('string_escape')
-                }
-                has_injected.append(the_has_injected)
-                the_inject_info = {
-                    "position": "mem",
-                    "ip": target_host,
-                    "start_time": result["success"][transform_ip]["start"],
-                    "cmd": result["success"][transform_ip]["cmd"],
-                    "cmd_id": json.loads(
-                        result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
-                        "result"].encode('unicode-escape').decode('string_escape')
-                }
-                inject_info.append(the_inject_info)
-                Logger.log('info', str('SUCCESS - ') + str(the_inject_info))
-                try:
-                    channel.basic_publish(exchange='', routing_key="blade_mq",
-                                          body='SUCCESS - ' + str(the_inject_info))
-                finally:
-                    return result
-            else:
-                the_inject_info = {
-                    "position": "mem",
-                    "ip": target_host,
-                    "cmd": target_inject,
-                }
-                Logger.log('error', 'ERROR - ' + str(the_inject_info))
-            return result
+            print result
+            return handle_inject_result('mem', target_host, target_inject + timeout, result)
         else:
             return "The host's mem has been injected"
 
     @staticmethod
     def chaos_inject_disk(dto):
         find = 0
-        target_inject = ''
-        target_host = ''
         timeout = ''
-        if dto['host'] == 'random':
-            i = random.randint(0, len(Hosts) - 1)
-            target_host = Hosts[i]
-        else:
-            target_host = dto['host']
+        (target_host, is_exist) = get_target_host(dto)
+        if not is_exist:
+            return 'Host: ' + target_host + ' does not exist.'
         if dto['type'] == 'default':
-            target_inject = Default_cmd["disk"]
+            target_inject = Default_cmd['disk']
         else:
-            target_inject = Cmd["disk"] + dto['type']
+            target_inject = Cmd['disk'] + dto['type']
         if dto['timeout'] == 'default':
             timeout = ' --timeout 300'
         elif dto['timeout'] != 'no':
             timeout = ' --timeout ' + dto['timeout']
         for i in range(0, len(has_injected)):
-            if has_injected[i]["host"] == target_host \
-                    and has_injected[i]["inject_type"] == "disk":
+            if has_injected[i]['host'] == target_host and has_injected[i]['inject_type'] == 'disk':
                 find = 1
         if find == 0:
             r = Runner()
@@ -230,65 +147,26 @@ class FaultInjector(object):
                 args=target_inject + timeout
             )
             result = r.get_adhoc_result()
-            print (result)
-            if len(result["success"]) > 0:
-                transform_ip = result["success"].keys()[0]
-                stdout = result["success"][transform_ip]["stdout"]
-                result_ = stdout.split(',', 3)[2]
-                tag_result = result_.split(':', 2)[1].replace('"', '').replace('}', '')
-                the_has_injected = {
-                    "host": target_host.encode('unicode_escape').decode('string_escape'),
-                    "inject_type": "disk",
-                    "tag": tag_result.encode('unicode_escape').decode('string_escape')
-                }
-                has_injected.append(the_has_injected)
-                the_inject_info = {
-                    "position": "disk",
-                    "ip": target_host,
-                    "start_time": result["success"][transform_ip]["start"],
-                    "cmd": result["success"][transform_ip]["cmd"],
-                    "cmd_id": json.loads(
-                        result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
-                        "result"].encode('unicode-escape').decode('string_escape')
-                }
-                inject_info.append(the_inject_info)
-                Logger.log('info', str('SUCCESS - ') + str(the_inject_info))
-                try:
-                    channel.basic_publish(exchange='', routing_key="blade_mq",
-                                          body='SUCCESS - ' + str(the_inject_info))
-                finally:
-                    return result
-            else:
-                the_inject_info = {
-                    "position": "disk",
-                    "ip": target_host,
-                    "cmd": target_inject,
-                }
-                Logger.log('error', 'ERROR - ' + str(the_inject_info))
-            return result
+            print result
+            return handle_inject_result('disk', target_host, target_inject + timeout, result)
         else:
             return "The host's disk has been injected"
 
     @staticmethod
     def chaos_inject_network(dto):
         find = 0
-        target_inject = ''
-        target_host = ''
         time = '3000'
         timeout = '600'
-        if dto['host'] == 'random':
-            i = random.randint(0, len(Hosts) - 1)
-            target_host = Hosts[i]
-        else:
-            target_host = dto['host']
+        (target_host, is_exist) = get_target_host(dto)
+        if not is_exist:
+            return 'Host: ' + target_host + ' does not exist.'
         if dto['time'] != 'default':
             time = dto['time']
         if dto['timeout'] != 'default':
             timeout = dto['timeout']
         target_inject = Cmd['network'] + '--time ' + time + ' --timeout ' + timeout
         for i in range(0, len(has_injected)):
-            if has_injected[i]["host"] == target_host \
-                    and has_injected[i]["inject_type"] == "network":
+            if has_injected[i]['host'] == target_host and has_injected[i]['inject_type'] == 'network':
                 find = 1
         if find == 0:
             r = Runner()
@@ -298,64 +176,55 @@ class FaultInjector(object):
                 args=target_inject
             )
             result = r.get_adhoc_result()
-            if len(result["success"]) > 0:
-                transform_ip = result["success"].keys()[0]
-                stdout = result["success"][transform_ip]["stdout"]
-                result_ = stdout.split(',', 3)[2]
-                tag_result = result_.split(':', 2)[1].replace('"', '').replace('}', '')
-                the_has_injected = {
-                    "host": target_host.encode('unicode_escape').decode('string_escape'),
-                    "inject_type": "network",
-                    "tag": tag_result.encode('unicode_escape').decode('string_escape')
-                }
-                has_injected.append(the_has_injected)
-                the_inject_info = {
-                    "position": "network",
-                    "ip": target_host,
-                    "start_time": result["success"][transform_ip]["start"],
-                    "cmd": result["success"][transform_ip]["cmd"],
-                    "cmd_id": json.loads(
-                        result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
-                        "result"].encode('unicode-escape').decode('string_escape')
-                }
-                inject_info.append(the_inject_info)
-                Logger.log('info', str('SUCCESS - ') + str(the_inject_info))
-                try:
-                    channel.basic_publish(exchange='', routing_key="blade_mq",
-                                          body='SUCCESS - ' + str(the_inject_info))
-                finally:
-                    return result
-            else:
-                the_inject_info = {
-                    "position": "network",
-                    "ip": target_host,
-                    "cmd": target_inject,
-                }
-                Logger.log('error', 'ERROR - ' + str(the_inject_info))
-            return result
+            print result
+            return handle_inject_result('network', target_host, target_inject, result)
         else:
             return "The host's network has been injected"
 
     @staticmethod
+    def chaos_inject_k8s(dto):
+        find = 0
+        timeout = ''
+        (target_host, is_exist) = get_target_host(dto)
+        if not is_exist:
+            return 'Host: ' + target_host + ' does not exist.'
+        if dto['timeout'] == 'default':
+            timeout = ' --timeout 300'
+        elif dto['timeout'] != 'no':
+            timeout = ' --timeout ' + dto['timeout']
+        target_inject = Cmd['k8s'] + dto['pod']
+        for i in range(0, len(has_injected)):
+            if has_injected[i]['host'] == target_host and has_injected[i]['inject_type'] == target_inject:
+                find = 1
+        if find == 0:
+            r = Runner()
+            r.run_ad_hoc(
+                hosts=target_host,
+                module='shell',
+                args=target_inject + timeout
+            )
+            result = r.get_adhoc_result()
+            print result
+            return handle_inject_result('k8s', target_host, target_inject + timeout, result)
+        else:
+            return 'The pod has been injected'
+
+    @staticmethod
     def chaos_inject_random(dto):
         find = 0
-        target_inject = ''
-        target_host = ''
         timeout = ''
-        if dto['host'] == 'random':
-            i = random.randint(0, len(Hosts) - 1)
-            target_host = Hosts[i]
-        else:
-            target_host = dto['host']
+        (target_host, is_exist) = get_target_host(dto)
+        if not is_exist:
+            return 'Host: ' + target_host + ' does not exist.'
         j = random.randint(0, len(Cmd) - 1)
+        inject_type = Default_cmd.keys()[j]
         target_inject = Default_cmd[Default_cmd.keys()[j]]
         if dto['timeout'] == 'default':
             timeout = ' --timeout 300'
         elif dto['timeout'] != 'no':
             timeout = ' --timeout ' + dto['timeout']
         for i in range(0, len(has_injected)):
-            if has_injected[i]["host"] == target_host \
-                    and has_injected[i]["inject_type"] == target_inject:
+            if has_injected[i]['host'] == target_host and has_injected[i]['inject_type'] == target_inject:
                 find = 1
         if find == 0:
             r = Runner()
@@ -365,115 +234,20 @@ class FaultInjector(object):
                 args=target_inject + timeout
             )
             result = r.get_adhoc_result()
-            if len(result["success"]) > 0:
-                transform_ip = result["success"].keys()[0]
-                stdout = result["success"][transform_ip]["stdout"]
-                result_ = stdout.split(',', 3)[2]
-                tag_result = result_.split(':', 2)[1].replace('"', '').replace('}', '')
-                the_has_injected = {
-                    "host": target_host.encode('unicode_escape').decode('string_escape'),
-                    "inject_type": target_inject.encode('unicode_escape').decode('string_escape'),
-                    "tag": tag_result.encode('unicode_escape').decode('string_escape')
-                }
-                has_injected.append(the_has_injected)
-                the_inject_info = {
-                    "position": Default_cmd.keys()[j],
-                    "ip": target_host,
-                    "start_time": result["success"][transform_ip]["start"],
-                    "cmd": result["success"][transform_ip]["cmd"],
-                    "cmd_id": json.loads(
-                        result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
-                        "result"].encode('unicode-escape').decode('string_escape')
-                }
-                inject_info.append(the_inject_info)
-                Logger.log('info', str('SUCCESS - ') + str(the_inject_info))
-                try:
-                    channel.basic_publish(exchange='', routing_key="blade_mq",
-                                          body='SUCCESS - ' + str(the_inject_info))
-                finally:
-                    return result
-            else:
-                the_inject_info = {
-                    "ip": target_host,
-                    "cmd": target_inject,
-                }
-                Logger.log('error', 'ERROR - ' + str(the_inject_info))
-            return result
+            print result
+            return handle_inject_result(inject_type, target_host, target_inject + timeout, result)
         else:
             return "The host has been injected by the inject"
-
-    @staticmethod
-    def chaos_inject_k8s(dto):
-        find = 0
-        timeout = ''
-        if dto['host'] == 'random':
-            i = random.randint(0, len(Hosts) - 1)
-            target_host = Hosts[i]
-        else:
-            target_host = dto['host']
-        if dto['timeout'] == 'default':
-            timeout = ' --timeout 300'
-        elif dto['timeout'] != 'no':
-            timeout = ' --timeout ' + dto['timeout']
-        target_inject = Cmd["k8s"] + dto['pod']
-        for i in range(0, len(has_injected)):
-            if has_injected[i]["host"] == target_host \
-                    and has_injected[i]["inject_type"] == target_inject:
-                find = 1
-        if find == 0:
-            r = Runner()
-            r.run_ad_hoc(
-                hosts=target_host,
-                module='shell',
-                args=target_inject + timeout
-            )
-            result = r.get_adhoc_result()
-            print(result)
-            if len(result["success"]) > 0:
-                transform_ip = result["success"].keys()[0]
-                stdout = result["success"][transform_ip]["stdout"]
-                result_ = stdout.split(',', 3)[2]
-                tag_result = result_.split(':', 2)[1].replace('"', '').replace('}', '')
-                the_has_injected = {
-                    "host": target_host.encode('unicode_escape').decode('string_escape'),
-                    "inject_type": "k8s",
-                    "tag": tag_result.encode('unicode_escape').decode('string_escape')
-                }
-                has_injected.append(the_has_injected)
-                the_inject_info = {
-                    "position": "k8s",
-                    "ip": target_host,
-                    "start_time": result["success"][transform_ip]["start"],
-                    "cmd": result["success"][transform_ip]["cmd"],
-                    "cmd_id": json.loads(
-                        result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
-                        "result"].encode('unicode-escape').decode('string_escape')
-                }
-                inject_info.append(the_inject_info)
-                Logger.log('info', str('SUCCESS - ') + str(the_inject_info))
-                try:
-                    channel.basic_publish(exchange='', routing_key="blade_mq",
-                                          body='SUCCESS - ' + str(the_inject_info))
-                finally:
-                    return result
-            else:
-                the_inject_info = {
-                    "position": "k8s",
-                    "ip": target_host,
-                    "cmd": target_inject,
-                }
-                Logger.log('error', 'ERROR - ' + str(the_inject_info))
-            return result
-        else:
-            return "The pod has been injected"
 
     @staticmethod
     def view_chaos_inject():
         return inject_info
 
     @staticmethod
-    def view_chaos_status_inject(type, dto):
-        target_host = dto['target_host']
+    def view_inject_on_host_by_status(status_type, dto):
+        (target_host, is_exist) = get_target_host(dto)
+        if not is_exist:
+            return 'Host: ' + dto['host'] + ' does not exist.'
         target_inject = "./blade status --type create"
         r = Runner()
         r.run_ad_hoc(
@@ -482,21 +256,39 @@ class FaultInjector(object):
             args=target_inject
         )
         result = r.get_adhoc_result()
-        type_list = []
-        if len(result["success"]) > 0:
-            transform_ip = result["success"].keys()[0]
-            info = json.loads(result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
-                "result"]
+        inject_list = []
+        if len(result['success']) > 0:
+            transform_ip = result['success'].keys()[0]
+            info = \
+                json.loads(result['success'][transform_ip]['stdout'].encode('unicode-escape').decode('string_escape'))[
+                    'result']
             for i in info:
-                if i["Status"] == type:
-                    type_list.append(i)
+                if i['Status'] == status_type:
+                    inject_list.append(i)
             try:
-                requests.post(url=target_url, params={"content": str(type_list)}, verify=False, timeout=2)
+                requests.post(url=target_url, params={'content': str(inject_list)}, verify=False, timeout=2)
             except Timeout:
                 pass
             finally:
-                return type_list
-        return type_list
+                Logger.log("info", "SUCCESS - View successful injection in host: " + target_host)
+                return inject_list
+        else:
+            if len(result["unreachable"]) > 0:
+                transform_ip = result["unreachable"].keys()[0]
+                message = result["unreachable"][transform_ip]["msg"]
+                flag = "UNREACHABLE"
+            else:
+                transform_ip = result["failed"].keys()[0]
+                message = result["failed"][transform_ip]["msg"]
+                flag = "FAILED"
+            view_info = {
+                "ip": target_host,
+                "status type": status_type,
+                "cmd": target_inject,
+                "message": message
+            }
+            Logger.log("error", flag + " - " + str(view_info))
+        return inject_list
 
     @staticmethod
     def stop_chaos_inject(dto):
@@ -505,20 +297,20 @@ class FaultInjector(object):
         find = 0
         key = 0
         for i in range(0, len(inject_info)):
-            if inject_info[i]["cmd_id"] == stop_id:
-                target_host = inject_info[i]["ip"]
+            if inject_info[i]['cmd_id'] == stop_id:
+                target_host = inject_info[i]['ip']
                 find = 1
                 key = i
         for i in range(0, len(has_injected)):
-            if target_host == has_injected[i]["host"] and stop_id == has_injected[i]["tag"]:
+            if target_host == has_injected[i]['host'] and stop_id == has_injected[i]['tag']:
                 has_injected.pop(i)
                 break
         if find == 1:
             r = Runner()
             r.run_ad_hoc(
-                hosts=Spare_hosts[inject_info[key]["ip"]],
+                hosts=Spare_hosts[inject_info[key]['ip']],
                 module='shell',
-                args="./blade destroy " + stop_id
+                args='./blade destroy ' + stop_id
             )
             result = r.get_adhoc_result()
             if len(result["success"]) > 0:
@@ -552,8 +344,11 @@ class FaultInjector(object):
             return 'Inject not found'
 
     @staticmethod
-    def stop_all_chaos_inject(target_host):
-        target_inject = "./blade status --type create"
+    def stop_all_on_host(dto):
+        (target_host, is_exist) = get_target_host(dto)
+        if not is_exist:
+            return 'Host: ' + target_host + ' does not exist.'
+        target_inject = './blade status --type create'
         r = Runner()
         r.run_ad_hoc(
             hosts=target_host,
@@ -561,18 +356,17 @@ class FaultInjector(object):
             args=target_inject
         )
         result = r.get_adhoc_result()
-        destroy_list = []
+        uid_list = []
         result_list = []
         if len(result["success"]) > 0:
             transform_ip = result["success"].keys()[0]
             info = \
-            json.loads(result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
-                "result"]
+                json.loads(result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
+                    "result"]
             for i in info:
                 if i["Status"] == "Success":
-                    destroy_list.append(i["Uid"])
-
-        for item in destroy_list:
+                    uid_list.append(i["Uid"])
+        for item in uid_list:
             cmd = './blade destroy ' + item
             r = Runner()
             r.run_ad_hoc(
@@ -583,9 +377,9 @@ class FaultInjector(object):
             result = r.get_adhoc_result()
             result_list.append(result)
         try:
-            channel.basic_publish(exchange='', routing_key="blade_mq",
-                                  body='SUCCESS - ' + "stop all injection")
+            channel.basic_publish(exchange='', routing_key="blade_mq", body='SUCCESS - ' + "stop all injection")
         finally:
+            Logger.log('info', str('SUCCESS - stop all injection on host ' + target_host))
             return result_list
 
     @staticmethod
@@ -593,7 +387,7 @@ class FaultInjector(object):
         destroy_list = []
         result_list = []
         for target_host in Hosts:
-            target_inject = "./blade status --type create"
+            target_inject = './blade status --type create'
             r = Runner()
             r.run_ad_hoc(
                 hosts=target_host,
@@ -604,8 +398,9 @@ class FaultInjector(object):
             if len(result["success"]) > 0:
                 transform_ip = result["success"].keys()[0]
                 info = \
-                json.loads(result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
-                "result"]
+                    json.loads(
+                        result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
+                        "result"]
                 for i in info:
                     if i["Status"] == "Success":
                         destroy_list.append(i["Uid"])
@@ -623,6 +418,104 @@ class FaultInjector(object):
         channel.basic_publish(exchange='', routing_key="blade_mq", body='SUCCESS - ' + "stop all injection")
         return result_list
 
+    @staticmethod
+    def delete_all_pods(keywords):
+        """
+        todo: 停止所有的某种容器[根据关键字删]
+        :param keywords:
+        :return:
+        """
+        return "developing..."
 
 
+def handle_inject_result(inject_type, target_host, target_inject, result):
+    """
+    处理返回结果
+    :param inject_type: 注入类型
+    :param target_host: 目标主机地址
+    :param target_inject: 注入指令
+    :param result: 注入结果
+    :return: 注入结果
+    """
+    if len(result["success"]) > 0:
+        transform_ip = result["success"].keys()[0]
+        stdout = result["success"][transform_ip]["stdout"]
+        result_ = stdout.split(',', 3)[2]
+        tag_result = result_.split(':', 2)[1].replace('"', '').replace('}', '')
+        the_has_injected = {
+            "host": target_host.encode('unicode_escape').decode('string_escape'),
+            "inject_type": inject_type,
+            "tag": tag_result.encode('unicode_escape').decode('string_escape')
+        }
+        has_injected.append(the_has_injected)
+        the_inject_info = {
+            "position": inject_type,
+            "ip": target_host,
+            "start_time": result["success"][transform_ip]["start"],
+            "cmd": result["success"][transform_ip]["cmd"],
+            "cmd_id": json.loads(
+                result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
+                "result"].encode('unicode-escape').decode('string_escape')
+        }
+        inject_info.append(the_inject_info)
+        Logger.log('info', 'SUCCESS - ' + str(the_inject_info))
+        try:
+            channel.basic_publish(exchange='', routing_key="blade_mq",
+                                  body='SUCCESS - ' + str(the_inject_info))
+        finally:
+            return result
+    else:
+        if len(result["unreachable"]) > 0:
+            transform_ip = result["unreachable"].keys()[0]
+            message = result["unreachable"][transform_ip]["msg"]
+            flag = "UNREACHABLE"
+        else:
+            transform_ip = result["failed"].keys()[0]
+            message = result["failed"][transform_ip]["msg"]
+            flag = "FAILED"
+        the_inject_info = {
+            "ip": target_host,
+            "position": inject_type,
+            "cmd": target_inject,
+            "message": message
+        }
+        Logger.log("error", flag + " - " + str(the_inject_info))
+    return result
 
+
+def get_target_host(dto):
+    """
+    获取目标主机地址
+    :param dto: 注入参数
+    :return: (目标主机, 存在与否) 若不存在, 返回值中的目标主机为提示语句
+    """
+    target_host = dto["host"]
+    if target_host == "random":
+        i = random.randint(0, len(Hosts) - 1)
+        target_host = Hosts[i]
+        return target_host, True
+    if target_host not in Hosts:
+        info = {
+            "message": "Host: " + target_host + " does not exist.",
+            "command info": dto
+        }
+        Logger.log("error", "HOST NOT EXIST - " + str(info))
+        return target_host, False
+    else:
+        return target_host, True
+
+
+def get_all_pods_info(namespace):
+    """
+    todo: 处理result, 返回pod name的list
+          被delete_all_pods(keywords)调用
+    :param namespace:
+    :return:
+    """
+    r = Runner()
+    r.run_ad_hoc(
+        hosts="10.60.38.173",
+        module='shell',
+        args="kubectl get pods -n " + namespace
+    )
+    result = r.get_adhoc_result()
