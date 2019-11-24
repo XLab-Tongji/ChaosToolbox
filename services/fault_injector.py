@@ -5,9 +5,10 @@ import random
 import json
 import requests
 import pika
+
+from services.k8s_observer import K8sObserver
 from utils.ansible_runner import Runner
 from requests.exceptions import Timeout
-
 from utils.log_record import Logger
 
 username = 'guest'
@@ -82,12 +83,13 @@ class FaultInjector(object):
             r.run_ad_hoc(
                 hosts=target_host,
                 module='shell',
-                args=target_inject + timeout
-            )
+                args=target_inject + timeout)
             result = r.get_adhoc_result()
-            print result
-            return handle_inject_result('cpu', target_host, target_inject + timeout, result)
+            return handle_inject_result('cpu', target_host, target_inject + timeout, result,
+                                        sys._getframe().f_code.co_name)
         else:
+            Logger.log("error",
+                       "HOST HAS BEEN INJECTED - Method : " + sys._getframe().f_code.co_name + "() - - " + target_host)
             return "The host's cpu has been injected"
 
     @staticmethod
@@ -116,9 +118,11 @@ class FaultInjector(object):
                 args=target_inject + timeout
             )
             result = r.get_adhoc_result()
-            print result
-            return handle_inject_result('mem', target_host, target_inject + timeout, result)
+            return handle_inject_result('mem', target_host, target_inject + timeout, result,
+                                        sys._getframe().f_code.co_name)
         else:
+            Logger.log("error",
+                       "HOST HAS BEEN INJECTED - Method : " + sys._getframe().f_code.co_name + "() - - " + target_host)
             return "The host's mem has been injected"
 
     @staticmethod
@@ -148,8 +152,11 @@ class FaultInjector(object):
             )
             result = r.get_adhoc_result()
             print result
-            return handle_inject_result('disk', target_host, target_inject + timeout, result)
+            return handle_inject_result('disk', target_host, target_inject + timeout, result,
+                                        sys._getframe().f_code.co_name)
         else:
+            Logger.log("error",
+                       "HOST HAS BEEN INJECTED - Method : " + sys._getframe().f_code.co_name + "() - - " + target_host)
             return "The host's disk has been injected"
 
     @staticmethod
@@ -177,7 +184,8 @@ class FaultInjector(object):
             )
             result = r.get_adhoc_result()
             print result
-            return handle_inject_result('network', target_host, target_inject, result)
+            return handle_inject_result('network', target_host, target_inject + timeout, result,
+                                        sys._getframe().f_code.co_name)
         else:
             return "The host's network has been injected"
 
@@ -205,7 +213,8 @@ class FaultInjector(object):
             )
             result = r.get_adhoc_result()
             print result
-            return handle_inject_result('k8s', target_host, target_inject + timeout, result)
+            return handle_inject_result('k8s', target_host, target_inject + timeout, result,
+                                        sys._getframe().f_code.co_name)
         else:
             return 'The pod has been injected'
 
@@ -235,8 +244,11 @@ class FaultInjector(object):
             )
             result = r.get_adhoc_result()
             print result
-            return handle_inject_result(inject_type, target_host, target_inject + timeout, result)
+            return handle_inject_result(inject_type, target_host, target_inject + timeout, result,
+                                        sys._getframe().f_code.co_name)
         else:
+            Logger.log("error",
+                       "HOST HAS BEEN INJECTED - Method : " + sys._getframe().f_code.co_name + "() - - " + str(dto))
             return "The host has been injected by the inject"
 
     @staticmethod
@@ -244,11 +256,12 @@ class FaultInjector(object):
         return inject_info
 
     @staticmethod
-    def view_inject_on_host_by_status(status_type, dto):
+    def view_inject_on_host_by_status(dto):
         (target_host, is_exist) = get_target_host(dto)
         if not is_exist:
             return 'Host: ' + dto['host'] + ' does not exist.'
         target_inject = "./blade status --type create"
+        status_type = str(dto['status']).capitalize()
         r = Runner()
         r.run_ad_hoc(
             hosts=target_host,
@@ -270,7 +283,7 @@ class FaultInjector(object):
             except Timeout:
                 pass
             finally:
-                Logger.log("info", "SUCCESS - View successful injection in host: " + target_host)
+                Logger.log("info", "SUCCESS - Method : " + sys._getframe().f_code.co_name + "() - - " + str(dto))
                 return inject_list
         else:
             if len(result["unreachable"]) > 0:
@@ -287,11 +300,11 @@ class FaultInjector(object):
                 "cmd": target_inject,
                 "message": message
             }
-            Logger.log("error", flag + " - " + str(view_info))
+            Logger.log("error", flag + " - Method : " + sys._getframe().f_code.co_name + "() - - " + str(view_info))
         return inject_list
 
     @staticmethod
-    def stop_chaos_inject(dto):
+    def stop_specific_chaos_inject(dto):
         stop_id = dto['tag']
         target_host = ''
         find = 0
@@ -321,30 +334,42 @@ class FaultInjector(object):
                     "start_time": result["success"][transform_ip]["start"],
                     "cmd": result["success"][transform_ip]["cmd"],
                 }
-                Logger.log('info', str('SUCCESS - ') + str(the_stop_info))
+                inject_info.pop(key)
+                Logger.log('info',
+                           'SUCCESS - Method : ' + sys._getframe().f_code.co_name + "() - - " + str(the_stop_info))
                 try:
                     channel.basic_publish(exchange='', routing_key="blade_mq",
                                           body=str('SUCCESS - ') + str(the_stop_info))
                 finally:
                     return result
             else:
+                if len(result["unreachable"]) > 0:
+                    transform_ip = result["unreachable"].keys()[0]
+                    message = result["unreachable"][transform_ip]["msg"]
+                    flag = "UNREACHABLE"
+                else:
+                    transform_ip = result["failed"].keys()[0]
+                    message = result["failed"][transform_ip]["msg"]
+                    flag = "FAILED"
                 the_stop_info = {
                     "position": inject_info[key]["position"],
                     "ip": Spare_hosts[inject_info[key]["ip"]],
                     "cmd": "./blade destroy " + stop_id,
+                    "message": message
                 }
-                Logger.log('error', str(the_stop_info))
-                inject_info.pop(key)
+                Logger.log("error",
+                           flag + " - Method : " + sys._getframe().f_code.co_name + "() - - " + str(the_stop_info))
                 return result
         else:
             the_stop_info = {
                 "cmd": "./blade destroy " + stop_id,
             }
-            Logger.log('error', 'UID NOT FOUND - ' + str(the_stop_info))
+            Logger.log('error',
+                       'UID NOT FOUND -  Method : ' + sys._getframe().f_code.co_name + "() - - " + str(the_stop_info))
             return 'Inject not found'
 
     @staticmethod
-    def stop_all_on_host(dto):
+    def stop_all_on_specific_node(dto):
         (target_host, is_exist) = get_target_host(dto)
         if not is_exist:
             return 'Host: ' + target_host + ' does not exist.'
@@ -360,12 +385,16 @@ class FaultInjector(object):
         result_list = []
         if len(result["success"]) > 0:
             transform_ip = result["success"].keys()[0]
-            info = \
-                json.loads(result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
-                    "result"]
+            info = json.loads(result["success"][transform_ip]["stdout"]
+                              .encode('unicode-escape')
+                              .decode('string_escape'))["result"]
             for i in info:
                 if i["Status"] == "Success":
                     uid_list.append(i["Uid"])
+            if len(uid_list) == 0:
+                Logger.log('info',
+                           'NO CHAOS INJECT - Method : ' + sys._getframe().f_code.co_name + "() - - " + str(dto))
+                return 'There is no injected attack on this host' + target_host
         for item in uid_list:
             cmd = './blade destroy ' + item
             r = Runner()
@@ -375,18 +404,31 @@ class FaultInjector(object):
                 args=cmd
             )
             result = r.get_adhoc_result()
-            result_list.append(result)
+            if len(result["success"]) > 0:
+                for i in range(0, len(inject_info)):
+                    if inject_info[i]['cmd_id'] == item:
+                        target_host = inject_info[i]['ip']
+                        inject_info.pop(i)
+                for i in range(0, len(has_injected)):
+                    if target_host == has_injected[i]['host'] and item == has_injected[i]['tag']:
+                        has_injected.pop(i)
+                        break
+                print inject_info
+            result_list.append(
+                handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name))
         try:
             channel.basic_publish(exchange='', routing_key="blade_mq", body='SUCCESS - ' + "stop all injection")
         finally:
-            Logger.log('info', str('SUCCESS - stop all injection on host ' + target_host))
             return result_list
 
     @staticmethod
     def stop_all_chaos_inject_on_all_nodes():
-        destroy_list = []
+        uid_list = []
         result_list = []
         for target_host in Hosts:
+            dto = {
+                'host': target_host
+            }
             target_inject = './blade status --type create'
             r = Runner()
             r.run_ad_hoc(
@@ -397,15 +439,16 @@ class FaultInjector(object):
             result = r.get_adhoc_result()
             if len(result["success"]) > 0:
                 transform_ip = result["success"].keys()[0]
-                info = \
-                    json.loads(
-                        result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
-                        "result"]
+                info = json.loads(result["success"][transform_ip]["stdout"]
+                                  .encode('unicode-escape')
+                                  .decode('string_escape'))["result"]
                 for i in info:
                     if i["Status"] == "Success":
-                        destroy_list.append(i["Uid"])
-
-            for item in destroy_list:
+                        uid_list.append(i["Uid"])
+                if len(uid_list) == 0:
+                    Logger.log('info',
+                               'NO CHAOS INJECT - Method : ' + sys._getframe().f_code.co_name + "() - - " + str(dto))
+            for item in uid_list:
                 cmd = './blade destroy ' + item
                 r = Runner()
                 r.run_ad_hoc(
@@ -414,21 +457,47 @@ class FaultInjector(object):
                     args=cmd
                 )
                 result = r.get_adhoc_result()
-                result_list.append(result)
+                if len(result["success"]) > 0:
+                    for i in range(0, len(inject_info)):
+                        if inject_info[i]['cmd_id'] == item:
+                            target_host = inject_info[i]['ip']
+                            inject_info.pop(i)
+                    for i in range(0, len(has_injected)):
+                        if target_host == has_injected[i]['host'] and item == has_injected[i]['tag']:
+                            has_injected.pop(i)
+                            break
+                    print inject_info
+                result_list.append(
+                    handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name))
         channel.basic_publish(exchange='', routing_key="blade_mq", body='SUCCESS - ' + "stop all injection")
         return result_list
 
     @staticmethod
     def delete_all_pods(keywords):
         """
-        todo: 停止所有的某种容器[根据关键字删]
-        :param keywords:
-        :return:
+        停止所有的某类容器[根据关键字删]
+        :param keywords: 容器名中的关键字
+        :return: 结果
         """
-        return "developing..."
+        result_list = []
+        target_host = "10.60.38.181"
+        pods_list = K8sObserver.get_pod_name_list('sock-shop')
+        for pod in pods_list:
+            if keywords in pod:
+                target_inject = Cmd['k8s'] + pod
+                r = Runner()
+                r.run_ad_hoc(
+                    hosts=target_host,
+                    module='shell',
+                    args=target_inject
+                )
+                result = r.get_adhoc_result()
+                result_list.append(
+                    handle_inject_result('k8s', target_host, target_inject, result, sys._getframe().f_code.co_name))
+        return result_list
 
 
-def handle_inject_result(inject_type, target_host, target_inject, result):
+def handle_inject_result(inject_type, target_host, target_inject, result, method_name):
     """
     处理返回结果
     :param inject_type: 注入类型
@@ -436,6 +505,7 @@ def handle_inject_result(inject_type, target_host, target_inject, result):
     :param target_inject: 注入指令
     :param result: 注入结果
     :return: 注入结果
+    :param method_name: 调用者的方法名
     """
     if len(result["success"]) > 0:
         transform_ip = result["success"].keys()[0]
@@ -447,7 +517,8 @@ def handle_inject_result(inject_type, target_host, target_inject, result):
             "inject_type": inject_type,
             "tag": tag_result.encode('unicode_escape').decode('string_escape')
         }
-        has_injected.append(the_has_injected)
+        if inject_type != "destroy":
+            has_injected.append(the_has_injected)
         the_inject_info = {
             "position": inject_type,
             "ip": target_host,
@@ -457,8 +528,9 @@ def handle_inject_result(inject_type, target_host, target_inject, result):
                 result["success"][transform_ip]["stdout"].encode('unicode-escape').decode('string_escape'))[
                 "result"].encode('unicode-escape').decode('string_escape')
         }
-        inject_info.append(the_inject_info)
-        Logger.log('info', 'SUCCESS - ' + str(the_inject_info))
+        if inject_type != "destroy":
+            inject_info.append(the_inject_info)
+        Logger.log('info', 'SUCCESS - Method : ' + method_name + "() - - " + str(the_inject_info))
         try:
             channel.basic_publish(exchange='', routing_key="blade_mq",
                                   body='SUCCESS - ' + str(the_inject_info))
@@ -479,7 +551,7 @@ def handle_inject_result(inject_type, target_host, target_inject, result):
             "cmd": target_inject,
             "message": message
         }
-        Logger.log("error", flag + " - " + str(the_inject_info))
+        Logger.log("error", flag + " - Method : " + method_name + "() - - " + str(the_inject_info))
     return result
 
 
@@ -499,23 +571,7 @@ def get_target_host(dto):
             "message": "Host: " + target_host + " does not exist.",
             "command info": dto
         }
-        Logger.log("error", "HOST NOT EXIST - " + str(info))
+        Logger.log("error", "HOST NOT EXIST - Method : " + sys._getframe().f_code.co_name + "() - - " + str(info))
         return target_host, False
     else:
         return target_host, True
-
-
-def get_all_pods_info(namespace):
-    """
-    todo: 处理result, 返回pod name的list
-          被delete_all_pods(keywords)调用
-    :param namespace:
-    :return:
-    """
-    r = Runner()
-    r.run_ad_hoc(
-        hosts="10.60.38.173",
-        module='shell',
-        args="kubectl get pods -n " + namespace
-    )
-    result = r.get_adhoc_result()

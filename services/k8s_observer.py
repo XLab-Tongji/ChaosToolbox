@@ -83,3 +83,30 @@ class K8sObserver(object):
         result=r.get_playbook_result()
         return result
 
+    @staticmethod
+    def get_pod_name_list(namespace):
+        """
+        获取某namespace下所有的pods名称
+
+        注意: 该函数只供fault_injector.py调用
+        :param namespace
+        :return: pods name list
+        """
+        r = Runner()
+        r.run_ad_hoc(
+            hosts="10.60.38.181",
+            module='shell',
+            args="kubectl get pods -n " + namespace
+        )
+        result = r.get_adhoc_result()
+        name_list = []
+        if len(result["success"]) > 0:
+            transform_ip = result["success"].keys()[0]
+            stdout_lines = result["success"][transform_ip]["stdout_lines"]
+            for line in stdout_lines[1:]:
+                line = line.split()
+                name = line[0]
+                name_list.append(name)
+        return name_list
+
+
