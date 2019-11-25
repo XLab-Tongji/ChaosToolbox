@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="397c750c-4a6c-4cb0-b001-8aab0e528367" name="Default Changelist" comment="1. 更改了日志的输出格式&#10;2. 更新了部分函数名称, 及接口的名称和参数&#10;3. 实现了k8s攻击注入">
+    <list default="true" id="397c750c-4a6c-4cb0-b001-8aab0e528367" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/chaosblade/chaosblade.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/chaosblade/chaosblade.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/record.log" beforeDir="false" afterPath="$PROJECT_DIR$/record.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/fault_injector.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/fault_injector.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/k8s_observer.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/k8s_observer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/log_record.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/log_record.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +32,7 @@
   <component name="ProjectId" id="1Twp2bum8kMiQPH8zDIRwedEMUS" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -70,6 +69,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="k8s_observer" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="2019-XLab-KubernetesTools" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/services" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/services/k8s_observer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="manage" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="2019-XLab-KubernetesTools" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -95,6 +116,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.manage" />
+        <item itemvalue="Python.k8s_observer" />
         <item itemvalue="Python.__init__" />
       </list>
     </recent_temporary>
@@ -110,7 +132,12 @@
       <option name="presentableId" value="Default" />
       <updated>1574380805908</updated>
       <workItem from="1574380809903" duration="147000" />
-      <workItem from="1574528387268" duration="13757000" />
+      <workItem from="1574528387268" duration="14903000" />
+      <workItem from="1574571341155" duration="253000" />
+      <workItem from="1574571632197" duration="399000" />
+      <workItem from="1574664945542" duration="5101000" />
+      <workItem from="1574681966721" duration="1700000" />
+      <workItem from="1574693932334" duration="5685000" />
     </task>
     <task id="LOCAL-00001" summary="日志完成 -----ok&#10;pods删除-----developing">
       <created>1574524618182</created>
@@ -119,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574524618182</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="1. 更改了日志的输出格式, 使日志能提供更多信息&#10;2. 更新了部分函数名称, 及接口的名称和参数&#10;3. 实现了k8s攻击注入[删除全部的同类pods]">
+      <created>1574568007305</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1574568007305</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,6 +227,11 @@
         <entry key="MAIN">
           <value>
             <State>
+              <option name="HIGHLIGHTERS">
+                <map>
+                  <entry key="MERGE_COMMITS" value="true" />
+                </map>
+              </option>
               <option name="COLUMN_ORDER" />
             </State>
           </value>
@@ -235,10 +274,17 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="日志完成 -----ok&#10;pods删除-----developing" />
-    <option name="LAST_COMMIT_MESSAGE" value="日志完成 -----ok&#10;pods删除-----developing" />
+    <MESSAGE value="1. 更改了日志的输出格式, 使日志能提供更多信息&#10;2. 更新了部分函数名称, 及接口的名称和参数&#10;3. 实现了k8s攻击注入[删除全部的同类pods]" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. 更改了日志的输出格式, 使日志能提供更多信息&#10;2. 更新了部分函数名称, 及接口的名称和参数&#10;3. 实现了k8s攻击注入[删除全部的同类pods]" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="572" height="976" key="Git.Branch.Popup" />
+    <state width="572" height="976" key="Git.Branch.Popup/2880.1800" />
+    <state width="572" height="976" key="Git.Branch.Popup@2880.1800@192dpi" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/2019_XLab_KubernetesTools$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1574536140150" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
-    <SUITE FILE_PATH="coverage/2019_XLab_KubernetesTools$manage.coverage" NAME="manage Coverage Results" MODIFIED="1574567620010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/2019_XLab_KubernetesTools$manage.coverage" NAME="manage Coverage Results" MODIFIED="1574696136296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/2019_XLab_KubernetesTools$k8s_observer.coverage" NAME="k8s_observer Coverage Results" MODIFIED="1574667881816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
   </component>
 </project>

@@ -6,6 +6,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timedelta
 import time
 
+from services.k8s_observer import K8sObserver
+
 chaosblade = Blueprint('chaosblade', __name__)
 
 
@@ -148,3 +150,12 @@ def delete_specific_kind_pods():
     if not request.json or 'type' not in request.json:
         abort(400)
     return jsonify(FaultInjector.delete_all_pods(request.json['type']))
+
+
+@chaosblade.route('/tool/api/v1.0/chaosblade/get-service-log', methods=['POST'])
+def get_pod_log():
+    if not request.json or 'service' not in request.json or 'namespace' not in request.json:
+        abort(400)
+    pod_name = request.json['service']
+    namespace = request.json['namespace']
+    return jsonify(K8sObserver.get_service_log(pod_name, namespace))
