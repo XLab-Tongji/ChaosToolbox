@@ -2,8 +2,6 @@
 import logging
 
 
-
-
 class Logger:
     def __init__(self):
         pass
@@ -15,7 +13,6 @@ class Logger:
         DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"  # 日期格式化输出
         logging.basicConfig(level=logging.INFO,
                             format=LOG_FORMAT,
-                            # datefmt=DATE_FORMAT,
                             filename='record.log')
         if info_type == "debug":
             logging.info(message)

@@ -2,7 +2,6 @@ from flask import Blueprint, jsonify
 from flask import request
 from flask import abort
 from services.fault_injector import FaultInjector
-from utils.log_record import Logger
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timedelta
 import time
@@ -34,7 +33,7 @@ def chaos_inject_cpu_with_time():
     scheduler = BackgroundScheduler()
     now = datetime.now()
     delta = timedelta(seconds=int(dto_time['time'].encode('raw_unicode_escape')))
-    scheduler.add_job(func=lambda: FaultInjector.chaos_inject_random(dto), trigger='date', next_run_time=(now+delta))
+    scheduler.add_job(func=lambda: FaultInjector.chaos_inject_random(dto), trigger='date', next_run_time=(now + delta))
     scheduler.start()
     time.sleep(delta.total_seconds() + 1)
     return "success"
@@ -107,17 +106,17 @@ def stop_specific_inject():
     dto = {
         'tag': request.json['tag'],
     }
-    return jsonify(FaultInjector.stop_chaos_inject(dto))
+    return jsonify(FaultInjector.stop_specific_chaos_inject(dto))
 
 
-@chaosblade.route('/tool/api/v1.0/chaosblade/stop-all-inject', methods=['POST'])
+@chaosblade.route('/tool/api/v1.0/chaosblade/stop-all-inject-on-specific-node', methods=['POST'])
 def stop_all_inject():
-    if not request.json or 'target_host' not in request.json:
+    if not request.json or 'host' not in request.json:
         abort(400)
     dto = {
-        'target_host': request.json['target_host'],
+        'host': request.json['host'],
     }
-    return jsonify(FaultInjector.stop_all_chaos_inject(dto['target_host']))
+    return jsonify(FaultInjector.stop_all_on_specific_node(dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/stop-all-inject-on-all-nodes', methods=['POST'])
@@ -130,31 +129,22 @@ def view_inject_info():
     return jsonify(FaultInjector.view_chaos_inject())
 
 
-@chaosblade.route('/tool/api/v1.0/chaosblade/view-all-create-error-inject-info', methods=['GET'])
-def view_all_create_error_inject_info():
-    if not request.json or 'target_host' not in request.json:
-        abort(400)
-    dto = {
-        'target_host': request.json['target_host'],
-    }
-    return jsonify(FaultInjector.view_chaos_status_inject("Error", dto))
-
-
-@chaosblade.route('/tool/api/v1.0/chaosblade/view-all-create-success-inject-info', methods=['GET'])
+@chaosblade.route('/tool/api/v1.0/chaosblade/view-inject-on-host-by-status', methods=['POST'])
 def view_all_create_success_inject_info():
-    if not request.json or 'target_host' not in request.json:
+    if not request.json or 'host' not in request.json or 'status' not in request.json:
+        abort(400)
+    status = str(request.json['status']).capitalize()
+    if status not in ['Success', 'Destroyed', 'Error']:
         abort(400)
     dto = {
-        'target_host': request.json['target_host'],
+        'host': request.json['host'],
+        'status': request.json['status']
     }
-    return jsonify(FaultInjector.view_chaos_status_inject("Success", dto))
+    return jsonify(FaultInjector.view_inject_on_host_by_status(dto))
 
 
-@chaosblade.route('/tool/api/v1.0/chaosblade/view-all-create-destroy-inject-info', methods=['GET'])
-def view_all_create_destroy_inject_info():
-    if not request.json or 'target_host' not in request.json:
+@chaosblade.route('/tool/api/v1.0/chaosblade/delete-specific-kind-pods', methods=['POST'])
+def delete_specific_kind_pods():
+    if not request.json or 'type' not in request.json:
         abort(400)
-    dto = {
-        'target_host': request.json['target_host'],
-    }
-    return jsonify(FaultInjector.view_chaos_status_inject("Destroyed", dto))
+    return jsonify(FaultInjector.delete_all_pods(request.json['type']))
