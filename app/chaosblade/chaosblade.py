@@ -145,11 +145,11 @@ def view_all_create_success_inject_info():
     return jsonify(FaultInjector.view_inject_on_host_by_status(dto))
 
 
-@chaosblade.route('/tool/api/v1.0/chaosblade/delete-specific-kind-pods', methods=['POST'])
+@chaosblade.route('/tool/api/v1.0/chaosblade/delete-specific-service', methods=['POST'])
 def delete_specific_kind_pods():
-    if not request.json or 'type' not in request.json:
+    if not request.json or 'service' not in request.json:
         abort(400)
-    return jsonify(FaultInjector.delete_all_pods(request.json['type']))
+    return jsonify(FaultInjector.delete_all_pods_for_service(request.json['service']))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/get-service-log', methods=['POST'])
