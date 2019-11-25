@@ -119,3 +119,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .idea/workspace.xml
+
+# logfile
+pod_log_dir
