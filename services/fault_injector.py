@@ -151,7 +151,6 @@ class FaultInjector(object):
                 args=target_inject + timeout
             )
             result = r.get_adhoc_result()
-            print result
             return handle_inject_result('disk', target_host, target_inject + timeout, result,
                                         sys._getframe().f_code.co_name)
         else:
@@ -183,7 +182,6 @@ class FaultInjector(object):
                 args=target_inject
             )
             result = r.get_adhoc_result()
-            print result
             return handle_inject_result('network', target_host, target_inject + timeout, result,
                                         sys._getframe().f_code.co_name)
         else:
@@ -212,7 +210,6 @@ class FaultInjector(object):
                 args=target_inject + timeout
             )
             result = r.get_adhoc_result()
-            print result
             return handle_inject_result('k8s', target_host, target_inject + timeout, result,
                                         sys._getframe().f_code.co_name)
         else:
@@ -243,7 +240,6 @@ class FaultInjector(object):
                 args=target_inject + timeout
             )
             result = r.get_adhoc_result()
-            print result
             return handle_inject_result(inject_type, target_host, target_inject + timeout, result,
                                         sys._getframe().f_code.co_name)
         else:
@@ -407,13 +403,12 @@ class FaultInjector(object):
             if len(result["success"]) > 0:
                 for i in range(0, len(inject_info)):
                     if inject_info[i]['cmd_id'] == item:
-                        target_host = inject_info[i]['ip']
-                        inject_info.pop(i)
+                        if target_host == inject_info[i]['ip']:
+                            inject_info.pop(i)
                 for i in range(0, len(has_injected)):
                     if target_host == has_injected[i]['host'] and item == has_injected[i]['tag']:
                         has_injected.pop(i)
                         break
-                print inject_info
             result_list.append(
                 handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name))
         try:
@@ -466,25 +461,24 @@ class FaultInjector(object):
                         if target_host == has_injected[i]['host'] and item == has_injected[i]['tag']:
                             has_injected.pop(i)
                             break
-                    print inject_info
                 result_list.append(
                     handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name))
         channel.basic_publish(exchange='', routing_key="blade_mq", body='SUCCESS - ' + "stop all injection")
         return result_list
 
     @staticmethod
-    def delete_all_pods(keywords):
+    def delete_all_pods_for_service(service):
         """
         停止所有的某类容器[根据关键字删]
-        :param keywords: 容器名中的关键字
+        :param service: 容器名中的关键字
         :return: 结果
         """
         result_list = []
         target_host = "10.60.38.181"
-        pods_list = K8sObserver.get_pod_name_list('sock-shop')
-        for pod in pods_list:
-            if keywords in pod:
-                target_inject = Cmd['k8s'] + pod
+        name_list = K8sObserver.get_pod_name_list('sock-shop')
+        for pod_name in name_list:
+            if service in pod_name and (service + "-db") not in pod_name and (service + "-external") not in pod_name:
+                target_inject = Cmd['k8s'] + pod_name
                 r = Runner()
                 r.run_ad_hoc(
                     hosts=target_host,
