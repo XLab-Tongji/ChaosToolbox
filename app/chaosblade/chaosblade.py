@@ -88,8 +88,8 @@ def chaos_inject_random():
     return jsonify(FaultInjector.chaos_inject_random(dto))
 
 
-@chaosblade.route('/tool/api/v1.0/chaosblade/inject-k8s', methods=['POST'])
-def chaos_inject_k8s():
+@chaosblade.route('/tool/api/v1.0/chaosblade/inject-pod-single', methods=['POST'])
+def chaos_inject_pod_single():
     if not request.json or 'host' not in request.json or 'pod' not in request.json or \
             'timeout' not in request.json:
         abort(400)
@@ -98,7 +98,7 @@ def chaos_inject_k8s():
         'pod': request.json['pod'],
         'timeout': request.json['timeout']
     }
-    return jsonify(FaultInjector.chaos_inject_k8s(dto))
+    return jsonify(FaultInjector.chaos_inject_pod_single(dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/stop-specific-inject', methods=['POST'])

@@ -45,7 +45,7 @@ Default_cmd = {
     "network": "./blade create network delay --interface enp3s0 --time 1000",
     "disk": "./blade create disk burn --read",
     "mem": "./blade create mem load --mem-percent 80",
-    "k8s": "./blade create k8s delete --namespace sock-shop --pod"
+    "k8s": "./blade create k8s delete --namespace sock-shop --pod "
 }
 
 Cmd = {
@@ -188,7 +188,7 @@ class FaultInjector(object):
             return "The host's network has been injected"
 
     @staticmethod
-    def chaos_inject_k8s(dto):
+    def chaos_inject_pod_single(dto):
         find = 0
         timeout = ''
         (target_host, is_exist) = get_target_host(dto)
@@ -210,6 +210,7 @@ class FaultInjector(object):
                 args=target_inject + timeout
             )
             result = r.get_adhoc_result()
+            print(result)
             return handle_inject_result('k8s', target_host, target_inject + timeout, result,
                                         sys._getframe().f_code.co_name)
         else:
