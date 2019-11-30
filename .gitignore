@@ -122,3 +122,4 @@ dmypy.json
 
 # logfile
 pod_log_dir
+record.log

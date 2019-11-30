@@ -6,10 +6,13 @@ import json
 import requests
 import pika
 
+
 from services.k8s_observer import K8sObserver
 from utils.ansible_runner import Runner
 from requests.exceptions import Timeout
 from utils.log_record import Logger
+from config import Default_cmd
+
 
 username = 'guest'
 pwd = 'guest'
@@ -40,13 +43,15 @@ Spare_hosts = {
     "192.168.199.45": "192.168.199.35"
 }
 
-Default_cmd = {
-    "cpu": "./blade create cpu fullload",
-    "network": "./blade create network delay --interface enp3s0 --time 1000",
-    "disk": "./blade create disk burn --read",
-    "mem": "./blade create mem load --mem-percent 80",
-    "k8s": "./blade create k8s delete --namespace sock-shop --pod"
-}
+
+# 此部分已经移入配置文件
+# Default_cmd = {
+#     "cpu": "./blade create cpu fullload",
+#     "network": "./blade create network delay --interface enp3s0 --time 1000",
+#     "disk": "./blade create disk burn --read",
+#     "mem": "./blade create mem load --mem-percent 80",
+#     "k8s": "./blade create k8s delete --namespace sock-shop --pod"
+# }
 
 Cmd = {
     "cpu": "./blade create cpu fullload",
@@ -222,7 +227,7 @@ class FaultInjector(object):
         (target_host, is_exist) = get_target_host(dto)
         if not is_exist:
             return 'Host: ' + target_host + ' does not exist.'
-        j = random.randint(0, len(Cmd) - 1)
+        j = random.randint(0, len(Default_cmd) - 1)
         inject_type = Default_cmd.keys()[j]
         target_inject = Default_cmd[Default_cmd.keys()[j]]
         if dto['timeout'] == 'default':
