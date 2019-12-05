@@ -165,6 +165,7 @@ class K8sObserver(object):
                     name_list.append(name)
                 else:
                     continue
+            print name_list
             if len(name_list) != 0:
                 info = {
                     "success": "The  " + service + "service pod list was successfully obtained!",

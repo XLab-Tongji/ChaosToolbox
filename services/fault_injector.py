@@ -224,12 +224,19 @@ class FaultInjector(object):
     def chaos_inject_random(dto):
         find = 0
         timeout = ''
+        pod_inject = ''
         (target_host, is_exist) = get_target_host(dto)
         if not is_exist:
             return 'Host: ' + target_host + ' does not exist.'
         j = random.randint(0, len(Default_cmd) - 1)
         inject_type = Default_cmd.keys()[j]
-        target_inject = Default_cmd[Default_cmd.keys()[j]]
+        if inject_type == "k8s":
+            pod_list = K8sObserver.get_pod_name_list("sock-shop")
+            k = random.randint(0,len(pod_list) - 1)
+            pod_inject = pod_list[k]
+            target_inject = Default_cmd[Default_cmd.keys()[j]] + " "  + pod_inject
+        else:
+            target_inject = Default_cmd[Default_cmd.keys()[j]]
         if dto['timeout'] == 'default':
             timeout = ' --timeout 300'
         elif dto['timeout'] != 'no':
@@ -405,15 +412,15 @@ class FaultInjector(object):
                 args=cmd
             )
             result = r.get_adhoc_result()
-            if len(result["success"]) > 0:
-                for i in range(0, len(inject_info)):
-                    if inject_info[i]['cmd_id'] == item:
-                        if target_host == inject_info[i]['ip']:
-                            inject_info.pop(i)
-                for i in range(0, len(has_injected)):
-                    if target_host == has_injected[i]['host'] and item == has_injected[i]['tag']:
-                        has_injected.pop(i)
-                        break
+            # if len(result["success"]) > 0:
+            #     for i in range(0, len(inject_info)):
+            #         if inject_info[i]['cmd_id'] == item:
+            #             if target_host == inject_info[i]['ip']:
+            #                 inject_info.pop(i)
+            #     for i in range(0, len(has_injected)):
+            #         if target_host == has_injected[i]['host'] and item == has_injected[i]['tag']:
+            #             has_injected.pop(i)
+            #             break
             result_list.append(
                 handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name))
         try:
