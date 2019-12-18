@@ -12,6 +12,7 @@ RUN sudo apt-get update \
     && pip2 install flask \
     && pip2 install flask_httpauth \
     && pip2 install requests \
+    && pip2 install influxdb \
     && git -C /root/Ansible_Operator pull \
     && chmod 777 ~/Ansible_Operator/run.sh
 
