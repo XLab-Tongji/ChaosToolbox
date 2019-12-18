@@ -3,7 +3,7 @@ FROM ansible/ansible:ubuntu1604
 
 RUN sudo apt-get update \
     && apt-get install -y --no-install-recommends --fix-missing tcl tk expect \
-    && git clone -b ansible_operator_hm https://github.com/baiyanquan/2019-XLab-KubernetesTools.git ~/Ansible_Operator \
+    && git clone https://github.com/baiyanquan/2019-XLab-KubernetesTools.git ~/Ansible_Operator \
     && chmod 777 ~/Ansible_Operator/auto_ssh.sh \
     && rm /etc/ansible/hosts \
     && cp ~/Ansible_Operator/hosts /etc/ansible/ \
@@ -12,8 +12,9 @@ RUN sudo apt-get update \
     && pip2 install flask \
     && pip2 install flask_httpauth \
     && pip2 install requests \
-    && pip2 install apscheduler
-    && pip2 install pika
+    && pip2 install apscheduler \
+    && pip2 install pika \
+    && pip2 install influxdb \
     && git -C /root/Ansible_Operator pull \
     && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 10.60.38.181 2331\
     && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.31 22\

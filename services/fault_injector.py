@@ -4,13 +4,14 @@ import sys
 import random
 import json
 import requests
-import pika
 
 
 from services.k8s_observer import K8sObserver
 from utils.ansible_runner import Runner
 from requests.exceptions import Timeout
 from utils.log_record import Logger
+from services.message_queue import RabbitMq
+
 from config import Default_cmd
 
 
@@ -44,6 +45,7 @@ Spare_hosts = {
 }
 
 
+
 # 此部分已经移入配置文件
 # Default_cmd = {
 #     "cpu": "./blade create cpu fullload",
@@ -52,6 +54,7 @@ Spare_hosts = {
 #     "mem": "./blade create mem load --mem-percent 80",
 #     "k8s": "./blade create k8s delete --namespace sock-shop --pod"
 # }
+
 
 Cmd = {
     "cpu": "./blade create cpu fullload",
@@ -91,7 +94,7 @@ class FaultInjector(object):
                 args=target_inject + timeout)
             result = r.get_adhoc_result()
             return handle_inject_result('cpu', target_host, target_inject + timeout, result,
-                                        sys._getframe().f_code.co_name)
+                                        sys._getframe().f_code.co_name, dto['open'])
         else:
             Logger.log("error",
                        "HOST HAS BEEN INJECTED - Method : " + sys._getframe().f_code.co_name + "() - - " + target_host)
@@ -124,7 +127,7 @@ class FaultInjector(object):
             )
             result = r.get_adhoc_result()
             return handle_inject_result('mem', target_host, target_inject + timeout, result,
-                                        sys._getframe().f_code.co_name)
+                                        sys._getframe().f_code.co_name, dto['open'])
         else:
             Logger.log("error",
                        "HOST HAS BEEN INJECTED - Method : " + sys._getframe().f_code.co_name + "() - - " + target_host)
@@ -157,7 +160,7 @@ class FaultInjector(object):
             )
             result = r.get_adhoc_result()
             return handle_inject_result('disk', target_host, target_inject + timeout, result,
-                                        sys._getframe().f_code.co_name)
+                                        sys._getframe().f_code.co_name, dto['open'])
         else:
             Logger.log("error",
                        "HOST HAS BEEN INJECTED - Method : " + sys._getframe().f_code.co_name + "() - - " + target_host)
@@ -188,12 +191,12 @@ class FaultInjector(object):
             )
             result = r.get_adhoc_result()
             return handle_inject_result('network', target_host, target_inject + timeout, result,
-                                        sys._getframe().f_code.co_name)
+                                        sys._getframe().f_code.co_name, dto['open'])
         else:
             return "The host's network has been injected"
 
     @staticmethod
-    def chaos_inject_k8s(dto):
+    def chaos_inject_pod_single(dto):
         find = 0
         timeout = ''
         (target_host, is_exist) = get_target_host(dto)
@@ -215,8 +218,9 @@ class FaultInjector(object):
                 args=target_inject + timeout
             )
             result = r.get_adhoc_result()
+            print(result)
             return handle_inject_result('k8s', target_host, target_inject + timeout, result,
-                                        sys._getframe().f_code.co_name)
+                                        sys._getframe().f_code.co_name, dto['open'])
         else:
             return 'The pod has been injected'
 
@@ -253,7 +257,7 @@ class FaultInjector(object):
             )
             result = r.get_adhoc_result()
             return handle_inject_result(inject_type, target_host, target_inject + timeout, result,
-                                        sys._getframe().f_code.co_name)
+                                        sys._getframe().f_code.co_name, dto['open'])
         else:
             Logger.log("error",
                        "HOST HAS BEEN INJECTED - Method : " + sys._getframe().f_code.co_name + "() - - " + str(dto))
@@ -345,11 +349,9 @@ class FaultInjector(object):
                 inject_info.pop(key)
                 Logger.log('info',
                            'SUCCESS - Method : ' + sys._getframe().f_code.co_name + "() - - " + str(the_stop_info))
-                try:
-                    channel.basic_publish(exchange='', routing_key="blade_mq",
-                                          body=str('SUCCESS - ') + str(the_stop_info))
-                finally:
-                    return result
+                if dto['open'] == 'true':
+                    RabbitMq.connect(the_stop_info)
+                return result
             else:
                 if len(result["unreachable"]) > 0:
                     transform_ip = result["unreachable"].keys()[0]
@@ -422,11 +424,8 @@ class FaultInjector(object):
             #             has_injected.pop(i)
             #             break
             result_list.append(
-                handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name))
-        try:
-            channel.basic_publish(exchange='', routing_key="blade_mq", body='SUCCESS - ' + "stop all injection")
-        finally:
-            return result_list
+                handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name, dto['open']))
+        return result_list
 
     @staticmethod
     def stop_all_chaos_inject_on_all_nodes():
@@ -474,8 +473,7 @@ class FaultInjector(object):
                             has_injected.pop(i)
                             break
                 result_list.append(
-                    handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name))
-        channel.basic_publish(exchange='', routing_key="blade_mq", body='SUCCESS - ' + "stop all injection")
+                    handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name, dto['open']))
         return result_list
 
     @staticmethod
@@ -499,11 +497,12 @@ class FaultInjector(object):
                 )
                 result = r.get_adhoc_result()
                 result_list.append(
-                    handle_inject_result('k8s', target_host, target_inject, result, sys._getframe().f_code.co_name))
+                    handle_inject_result('k8s', target_host, target_inject, result,
+                                         sys._getframe().f_code.co_name, service['open']))
         return result_list
 
 
-def handle_inject_result(inject_type, target_host, target_inject, result, method_name):
+def handle_inject_result(inject_type, target_host, target_inject, result, method_name, mq_control):
     """
     处理返回结果
     :param inject_type: 注入类型
@@ -537,11 +536,11 @@ def handle_inject_result(inject_type, target_host, target_inject, result, method
         if inject_type != "destroy":
             inject_info.append(the_inject_info)
         Logger.log('info', 'SUCCESS - Method : ' + method_name + "() - - " + str(the_inject_info))
-        try:
-            channel.basic_publish(exchange='', routing_key="blade_mq",
-                                  body='SUCCESS - ' + str(the_inject_info))
-        finally:
-            return result
+        print("=====")
+        print(mq_control)
+        if mq_control == 'true':
+            RabbitMq.connect(the_inject_info)
+        return result
     else:
         if len(result["unreachable"]) > 0:
             transform_ip = result["unreachable"].keys()[0]

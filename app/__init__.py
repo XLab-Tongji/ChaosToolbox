@@ -6,6 +6,7 @@ from flask import Flask, jsonify
 from common_options import get_info
 from chaosblade import chaosblade
 from influxdb import get_data
+from message_mq import mq_control
 from flask_httpauth import HTTPBasicAuth
 from utils.config import Config
 from flask import make_response
@@ -33,3 +34,5 @@ def not_found(error):
 app.register_blueprint(get_info.get_info)
 app.register_blueprint(chaosblade.chaosblade)
 app.register_blueprint(get_data.get_data)
+app.register_blueprint(mq_control.rabbitmq)
+

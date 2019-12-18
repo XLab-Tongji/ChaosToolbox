@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 import time
 
 from services.k8s_observer import K8sObserver
+from services.message_queue import RabbitMq
 
 chaosblade = Blueprint('chaosblade', __name__)
 
@@ -15,9 +16,11 @@ chaosblade = Blueprint('chaosblade', __name__)
 def chaos_inject_cpu():
     if not request.json or 'host' not in request.json or 'timeout' not in request.json:
         abort(400)
+    mq_control = RabbitMq.control()
     dto = {
         'host': request.json['host'],
-        'timeout': request.json['timeout']
+        'timeout': request.json['timeout'],
+        'open': mq_control
     }
     return jsonify(FaultInjector.chaos_inject_cpu(dto))
 
@@ -26,11 +29,13 @@ def chaos_inject_cpu():
 def chaos_inject_cpu_with_time():
     if not request.json or 'host' not in request.json or 'second' not in request.json:
         abort(400)
+    mq_control = RabbitMq.control()
     dto_time = {
         'time': request.json['second']
     }
     dto = {
-        'host': request.json['host']
+        'host': request.json['host'],
+        'open': mq_control
     }
     scheduler = BackgroundScheduler()
     now = datetime.now()
@@ -45,10 +50,12 @@ def chaos_inject_cpu_with_time():
 def chaos_inject_mem():
     if not request.json or 'host' not in request.json or 'percent' not in request.json or 'timeout' not in request.json:
         abort(400)
+    mq_control = RabbitMq.control()
     dto = {
         'host': request.json['host'],
         'percent': request.json['percent'],
-        'timeout': request.json['timeout']
+        'timeout': request.json['timeout'],
+        'open': mq_control
     }
     return jsonify(FaultInjector.chaos_inject_mem(dto))
 
@@ -57,10 +64,12 @@ def chaos_inject_mem():
 def chaos_inject_disk():
     if not request.json or 'host' not in request.json or 'type' not in request.json or 'timeout' not in request.json:
         abort(400)
+    mq_control = RabbitMq.control()
     dto = {
         'host': request.json['host'],
         'type': request.json['type'],
-        'timeout': request.json['timeout']
+        'timeout': request.json['timeout'],
+        'open': mq_control
     }
     return jsonify(FaultInjector.chaos_inject_disk(dto))
 
@@ -69,10 +78,12 @@ def chaos_inject_disk():
 def chaos_inject_network():
     if not request.json or 'host' not in request.json or 'time' not in request.json or 'timeout' not in request.json:
         abort(400)
+    mq_control = RabbitMq.control()
     dto = {
         'host': request.json['host'],
         'time': request.json['time'],
-        'timeout': request.json['timeout']
+        'timeout': request.json['timeout'],
+        'open': mq_control
     }
     return jsonify(FaultInjector.chaos_inject_network(dto))
 
@@ -81,32 +92,38 @@ def chaos_inject_network():
 def chaos_inject_random():
     if not request.json or 'host' not in request.json or 'timeout' not in request.json:
         abort(400)
+    mq_control = RabbitMq.control()
     dto = {
         'host': request.json['host'],
-        'timeout': request.json['timeout']
+        'timeout': request.json['timeout'],
+        'open': mq_control
     }
     return jsonify(FaultInjector.chaos_inject_random(dto))
 
 
-@chaosblade.route('/tool/api/v1.0/chaosblade/inject-k8s', methods=['POST'])
-def chaos_inject_k8s():
+@chaosblade.route('/tool/api/v1.0/chaosblade/inject-pod-single', methods=['POST'])
+def chaos_inject_pod_single():
     if not request.json or 'host' not in request.json or 'pod' not in request.json or \
             'timeout' not in request.json:
         abort(400)
+    mq_control = RabbitMq.control()
     dto = {
         'host': request.json['host'],
         'pod': request.json['pod'],
-        'timeout': request.json['timeout']
+        'timeout': request.json['timeout'],
+        'open': mq_control
     }
-    return jsonify(FaultInjector.chaos_inject_k8s(dto))
+    return jsonify(FaultInjector.chaos_inject_pod_single(dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/stop-specific-inject', methods=['POST'])
 def stop_specific_inject():
     if not request.json or 'tag' not in request.json:
         abort(400)
+    mq_control = RabbitMq.control()
     dto = {
         'tag': request.json['tag'],
+        'open': mq_control
     }
     return jsonify(FaultInjector.stop_specific_chaos_inject(dto))
 
@@ -115,8 +132,10 @@ def stop_specific_inject():
 def stop_all_inject():
     if not request.json or 'host' not in request.json:
         abort(400)
+    mq_control = RabbitMq.control()
     dto = {
         'host': request.json['host'],
+        'open': mq_control
     }
     return jsonify(FaultInjector.stop_all_on_specific_node(dto))
 
@@ -149,7 +168,12 @@ def view_all_create_success_inject_info():
 def delete_specific_kind_pods():
     if not request.json or 'service' not in request.json:
         abort(400)
-    return jsonify(FaultInjector.delete_all_pods_for_service(request.json['service']))
+    mq_control = RabbitMq.control()
+    service = {
+        'service': request.json['service'],
+        'open': mq_control
+    }
+    return jsonify(FaultInjector.delete_all_pods_for_service(service))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/get-service-log', methods=['POST'])
