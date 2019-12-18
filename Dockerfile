@@ -12,8 +12,8 @@ RUN sudo apt-get update \
     && pip2 install flask \
     && pip2 install flask_httpauth \
     && pip2 install requests \
-    && pip2 install apscheduler
-    && pip2 install pika
+    && pip2 install apscheduler \
+    && pip2 install pika \
     && git -C /root/Ansible_Operator pull \
     && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 10.60.38.181 2331\
     && /usr/bin/expect /root/Ansible_Operator/auto_ssh.sh root tongji409 192.168.199.31 22\
