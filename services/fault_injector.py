@@ -3,8 +3,8 @@
 import sys
 import random
 import json
+import pika
 import requests
-
 
 from services.k8s_observer import K8sObserver
 from utils.ansible_runner import Runner
@@ -13,7 +13,6 @@ from utils.log_record import Logger
 from services.message_queue import RabbitMq
 
 from config import Default_cmd
-
 
 username = 'guest'
 pwd = 'guest'
@@ -43,8 +42,6 @@ Spare_hosts = {
     "192.168.199.44": "192.168.199.34",
     "192.168.199.45": "192.168.199.35"
 }
-
-
 
 # 此部分已经移入配置文件
 # Default_cmd = {
@@ -236,9 +233,9 @@ class FaultInjector(object):
         inject_type = Default_cmd.keys()[j]
         if inject_type == "k8s":
             pod_list = K8sObserver.get_pod_name_list("sock-shop")
-            k = random.randint(0,len(pod_list) - 1)
+            k = random.randint(0, len(pod_list) - 1)
             pod_inject = pod_list[k]
-            target_inject = Default_cmd[Default_cmd.keys()[j]] + " "  + pod_inject
+            target_inject = Default_cmd[Default_cmd.keys()[j]] + " " + pod_inject
         else:
             target_inject = Default_cmd[Default_cmd.keys()[j]]
         if dto['timeout'] == 'default':
@@ -473,7 +470,8 @@ class FaultInjector(object):
                             has_injected.pop(i)
                             break
                 result_list.append(
-                    handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name, dto['open']))
+                    handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name,
+                                         dto['open']))
         return result_list
 
     @staticmethod
