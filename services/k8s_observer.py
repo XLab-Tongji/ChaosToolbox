@@ -146,7 +146,7 @@ class K8sObserver(object):
             }
             Logger.log("error",
                        "SERVICE NOT EXIST - Method : " + sys._getframe().f_code.co_name + "() - - " + str(info))
-            return "The service does not exist. Please check the service name!"
+            return "The service" + service + " does not exist. Please check the service name!"
         r = Runner()
         r.run_ad_hoc(
             hosts="10.60.38.181",
@@ -165,20 +165,21 @@ class K8sObserver(object):
                     name_list.append(name)
                 else:
                     continue
+            print name_list
             if len(name_list) != 0:
                 info = {
-                    "success": "The service's pod list was successfully obtained!",
+                    "success": "The  " + service + "service pod list was successfully obtained!",
                     "pod": name_list
                 }
                 Logger.log("info",
                            "SUCCESS - Method : " + sys._getframe().f_code.co_name + "() - - " + str(info))
             else:
                 info = {
-                    "error": "The service has no pod list!",
+                    "error": "The service" + service + " has no pod list!",
                 }
                 Logger.log("error",
                            "NO POD - Method : " + sys._getframe().f_code.co_name + "() - - " + str(info))
-                return "The service has no pod!"
+                return "The service" + service + " has no pod list!"
         else:
             if len(result["unreachable"]) > 0:
                 transform_ip = result["unreachable"].keys()[0]
@@ -189,12 +190,12 @@ class K8sObserver(object):
                 message = result["failed"][transform_ip]["msg"]
                 flag = "FAILED"
             info = {
-                "error": "Failed to get the pod list of services",
+                "error": "Failed to get the pod list of service " + service,
                 "message": message
             }
             Logger.log("error",
                        flag + " - Method : " + sys._getframe().f_code.co_name + "() - - " + str(info))
-            return "Failed to get the pod list of services"
+            return "Failed to get the pod list of services " + service
         request_time = time.strftime('%Y-%m-%d/%H:%M:%S', time.localtime(time.time()))
         result = []
         for pod_name in name_list:

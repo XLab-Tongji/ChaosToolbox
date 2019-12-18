@@ -5,11 +5,24 @@ import random
 import json
 import requests
 
+
 from services.k8s_observer import K8sObserver
 from utils.ansible_runner import Runner
 from requests.exceptions import Timeout
 from utils.log_record import Logger
 from services.message_queue import RabbitMq
+
+from config import Default_cmd
+
+
+username = 'guest'
+pwd = 'guest'
+user_pwd = pika.PlainCredentials(username, pwd)
+connection = pika.BlockingConnection(pika.ConnectionParameters(
+    host='10.60.38.173', credentials=user_pwd
+))
+channel = connection.channel()
+channel.queue_declare(queue='blade_mq')
 
 sys.path.append('../')
 
@@ -31,13 +44,17 @@ Spare_hosts = {
     "192.168.199.45": "192.168.199.35"
 }
 
-Default_cmd = {
-    "cpu": "./blade create cpu fullload",
-    "network": "./blade create network delay --interface enp3s0 --time 1000",
-    "disk": "./blade create disk burn --read",
-    "mem": "./blade create mem load --mem-percent 80",
-    "k8s": "./blade create k8s delete --namespace sock-shop --pod "
-}
+
+
+# 此部分已经移入配置文件
+# Default_cmd = {
+#     "cpu": "./blade create cpu fullload",
+#     "network": "./blade create network delay --interface enp3s0 --time 1000",
+#     "disk": "./blade create disk burn --read",
+#     "mem": "./blade create mem load --mem-percent 80",
+#     "k8s": "./blade create k8s delete --namespace sock-shop --pod"
+# }
+
 
 Cmd = {
     "cpu": "./blade create cpu fullload",
@@ -211,12 +228,19 @@ class FaultInjector(object):
     def chaos_inject_random(dto):
         find = 0
         timeout = ''
+        pod_inject = ''
         (target_host, is_exist) = get_target_host(dto)
         if not is_exist:
             return 'Host: ' + target_host + ' does not exist.'
-        j = random.randint(0, len(Cmd) - 1)
+        j = random.randint(0, len(Default_cmd) - 1)
         inject_type = Default_cmd.keys()[j]
-        target_inject = Default_cmd[Default_cmd.keys()[j]]
+        if inject_type == "k8s":
+            pod_list = K8sObserver.get_pod_name_list("sock-shop")
+            k = random.randint(0,len(pod_list) - 1)
+            pod_inject = pod_list[k]
+            target_inject = Default_cmd[Default_cmd.keys()[j]] + " "  + pod_inject
+        else:
+            target_inject = Default_cmd[Default_cmd.keys()[j]]
         if dto['timeout'] == 'default':
             timeout = ' --timeout 300'
         elif dto['timeout'] != 'no':
@@ -390,15 +414,15 @@ class FaultInjector(object):
                 args=cmd
             )
             result = r.get_adhoc_result()
-            if len(result["success"]) > 0:
-                for i in range(0, len(inject_info)):
-                    if inject_info[i]['cmd_id'] == item:
-                        if target_host == inject_info[i]['ip']:
-                            inject_info.pop(i)
-                for i in range(0, len(has_injected)):
-                    if target_host == has_injected[i]['host'] and item == has_injected[i]['tag']:
-                        has_injected.pop(i)
-                        break
+            # if len(result["success"]) > 0:
+            #     for i in range(0, len(inject_info)):
+            #         if inject_info[i]['cmd_id'] == item:
+            #             if target_host == inject_info[i]['ip']:
+            #                 inject_info.pop(i)
+            #     for i in range(0, len(has_injected)):
+            #         if target_host == has_injected[i]['host'] and item == has_injected[i]['tag']:
+            #             has_injected.pop(i)
+            #             break
             result_list.append(
                 handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name, dto['open']))
         return result_list
