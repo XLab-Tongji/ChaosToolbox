@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="397c750c-4a6c-4cb0-b001-8aab0e528367" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/chaosblade/chaosblade.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/chaosblade/chaosblade.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/record.log" beforeDir="false" afterPath="$PROJECT_DIR$/record.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/fault_injector.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/fault_injector.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,13 +49,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="Python.manage">
     <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -159,7 +162,11 @@
       <workItem from="1574664945542" duration="5101000" />
       <workItem from="1574681966721" duration="1700000" />
       <workItem from="1574693932334" duration="8377000" />
-      <workItem from="1576670169769" duration="1587000" />
+      <workItem from="1576670169769" duration="1909000" />
+      <workItem from="1576732002300" duration="248000" />
+      <workItem from="1576753717140" duration="347000" />
+      <workItem from="1577777907650" duration="685000" />
+      <workItem from="1577782669799" duration="453000" />
     </task>
     <task id="LOCAL-00001" summary="日志完成 -----ok&#10;pods删除-----developing">
       <created>1574524618182</created>
@@ -182,7 +189,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574703616074</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="bug fixed in chaos_inject_random">
+      <created>1576672124556</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1576672124557</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -305,9 +319,14 @@
     <MESSAGE value="日志完成 -----ok&#10;pods删除-----developing" />
     <MESSAGE value="1. 更改了日志的输出格式, 使日志能提供更多信息&#10;2. 更新了部分函数名称, 及接口的名称和参数&#10;3. 实现了k8s攻击注入[删除全部的同类pods]" />
     <MESSAGE value="1. 实现了日志的获取及存储[针对某一Service]&#10;2. 更新了chaosblade接口" />
-    <option name="LAST_COMMIT_MESSAGE" value="1. 实现了日志的获取及存储[针对某一Service]&#10;2. 更新了chaosblade接口" />
+    <MESSAGE value="bug fixed in chaos_inject_random" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fixed in chaos_inject_random" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="161" y="40" key="CommitChangelistDialog2" timestamp="1576672124339">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="161" y="40" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1576672124339" />
     <state x="82" y="153" width="1240" height="700" key="DiffContextDialog" timestamp="1576671972891">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -316,14 +335,54 @@
     <state width="572" height="976" key="Git.Branch.Popup" timestamp="1576671836843" />
     <state width="572" height="976" key="Git.Branch.Popup/2880.1800" timestamp="1576671836843" />
     <state width="572" height="976" key="Git.Branch.Popup@2880.1800@192dpi" timestamp="1576671836843" />
+    <state width="1396" height="345" key="GridCell.Tab.0.bottom" timestamp="1577783123617">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="345" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1577783123617" />
+    <state width="1396" height="345" key="GridCell.Tab.0.center" timestamp="1577783123615">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="345" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1577783123615" />
+    <state width="1396" height="345" key="GridCell.Tab.0.left" timestamp="1577783123614">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="345" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1577783123614" />
+    <state width="1396" height="345" key="GridCell.Tab.0.right" timestamp="1577783123616">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="345" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1577783123616" />
+    <state width="1396" height="41" key="GridCell.Tab.1.bottom" timestamp="1577779953389">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="41" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1577779953389" />
+    <state width="1396" height="41" key="GridCell.Tab.1.center" timestamp="1577779953388">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="41" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1577779953388" />
+    <state width="1396" height="41" key="GridCell.Tab.1.left" timestamp="1577779953387">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="41" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1577779953387" />
+    <state width="1396" height="41" key="GridCell.Tab.1.right" timestamp="1577779953388">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1396" height="41" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1577779953388" />
     <state x="431" y="173" key="MultipleFileMergeDialog" timestamp="1576672012400">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="431" y="173" key="MultipleFileMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1576672012400" />
+    <state x="221" y="89" key="SettingsEditor" timestamp="1576732065904">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1576732065904" />
     <state x="570" y="373" key="VCS.ChangelistChooser" timestamp="1576671955797">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="570" y="373" key="VCS.ChangelistChooser/0.0.1440.900@0.0.1440.900" timestamp="1576671955797" />
+    <state x="247" y="175" key="Vcs.Push.Dialog.v2" timestamp="1577783140365">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="247" y="175" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1577783140365" />
     <state x="503" y="374" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1576672044097">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -331,7 +390,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/2019_XLab_KubernetesTools$k8s_observer.coverage" NAME="k8s_observer Coverage Results" MODIFIED="1574667881816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
-    <SUITE FILE_PATH="coverage/2019_XLab_KubernetesTools$manage.coverage" NAME="manage Coverage Results" MODIFIED="1574707943930" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/2019_XLab_KubernetesTools$manage.coverage" NAME="manage Coverage Results" MODIFIED="1577783013790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/2019_XLab_KubernetesTools$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1574536140150" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
   </component>
 </project>

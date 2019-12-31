@@ -212,11 +212,11 @@ class FaultInjector(object):
             r.run_ad_hoc(
                 hosts=target_host,
                 module='shell',
-                args=target_inject + timeout
+                args=target_inject
             )
             result = r.get_adhoc_result()
             print(result)
-            return handle_inject_result('k8s', target_host, target_inject + timeout, result,
+            return handle_inject_result('k8s', target_host, target_inject, result,
                                         sys._getframe().f_code.co_name, dto['open'])
         else:
             return 'The pod has been injected'
@@ -425,12 +425,12 @@ class FaultInjector(object):
         return result_list
 
     @staticmethod
-    def stop_all_chaos_inject_on_all_nodes():
+    def stop_all_chaos_inject_on_all_nodes(mq_control):
         uid_list = []
         result_list = []
         for target_host in Hosts:
             dto = {
-                'host': target_host
+                'host': target_host,
             }
             target_inject = './blade status --type create'
             r = Runner()
@@ -471,7 +471,7 @@ class FaultInjector(object):
                             break
                 result_list.append(
                     handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name,
-                                         dto['open']))
+                                         mq_control['open']))
         return result_list
 
     @staticmethod
@@ -534,8 +534,6 @@ def handle_inject_result(inject_type, target_host, target_inject, result, method
         if inject_type != "destroy":
             inject_info.append(the_inject_info)
         Logger.log('info', 'SUCCESS - Method : ' + method_name + "() - - " + str(the_inject_info))
-        print("=====")
-        print(mq_control)
         if mq_control == 'true':
             RabbitMq.connect(the_inject_info)
         return result
