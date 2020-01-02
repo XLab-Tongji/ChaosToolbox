@@ -532,8 +532,6 @@ def handle_inject_result(inject_type, target_host, target_inject, result, method
         if inject_type != "destroy":
             inject_info.append(the_inject_info)
         Logger.log('info', 'SUCCESS - Method : ' + method_name + "() - - " + str(the_inject_info))
-        print("=====")
-        print(mq_control)
         if mq_control == 'true':
             RabbitMq.connect(the_inject_info)
         return result

@@ -1,5 +1,6 @@
 from influxdb import InfluxDBClient
 import time
+import csv
 
 client = InfluxDBClient('10.60.38.173', '8086')
 
@@ -51,4 +52,10 @@ class InfluxdbObserver(object):
             return csvset
         else:
             "response error , please check the param"
+
+    @staticmethod
+    def write_to_csv(filename, measurements, values, print_data_time):
+
+        with open(filename, 'wb') as file:
+            writer = csv.writer(file)
 
