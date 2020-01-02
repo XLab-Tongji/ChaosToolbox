@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="397c750c-4a6c-4cb0-b001-8aab0e528367" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/chaosblade/chaosblade.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/chaosblade/chaosblade.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/record.log" beforeDir="false" afterPath="$PROJECT_DIR$/record.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/fault_injector.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/fault_injector.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +46,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -166,7 +165,8 @@
       <workItem from="1576732002300" duration="248000" />
       <workItem from="1576753717140" duration="347000" />
       <workItem from="1577777907650" duration="685000" />
-      <workItem from="1577782669799" duration="453000" />
+      <workItem from="1577782669799" duration="569000" />
+      <workItem from="1577972090040" duration="302000" />
     </task>
     <task id="LOCAL-00001" summary="日志完成 -----ok&#10;pods删除-----developing">
       <created>1574524618182</created>
@@ -196,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576672124557</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="bug fixed in chaos_inject_random">
+      <created>1577783174425</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1577783174425</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -323,10 +330,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="bug fixed in chaos_inject_random" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="161" y="40" key="CommitChangelistDialog2" timestamp="1576672124339">
+    <state x="161" y="40" key="CommitChangelistDialog2" timestamp="1577783174183">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="161" y="40" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1576672124339" />
+    <state x="161" y="40" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1577783174183" />
     <state x="82" y="153" width="1240" height="700" key="DiffContextDialog" timestamp="1576671972891">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -335,22 +342,22 @@
     <state width="572" height="976" key="Git.Branch.Popup" timestamp="1576671836843" />
     <state width="572" height="976" key="Git.Branch.Popup/2880.1800" timestamp="1576671836843" />
     <state width="572" height="976" key="Git.Branch.Popup@2880.1800@192dpi" timestamp="1576671836843" />
-    <state width="1396" height="345" key="GridCell.Tab.0.bottom" timestamp="1577783123617">
+    <state width="1396" height="345" key="GridCell.Tab.0.bottom" timestamp="1577783241886">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1396" height="345" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1577783123617" />
-    <state width="1396" height="345" key="GridCell.Tab.0.center" timestamp="1577783123615">
+    <state width="1396" height="345" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1577783241886" />
+    <state width="1396" height="345" key="GridCell.Tab.0.center" timestamp="1577783241885">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1396" height="345" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1577783123615" />
-    <state width="1396" height="345" key="GridCell.Tab.0.left" timestamp="1577783123614">
+    <state width="1396" height="345" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1577783241885" />
+    <state width="1396" height="345" key="GridCell.Tab.0.left" timestamp="1577783241884">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1396" height="345" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1577783123614" />
-    <state width="1396" height="345" key="GridCell.Tab.0.right" timestamp="1577783123616">
+    <state width="1396" height="345" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1577783241884" />
+    <state width="1396" height="345" key="GridCell.Tab.0.right" timestamp="1577783241885">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1396" height="345" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1577783123616" />
+    <state width="1396" height="345" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1577783241885" />
     <state width="1396" height="41" key="GridCell.Tab.1.bottom" timestamp="1577779953389">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -379,10 +386,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="570" y="373" key="VCS.ChangelistChooser/0.0.1440.900@0.0.1440.900" timestamp="1576671955797" />
-    <state x="247" y="175" key="Vcs.Push.Dialog.v2" timestamp="1577783140365">
+    <state x="247" y="175" key="Vcs.Push.Dialog.v2" timestamp="1577783183045">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="247" y="175" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1577783140365" />
+    <state x="247" y="175" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1577783183045" />
     <state x="503" y="374" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1576672044097">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

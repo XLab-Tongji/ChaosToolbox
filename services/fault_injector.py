@@ -193,14 +193,9 @@ class FaultInjector(object):
     @staticmethod
     def chaos_inject_pod_single(dto):
         find = 0
-        timeout = ''
         (target_host, is_exist) = get_target_host(dto)
         if not is_exist:
             return 'Host: ' + target_host + ' does not exist.'
-        if dto['timeout'] == 'default':
-            timeout = ' --timeout 300'
-        elif dto['timeout'] != 'no':
-            timeout = ' --timeout ' + dto['timeout']
         target_inject = Cmd['k8s'] + dto['pod']
         for i in range(0, len(has_injected)):
             if has_injected[i]['host'] == target_host and has_injected[i]['inject_type'] == target_inject:
@@ -244,14 +239,16 @@ class FaultInjector(object):
             if has_injected[i]['host'] == target_host and has_injected[i]['inject_type'] == target_inject:
                 find = 1
         if find == 0:
+            if inject_type != "k8s":
+                target_inject = target_inject + timeout
             r = Runner()
             r.run_ad_hoc(
                 hosts=target_host,
                 module='shell',
-                args=target_inject + timeout
+                args=target_inject
             )
             result = r.get_adhoc_result()
-            return handle_inject_result(inject_type, target_host, target_inject + timeout, result,
+            return handle_inject_result(inject_type, target_host, target_inject, result,
                                         sys._getframe().f_code.co_name, dto['open'])
         else:
             Logger.log("error",
