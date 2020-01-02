@@ -142,7 +142,11 @@ def stop_all_inject():
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/stop-all-inject-on-all-nodes', methods=['POST'])
 def stop_all_inject_on_all_nodes():
-    return jsonify(FaultInjector.stop_all_chaos_inject_on_all_nodes())
+    mq_control = RabbitMq.control()
+    mq_control = {
+        'open': mq_control
+    }
+    return jsonify(FaultInjector.stop_all_chaos_inject_on_all_nodes(mq_control))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/view-inject-info', methods=['GET'])
