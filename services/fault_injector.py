@@ -12,7 +12,7 @@ from requests.exceptions import Timeout
 from utils.log_record import Logger
 from services.message_queue import RabbitMq
 
-from config import Default_cmd
+from config import DefaultCmd
 
 username = 'guest'
 pwd = 'guest'
@@ -60,9 +60,12 @@ Cmd = {
 }
 inject_info = []
 has_injected = []
+Default_cmd = {}
+
 
 
 class FaultInjector(object):
+
     def __init__(self):
         pass
 
@@ -216,6 +219,8 @@ class FaultInjector(object):
 
     @staticmethod
     def chaos_inject_random(dto):
+        global Default_cmd
+        Default_cmd = DefaultCmd.get_default_cmd()
         find = 0
         timeout = ''
         pod_inject = ''
@@ -493,6 +498,12 @@ class FaultInjector(object):
                     handle_inject_result('k8s', target_host, target_inject, result,
                                          sys._getframe().f_code.co_name, service['open']))
         return result_list
+
+    @staticmethod
+    def test_config():
+        global Default_cmd
+        Default_cmd = DefaultCmd.get_default_cmd()
+        return Default_cmd
 
 
 def handle_inject_result(inject_type, target_host, target_inject, result, method_name, mq_control):
