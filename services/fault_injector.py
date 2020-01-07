@@ -461,14 +461,18 @@ class FaultInjector(object):
                 )
                 result = r.get_adhoc_result()
                 if len(result["success"]) > 0:
-                    for i in range(0, len(inject_info)):
-                        if inject_info[i]['cmd_id'] == item:
-                            target_host = inject_info[i]['ip']
-                            inject_info.pop(i)
-                    for i in range(0, len(has_injected)):
-                        if target_host == has_injected[i]['host'] and item == has_injected[i]['tag']:
-                            has_injected.pop(i)
-                            break
+                    global  inject_info
+                    global has_injected
+                    inject_info = []
+                    has_injected = []
+                    # for i in range(0, len(inject_info)):
+                    #     if inject_info[i]['cmd_id'] == item:
+                    #         target_host = inject_info[i]['ip']
+                    #         inject_info.pop(i)
+                    # for i in range(0, len(has_injected)):
+                    #     if target_host == has_injected[i]['host'] and item == has_injected[i]['tag']:
+                    #         has_injected.pop(i)
+                    #         break
                 result_list.append(
                     handle_inject_result("destroy", target_host, cmd, result, sys._getframe().f_code.co_name,
                                          mq_control['open']))
