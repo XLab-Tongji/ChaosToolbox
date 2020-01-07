@@ -27,7 +27,7 @@ class RabbitMq:
     def mq_control(dto):
         control_result.append(dto)
         length = len(control_result)
-        return control_result[length-1]
+        return "now the rabbitMQ is opened:"+control_result[length-1]
 
     @staticmethod
     def control():
@@ -52,6 +52,7 @@ class RabbitMq:
 
     @staticmethod
     def consumer():
+        result_message = []
         username = 'guest'
         pwd = 'guest'
         user_pwd = pika.PlainCredentials(username, pwd)
@@ -68,8 +69,9 @@ class RabbitMq:
         return result_message
 
     @staticmethod
-    def callback(channel, methos, property,body):
+    def callback(channel, methos, property, body):
         result_message.append(body)
+
         print(body)
 
 

@@ -3,10 +3,15 @@
 import requests
 import time
 import logging
-import datetime
+import os
 
 from view_model.prometheus_repository import PrometheusRepository
 from utils.config import Config
+
+from utils.SockConfig import SockConfig
+from utils.utils import Utils
+from controller.prometheus.PerformanceDataPicker import PerformanceDataPicker
+from controller.prometheus.PerformanceDataWriter import PerformanceDataWriter
 
 
 class PrometheusObserver(object):
@@ -107,6 +112,29 @@ class PrometheusObserver(object):
         # 生成数据集
         logging.info("Querying metric values succeeded, rows of data: %s", len(csvset1))
         return PrometheusRepository.create_prometheus_stream_view_model(datasetHeader, csvset1, csvset2)
+
+    @staticmethod
+    def sock_performance_picker(dto):
+        # START_STR = "2019-12-18 14:00:00"
+        # END_STR = "2019-12-18 14:00:08"
+        START_STR = dto['start']
+        END_STR = dto['end']
+        RESOLUTION = SockConfig.PROMETHEUS_RESOLUTION
+
+        end_time = Utils.datetime_timestamp(END_STR)
+        start_time = Utils.datetime_timestamp(START_STR)
+
+        headers, csvsets = PerformanceDataPicker.query_multi_entity_metric_values(
+                                        queryconfiglist=SockConfig.QUERY_CONFIGS_HW,
+                                        resolution=SockConfig.PROMETHEUS_RESOLUTION,
+                                        start_time=start_time,
+                                        end_time=end_time)
+
+        path = os.path.abspath('./data/sock-results-HW_10-23.csv')
+
+        PerformanceDataWriter.write2csv_merged(filename=path,
+                                           metricsnameset=headers, datasets=csvsets)
+        return 'success'
 
 
 if __name__ == '__main__':

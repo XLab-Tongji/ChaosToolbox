@@ -5,7 +5,7 @@ sys.path.append('')
 from flask import Flask, jsonify
 from common_options import get_info
 from chaosblade import chaosblade
-from influxdb import get_data
+from influxdb_and_prometheus import get_data
 from message_mq import mq_control
 from flask_httpauth import HTTPBasicAuth
 from utils.config import Config
