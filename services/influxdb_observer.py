@@ -45,7 +45,7 @@ class InfluxdbObserver(object):
     @staticmethod
     def select_measurements_values(database, measurements_name, start_time, end_time):
         csvset = []
-        path = os.path.abspath('./data/InfluxDB-values.csv')
+        path = os.path.abspath('./data/InfluxDB-values_'+str(measurements_name)+'.csv')
         start_ = InfluxdbObserver.datetime_timestamp(start_time)
         end_ = InfluxdbObserver.datetime_timestamp(end_time)
         aim_client = InfluxDBClient('10.60.38.173', '8086', '', '', database)

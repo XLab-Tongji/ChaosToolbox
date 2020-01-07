@@ -63,7 +63,6 @@ has_injected = []
 Default_cmd = {}
 
 
-
 class FaultInjector(object):
 
     def __init__(self):

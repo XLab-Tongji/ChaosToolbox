@@ -15,7 +15,7 @@ class RabbitMq:
         pwd = 'guest'
         user_pwd = pika.PlainCredentials(username, pwd)
         connection = pika.BlockingConnection(pika.ConnectionParameters(
-            host='127.0.0.1', credentials=user_pwd
+            host='10.60.38.173', credentials=user_pwd
         ))
         channel = connection.channel()
         channel.queue_declare(queue='blade_mq')
@@ -43,7 +43,7 @@ class RabbitMq:
         pwd = 'guest'
         user_pwd = pika.PlainCredentials(username, pwd)
         connection = pika.BlockingConnection(pika.ConnectionParameters(
-            host='127.0.0.1', credentials=user_pwd
+            host='10.60.38.173', credentials=user_pwd
         ))
         channel = connection.channel()
         channel.queue_declare(queue=queue)
@@ -57,7 +57,7 @@ class RabbitMq:
         pwd = 'guest'
         user_pwd = pika.PlainCredentials(username, pwd)
         connection = pika.BlockingConnection(pika.ConnectionParameters(
-            host='127.0.0.1', credentials=user_pwd))
+            host='10.60.38.173', credentials=user_pwd))
         channel = connection.channel()
         channel.queue_declare(queue='blade_mq')
         i = 0
