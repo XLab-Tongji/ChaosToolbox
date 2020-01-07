@@ -14,6 +14,7 @@ from flask import make_response
 auth = HTTPBasicAuth()
 app = Flask(__name__)
 
+
 @auth.get_password
 def get_password(username):
     if username == Config.user_name:
@@ -35,4 +36,3 @@ app.register_blueprint(get_info.get_info)
 app.register_blueprint(chaosblade.chaosblade)
 app.register_blueprint(get_data.get_data)
 app.register_blueprint(mq_control.rabbitmq)
-

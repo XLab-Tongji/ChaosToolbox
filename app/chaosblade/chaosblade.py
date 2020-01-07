@@ -5,6 +5,9 @@ from services.fault_injector import FaultInjector
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timedelta
 import time
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 from services.k8s_observer import K8sObserver
 from services.message_queue import RabbitMq
@@ -173,11 +176,12 @@ def delete_specific_kind_pods():
     if not request.json or 'service' not in request.json:
         abort(400)
     mq_control = RabbitMq.control()
-    service = {
+    dto = {
         'service': request.json['service'],
         'open': mq_control
     }
-    return jsonify(FaultInjector.delete_all_pods_for_service(service))
+    print dto
+    return jsonify(FaultInjector.delete_all_pods_for_service(dto))
 
 
 @chaosblade.route('/tool/api/v1.0/chaosblade/get-service-log', methods=['POST'])

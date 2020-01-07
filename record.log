@@ -6,3 +6,4 @@
 2019-12-31 17:04:50,853 - INFO - 127.0.0.1 - - [31/Dec/2019 17:04:50] "POST /tool/api/v1.0/chaosblade/stop-all-inject-on-all-nodes HTTP/1.1" 200 -
 2020-01-02 14:05:47,701 - ERROR - HOST NOT EXIST - Method : get_target_host() - - {'command info': {'host': u'192.168.199.41', 'open': 'false', 'pod': u'front-end-858b4ff57-krfqn', 'timeout': u'3000'}, 'message': u'Host: 192.168.199.41 does not exist.'}
 2020-01-02 14:05:47,702 - INFO - 127.0.0.1 - - [02/Jan/2020 14:05:47] "POST /tool/api/v1.0/chaosblade/inject-pod-single HTTP/1.1" 200 -
+2020-01-07 15:48:21,031 - INFO - SUCCESS - Method : delete_all_pods_for_service() - - {'position': 'k8s', 'start_time': u'2020-01-07 15:47:35.264611', 'cmd': u'./blade create k8s delete --namespace sock-shop --pod carts-648d5f498d-twvxz', 'cmd_id': 'f7d893495bb006eb', 'ip': '10.60.38.181'}

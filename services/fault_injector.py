@@ -475,12 +475,13 @@ class FaultInjector(object):
         return result_list
 
     @staticmethod
-    def delete_all_pods_for_service(service):
+    def delete_all_pods_for_service(dto):
         """
         停止所有的某类容器[根据关键字删]
         :param service: 容器名中的关键字
         :return: 结果
         """
+        service = dto["service"]
         result_list = []
         target_host = "10.60.38.181"
         name_list = K8sObserver.get_pod_name_list('sock-shop')
@@ -496,7 +497,7 @@ class FaultInjector(object):
                 result = r.get_adhoc_result()
                 result_list.append(
                     handle_inject_result('k8s', target_host, target_inject, result,
-                                         sys._getframe().f_code.co_name, service['open']))
+                                         sys._getframe().f_code.co_name, dto['open']))
         return result_list
 
     @staticmethod
