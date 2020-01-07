@@ -187,3 +187,8 @@ def get_pod_log():
     pod_name = request.json['service']
     namespace = request.json['namespace']
     return jsonify(K8sObserver.get_service_log(pod_name, namespace))
+
+
+@chaosblade.route('/tool/api/v1.0/chaosblade/test-config-default-cmd', methods=['GET'])
+def test_config():
+    return jsonify(FaultInjector.test_config())
