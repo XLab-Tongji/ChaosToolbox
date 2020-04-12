@@ -202,6 +202,30 @@ class K8sObserver(object):
             result.append(get_pod_log(pod_name, namespace, request_time))
         return result
 
+    @staticmethod
+    def get_pods_status(namespace):
+        r = Runner()
+        r.run_ad_hoc(
+            hosts="10.60.38.181",
+            module='shell',
+            args='/opt/kube/bin/kubectl get pods -n ' + namespace
+        )
+        result = r.get_adhoc_result()
+        result_status = []
+        if len(result['success']) > 0:
+            host_name = result['success'].keys()[0]
+            stdout_lines = result['success'][host_name]['stdout_lines']
+            for index in range(1, len(stdout_lines)):
+                stdout_line = stdout_lines[index].split()
+                result_status.append({
+                    'name': stdout_line[0],
+                    'status': stdout_line[2],
+                    'restarts': stdout_line[3],
+                    'age': stdout_line[4],
+                })
+
+            return result_status
+
 
 def get_pod_log(pod_name, namespace, request_time):
     """
