@@ -1,0 +1,138 @@
+2020-01-07 23:47:53,015 - INFO - NO CHAOS INJECT - Method : stop_all_chaos_inject_on_all_nodes() - - {'host': '192.168.199.42'}
+2020-01-07 23:48:11,776 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:10.183357', 'cmd': u'./blade destroy 9e6d1db1c77d4a09', 'cmd_id': 'command: k8s delete --help false --namespace sock-shop --pod carts-db-64b6cc584f-6r6vp --debug false --force false', 'ip': '192.168.199.43'}
+2020-01-07 23:48:19,342 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:17.782188', 'cmd': u'./blade destroy 82a0ed477601603c', 'cmd_id': 'command: k8s delete --force false --pod catalogue-db-99cbcbb88-kvkkr --help false --namespace sock-shop --debug false', 'ip': '192.168.199.43'}
+2020-01-07 23:48:27,042 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:25.723956', 'cmd': u'./blade destroy 96c29d645e77bd26', 'cmd_id': 'command: k8s delete --namespace sock-shop --debug false --help false --force false --pod front-end-858b4ff57-2mvpb', 'ip': '192.168.199.43'}
+2020-01-07 23:48:36,587 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:36.264576', 'cmd': u'./blade destroy f0b1202fa53b166d', 'cmd_id': 'command: k8s delete --debug false --help false --force false --namespace sock-shop --pod front-end-858b4ff57-6s7k5', 'ip': '192.168.199.43'}
+2020-01-07 23:48:37,607 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:37.231829', 'cmd': u'./blade destroy 5ab62b4de4be9dea', 'cmd_id': 'command: k8s delete --debug false --force false --pod orders-6496fcd6f7-cfkrx --help false --namespace sock-shop', 'ip': '192.168.199.43'}
+2020-01-07 23:48:38,628 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:38.258518', 'cmd': u'./blade destroy b22a69bf52fa1049', 'cmd_id': 'command: k8s delete --debug false --help false --force false --namespace sock-shop --pod payment-6c698f689b-sfdl6', 'ip': '192.168.199.43'}
+2020-01-07 23:48:40,167 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:39.794485', 'cmd': u'./blade destroy dc0ebebe25fa882d', 'cmd_id': 'command: k8s delete --debug false --help false --pod queue-master-77d854c647-g4mt8 --force false --namespace sock-shop', 'ip': '192.168.199.43'}
+2020-01-07 23:48:41,298 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:40.949131', 'cmd': u'./blade destroy 923d3d7dad2a30d4', 'cmd_id': 'command: k8s delete --force false --namespace sock-shop --debug false --pod orders-6496fcd6f7-k7gsb --help false', 'ip': '192.168.199.43'}
+2020-01-07 23:48:42,632 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:42.245455', 'cmd': u'./blade destroy 8d6f266bb96d434f', 'cmd_id': 'command: k8s delete --force false --help false --pod session-db-6b57d5cc79-tbvl9 --debug false --namespace sock-shop', 'ip': '192.168.199.43'}
+2020-01-07 23:48:45,035 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:44.686703', 'cmd': u'./blade destroy a002a078a0479750', 'cmd_id': 'command: k8s delete --namespace sock-shop --force false --pod user-db-6ccbdb454c-mslg8 --debug false --help false', 'ip': '192.168.199.43'}
+2020-01-07 23:48:46,733 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:46.412188', 'cmd': u'./blade destroy 114cbe4b4ba02cc1', 'cmd_id': 'command: k8s delete --debug false --namespace sock-shop --pod user-d4cb47c5f-9rjhx --force false --help false', 'ip': '192.168.199.43'}
+2020-01-07 23:48:48,364 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:48.056571', 'cmd': u'./blade destroy d662c1fa2415b6ae', 'cmd_id': 'command: k8s delete --debug false --force false --help false --namespace sock-shop --pod user-d4cb47c5f-tqnvf', 'ip': '192.168.199.43'}
+2020-01-07 23:48:51,330 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:50.935670', 'cmd': u'./blade destroy 0314a89f6e3de37e', 'cmd_id': 'command: k8s delete --namespace sock-shop --pod user-d4cb47c5f-q4h5b --debug false --force false --help false', 'ip': '192.168.199.43'}
+2020-01-07 23:48:53,158 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:52.872338', 'cmd': u'./blade destroy 7f32055e9cdc8fea', 'cmd_id': 'command: k8s delete --pod orders-6496fcd6f7-kksvt --debug false --force false --help false --namespace sock-shop', 'ip': '192.168.199.43'}
+2020-01-07 23:48:54,806 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:54.459068', 'cmd': u'./blade destroy ac417bb4478a8d19', 'cmd_id': 'command: k8s delete --debug false --force false --namespace sock-shop --pod carts-648d5f498d-pr6fr --help false', 'ip': '192.168.199.43'}
+2020-01-07 23:48:57,419 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-07 23:48:57.054932', 'cmd': u'./blade destroy 1343493475b79cca', 'cmd_id': 'command: network delay --timeout 600 --interface enp3s0 --help false --time 3000 --debug false', 'ip': '192.168.199.43'}
+2020-01-07 23:49:12,082 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy 9e6d1db1c77d4a09', 'position': 'destroy'}
+2020-01-07 23:49:21,302 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy 82a0ed477601603c', 'position': 'destroy'}
+2020-01-07 23:49:28,896 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy 96c29d645e77bd26', 'position': 'destroy'}
+2020-01-07 23:49:37,486 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy f0b1202fa53b166d', 'position': 'destroy'}
+2020-01-07 23:49:45,351 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy 5ab62b4de4be9dea', 'position': 'destroy'}
+2020-01-07 23:49:56,003 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy b22a69bf52fa1049', 'position': 'destroy'}
+2020-01-07 23:50:06,368 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy dc0ebebe25fa882d', 'position': 'destroy'}
+2020-01-07 23:50:14,844 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy 923d3d7dad2a30d4', 'position': 'destroy'}
+2020-01-07 23:50:23,042 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy 8d6f266bb96d434f', 'position': 'destroy'}
+2020-01-07 23:50:34,022 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy a002a078a0479750', 'position': 'destroy'}
+2020-01-07 23:50:46,809 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy 114cbe4b4ba02cc1', 'position': 'destroy'}
+2020-01-07 23:50:59,385 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy d662c1fa2415b6ae', 'position': 'destroy'}
+2020-01-07 23:51:11,079 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy 0314a89f6e3de37e', 'position': 'destroy'}
+2020-01-07 23:51:24,110 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy 7f32055e9cdc8fea', 'position': 'destroy'}
+2020-01-07 23:51:37,411 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy ac417bb4478a8d19', 'position': 'destroy'}
+2020-01-07 23:51:50,116 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.44', 'message': u'non-zero return code', 'cmd': u'./blade destroy 1343493475b79cca', 'position': 'destroy'}
+2020-01-08 00:00:23,131 - ERROR - FAILED - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.45', 'message': u'non-zero return code', 'cmd': u'./blade destroy 9e6d1db1c77d4a09', 'position': 'destroy'}
+2020-01-08 00:03:26,972 - INFO - NO CHAOS INJECT - Method : stop_all_chaos_inject_on_all_nodes() - - {'host': '192.168.199.42'}
+2020-01-08 00:03:33,978 - INFO - NO CHAOS INJECT - Method : stop_all_chaos_inject_on_all_nodes() - - {'host': '192.168.199.43'}
+2020-01-08 00:03:42,066 - INFO - NO CHAOS INJECT - Method : stop_all_chaos_inject_on_all_nodes() - - {'host': '192.168.199.44'}
+2020-01-08 00:08:35,948 - ERROR - UNREACHABLE - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.45', 'message': u'Failed to connect to the host via ssh: OpenSSH_7.9p1, LibreSSL 2.7.3\r\ndebug1: Reading configuration data /etc/ssh/ssh_config\r\ndebug1: /etc/ssh/ssh_config line 48: Applying options for *\r\ndebug2: resolve_canonicalize: hostname 192.168.199.45 is address\r\ndebug1: auto-mux: Trying existing master\r\ndebug1: Control socket "/Users/yagotoasa/.ansible/cp/17b43c6c0e" does not exist\r\ndebug1: Executing proxy command: exec ssh -o ConnectTimeout=6000000 -p 20022 root@10.60.38.181 nc -w 100000 192.168.199.45 22\r\ndebug3: timeout: 10000 ms remain after connect\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_rsa type 0\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_rsa-cert type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_dsa type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_dsa-cert type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_ecdsa type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_ecdsa-cert type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_ed25519 type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_ed25519-cert type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_xmss type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_xmss-cert type -1\r\ndebug1: Local version string SSH-2.0-OpenSSH_7.9\r\nssh_exchange_identification: Connection closed by remote host', 'cmd': u'./blade destroy 9d041541182ac7af', 'position': 'destroy'}
+2020-01-08 00:08:35,953 - INFO - 127.0.0.1 - - [08/Jan/2020 00:08:35] "POST /tool/api/v1.0/chaosblade/stop-all-inject-on-all-nodes HTTP/1.1" 200 -
+2020-01-08 00:10:02,390 - INFO - NO CHAOS INJECT - Method : stop_all_on_specific_node() - - {'host': u'192.168.199.42', 'open': 'false'}
+2020-01-08 00:10:02,391 - INFO - 127.0.0.1 - - [08/Jan/2020 00:10:02] "POST /tool/api/v1.0/chaosblade/stop-all-inject-on-specific-node HTTP/1.1" 200 -
+2020-01-08 00:12:32,616 - INFO - 127.0.0.1 - - [08/Jan/2020 00:12:32] "GET /tool/api/v1.0/chaosblade/view-inject-info HTTP/1.1" 200 -
+2020-01-08 00:12:48,541 - INFO - SUCCESS - Method : view_inject_on_host_by_status() - - {'status': u'success', 'host': u'192.168.199.42'}
+2020-01-08 00:12:48,542 - INFO - 127.0.0.1 - - [08/Jan/2020 00:12:48] "POST /tool/api/v1.0/chaosblade/view-inject-on-host-by-status HTTP/1.1" 200 -
+2020-01-08 00:13:16,040 - INFO - SUCCESS - Method : chaos_inject_mem() - - {'position': 'mem', 'start_time': u'2020-01-08 00:13:13.938858', 'cmd': u'./blade create mem load --mem-percent 50 --timeout 60', 'cmd_id': 'e434942dee5b0362', 'ip': u'192.168.199.42'}
+2020-01-08 00:13:16,042 - INFO - 127.0.0.1 - - [08/Jan/2020 00:13:16] "POST /tool/api/v1.0/chaosblade/inject-mem HTTP/1.1" 200 -
+2020-01-08 00:14:22,223 - INFO - 127.0.0.1 - - [08/Jan/2020 00:14:22] "GET /tool/api/v1.0/chaosblade/view-inject-info HTTP/1.1" 200 -
+2020-01-08 00:14:36,614 - INFO - SUCCESS - Method : view_inject_on_host_by_status() - - {'status': u'success', 'host': u'192.168.199.42'}
+2020-01-08 00:14:36,618 - INFO - 127.0.0.1 - - [08/Jan/2020 00:14:36] "POST /tool/api/v1.0/chaosblade/view-inject-on-host-by-status HTTP/1.1" 200 -
+2020-01-08 00:15:33,018 - INFO - 127.0.0.1 - - [08/Jan/2020 00:15:33] "POST /tool/api/v1.0/chaosblade/view-inject-on-host-by-status HTTP/1.1" 400 -
+2020-01-08 00:15:44,669 - INFO - 127.0.0.1 - - [08/Jan/2020 00:15:44] "POST /tool/api/v1.0/chaosblade/view-inject-on-host-by-status HTTP/1.1" 400 -
+2020-01-08 00:16:05,808 - INFO - SUCCESS - Method : view_inject_on_host_by_status() - - {'status': u'Success', 'host': u'192.168.199.42'}
+2020-01-08 00:16:05,810 - INFO - 127.0.0.1 - - [08/Jan/2020 00:16:05] "POST /tool/api/v1.0/chaosblade/view-inject-on-host-by-status HTTP/1.1" 200 -
+2020-01-08 00:16:35,184 - INFO - SUCCESS - Method : view_inject_on_host_by_status() - - {'status': u'Destroyed', 'host': u'192.168.199.42'}
+2020-01-08 00:16:35,189 - INFO - 127.0.0.1 - - [08/Jan/2020 00:16:35] "POST /tool/api/v1.0/chaosblade/view-inject-on-host-by-status HTTP/1.1" 200 -
+2020-01-08 00:16:59,102 - INFO - NO CHAOS INJECT - Method : stop_all_on_specific_node() - - {'host': u'192.168.199.42', 'open': 'false'}
+2020-01-08 00:16:59,103 - INFO - 127.0.0.1 - - [08/Jan/2020 00:16:59] "POST /tool/api/v1.0/chaosblade/stop-all-inject-on-specific-node HTTP/1.1" 200 -
+2020-01-08 00:17:29,393 - INFO - SUCCESS - Method : stop_specific_chaos_inject() - - {'position': 'mem', 'start_time': u'2020-01-08 00:17:28.176341', 'cmd': u'./blade destroy e434942dee5b0362', 'ip': '192.168.199.32'}
+2020-01-08 00:17:29,397 - INFO - 127.0.0.1 - - [08/Jan/2020 00:17:29] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+2020-01-08 00:17:52,339 - INFO - SUCCESS - Method : chaos_inject_cpu() - - {'position': 'cpu', 'start_time': u'2020-01-08 00:17:50.820580', 'cmd': u'./blade create cpu fullload --timeout 60', 'cmd_id': '29f699361f792fef', 'ip': u'192.168.199.42'}
+2020-01-08 00:17:52,340 - INFO - 127.0.0.1 - - [08/Jan/2020 00:17:52] "POST /tool/api/v1.0/chaosblade/inject-cpu HTTP/1.1" 200 -
+2020-01-08 00:18:13,794 - INFO - SUCCESS - Method : stop_specific_chaos_inject() - - {'position': 'cpu', 'start_time': u'2020-01-08 00:18:12.342830', 'cmd': u'./blade destroy 29f699361f792fef', 'ip': '192.168.199.32'}
+2020-01-08 00:18:13,795 - INFO - 127.0.0.1 - - [08/Jan/2020 00:18:13] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+2020-01-08 00:18:19,042 - ERROR - HOST NOT EXIST - Method : get_target_host() - - {'command info': {'open': 'false', 'host': u'192.168.199.41', 'type': u'read', 'timeout': u'60'}, 'message': u'Host: 192.168.199.41 does not exist.'}
+2020-01-08 00:18:19,042 - INFO - 127.0.0.1 - - [08/Jan/2020 00:18:19] "POST /tool/api/v1.0/chaosblade/inject-disk HTTP/1.1" 200 -
+2020-01-08 00:18:25,715 - INFO - SUCCESS - Method : chaos_inject_disk() - - {'position': 'disk', 'start_time': u'2020-01-08 00:18:23.846667', 'cmd': u'./blade create disk burn --read --timeout 60', 'cmd_id': '8f72a0195194dda4', 'ip': u'192.168.199.42'}
+2020-01-08 00:18:25,717 - INFO - 127.0.0.1 - - [08/Jan/2020 00:18:25] "POST /tool/api/v1.0/chaosblade/inject-disk HTTP/1.1" 200 -
+2020-01-08 00:18:48,718 - INFO - SUCCESS - Method : stop_specific_chaos_inject() - - {'position': 'disk', 'start_time': u'2020-01-08 00:18:47.339093', 'cmd': u'./blade destroy 8f72a0195194dda4', 'ip': '192.168.199.32'}
+2020-01-08 00:18:48,719 - INFO - 127.0.0.1 - - [08/Jan/2020 00:18:48] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+2020-01-08 00:19:00,253 - INFO - SUCCESS - Method : chaos_inject_disk() - - {'position': 'disk', 'start_time': u'2020-01-08 00:18:58.614490', 'cmd': u'./blade create disk burn --read --timeout 60', 'cmd_id': '5d9aceaa42047198', 'ip': u'192.168.199.42'}
+2020-01-08 00:19:00,255 - INFO - 127.0.0.1 - - [08/Jan/2020 00:19:00] "POST /tool/api/v1.0/chaosblade/inject-disk HTTP/1.1" 200 -
+2020-01-08 00:19:45,139 - INFO - SUCCESS - Method : stop_specific_chaos_inject() - - {'position': 'disk', 'start_time': u'2020-01-08 00:19:42.016829', 'cmd': u'./blade destroy 5d9aceaa42047198', 'ip': '192.168.199.32'}
+2020-01-08 00:19:45,147 - INFO - 127.0.0.1 - - [08/Jan/2020 00:19:45] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+2020-01-08 00:25:09,890 - INFO - NO CHAOS INJECT - Method : stop_all_chaos_inject_on_all_nodes() - - {'host': '192.168.199.42'}
+2020-01-08 00:25:18,093 - INFO - NO CHAOS INJECT - Method : stop_all_chaos_inject_on_all_nodes() - - {'host': '192.168.199.43'}
+2020-01-08 00:25:25,180 - INFO - NO CHAOS INJECT - Method : stop_all_chaos_inject_on_all_nodes() - - {'host': '192.168.199.44'}
+2020-01-08 00:33:17,139 - ERROR - UNREACHABLE - Method : stop_all_chaos_inject_on_all_nodes() - - {'ip': '192.168.199.45', 'message': u'Failed to connect to the host via ssh: OpenSSH_7.9p1, LibreSSL 2.7.3\r\ndebug1: Reading configuration data /etc/ssh/ssh_config\r\ndebug1: /etc/ssh/ssh_config line 48: Applying options for *\r\ndebug2: resolve_canonicalize: hostname 192.168.199.45 is address\r\ndebug1: auto-mux: Trying existing master\r\ndebug1: Control socket "/Users/yagotoasa/.ansible/cp/17b43c6c0e" does not exist\r\ndebug1: Executing proxy command: exec ssh -o ConnectTimeout=6000000 -p 20022 root@10.60.38.181 nc -w 100000 192.168.199.45 22\r\ndebug3: timeout: 10000 ms remain after connect\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_rsa type 0\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_rsa-cert type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_dsa type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_dsa-cert type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_ecdsa type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_ecdsa-cert type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_ed25519 type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_ed25519-cert type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_xmss type -1\r\ndebug1: identity file /Users/yagotoasa/.ssh/id_xmss-cert type -1\r\ndebug1: Local version string SSH-2.0-OpenSSH_7.9\r\nssh_exchange_identification: Connection closed by remote host', 'cmd': u'./blade destroy 9d041541182ac7af', 'position': 'destroy'}
+2020-01-08 00:33:17,159 - INFO - 127.0.0.1 - - [08/Jan/2020 00:33:17] "POST /tool/api/v1.0/chaosblade/stop-all-inject-on-all-nodes HTTP/1.1" 200 -
+2020-01-08 00:35:46,710 - INFO - 127.0.0.1 - - [08/Jan/2020 00:35:46] "GET /tool/api/v1.0/get_svc/sock-shop HTTP/1.1" 200 -
+2020-01-08 00:35:55,558 - INFO - 127.0.0.1 - - [08/Jan/2020 00:35:55] "GET /tool/api/v1.0/get_node HTTP/1.1" 200 -
+2020-01-08 00:36:06,717 - INFO - 127.0.0.1 - - [08/Jan/2020 00:36:06] "GET /tool/api/v1.0/get_namespace HTTP/1.1" 200 -
+2020-01-08 01:19:47,715 - INFO - 127.0.0.1 - - [08/Jan/2020 01:19:47] "POST /tool/api/v1.0/get_sock_performance HTTP/1.1" 200 -
+2020-01-08 01:19:47,741 - INFO - 127.0.0.1 - - [08/Jan/2020 01:19:47] "POST /tool/api/v1.0/get_values HTTP/1.1" 200 -
+2020-01-08 01:19:47,747 - ERROR - Error on request:
+Traceback (most recent call last):
+  File "/Users/yagotoasa/Documents/Course/软件工程/K8s/github-repository/2019-XLab-KubernetesTools/venv/lib/python2.7/site-packages/werkzeug/serving.py", line 304, in run_wsgi
+    execute(self.server.app)
+  File "/Users/yagotoasa/Documents/Course/软件工程/K8s/github-repository/2019-XLab-KubernetesTools/venv/lib/python2.7/site-packages/werkzeug/serving.py", line 295, in execute
+    write(data)
+  File "/Users/yagotoasa/Documents/Course/软件工程/K8s/github-repository/2019-XLab-KubernetesTools/venv/lib/python2.7/site-packages/werkzeug/serving.py", line 270, in write
+    self.send_header("Server", self.version_string())
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/BaseHTTPServer.py", line 412, in send_header
+    self.wfile.write("%s: %s\r\n" % (keyword, value))
+IOError: [Errno 32] Broken pipe
+2020-01-08 01:19:52,359 - INFO - 127.0.0.1 - - [08/Jan/2020 01:19:52] "POST /tool/api/v1.0/get_sock_performance HTTP/1.1" 200 -
+2020-01-08 01:19:52,362 - ERROR - Error on request:
+Traceback (most recent call last):
+  File "/Users/yagotoasa/Documents/Course/软件工程/K8s/github-repository/2019-XLab-KubernetesTools/venv/lib/python2.7/site-packages/werkzeug/serving.py", line 304, in run_wsgi
+    execute(self.server.app)
+  File "/Users/yagotoasa/Documents/Course/软件工程/K8s/github-repository/2019-XLab-KubernetesTools/venv/lib/python2.7/site-packages/werkzeug/serving.py", line 295, in execute
+    write(data)
+  File "/Users/yagotoasa/Documents/Course/软件工程/K8s/github-repository/2019-XLab-KubernetesTools/venv/lib/python2.7/site-packages/werkzeug/serving.py", line 272, in write
+    self.send_header("Date", self.date_time_string())
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/BaseHTTPServer.py", line 412, in send_header
+    self.wfile.write("%s: %s\r\n" % (keyword, value))
+IOError: [Errno 32] Broken pipe
+2020-01-08 01:19:59,167 - INFO - 127.0.0.1 - - [08/Jan/2020 01:19:59] "POST /tool/api/v1.0/get_sock_performance HTTP/1.1" 200 -
+2020-01-08 01:23:47,520 - INFO - SUCCESS - Method : chaos_inject_network() - - {'position': 'network', 'start_time': u'2020-01-08 01:23:46.152090', 'cmd': u'./blade create network delay --interface enp3s0 --time 3000 --timeout 600', 'cmd_id': 'd5986ddf2a0434c1', 'ip': u'192.168.199.42'}
+2020-01-08 01:23:47,522 - INFO - 127.0.0.1 - - [08/Jan/2020 01:23:47] "POST /tool/api/v1.0/chaosblade/inject-network HTTP/1.1" 200 -
+2020-01-08 02:02:43,132 - INFO - SUCCESS - Method : stop_specific_chaos_inject() - - {'position': 'network', 'start_time': u'2020-01-08 02:02:41.931479', 'cmd': u'./blade destroy d5986ddf2a0434c1', 'ip': '192.168.199.32'}
+2020-01-08 02:02:43,140 - INFO - 127.0.0.1 - - [08/Jan/2020 02:02:43] "POST /tool/api/v1.0/chaosblade/stop-specific-inject HTTP/1.1" 200 -
+2020-01-08 02:02:58,697 - INFO - SUCCESS - Method : chaos_inject_network() - - {'position': 'network', 'start_time': u'2020-01-08 02:02:56.342132', 'cmd': u'./blade create network delay --interface enp3s0 --time 3000 --timeout 600', 'cmd_id': '4f4125f2089610a0', 'ip': u'192.168.199.42'}
+2020-01-08 02:02:58,699 - INFO - 127.0.0.1 - - [08/Jan/2020 02:02:58] "POST /tool/api/v1.0/chaosblade/inject-network HTTP/1.1" 200 -
+2020-01-08 02:03:29,362 - INFO - SUCCESS - Method : chaos_inject_network() - - {'position': 'network', 'start_time': u'2020-01-08 02:03:25.555211', 'cmd': u'./blade create network delay --interface enp3s0 --time 3000 --timeout 600', 'cmd_id': 'ffaff2f9845a0e51', 'ip': u'192.168.199.43'}
+2020-01-08 02:03:29,364 - INFO - 127.0.0.1 - - [08/Jan/2020 02:03:29] "POST /tool/api/v1.0/chaosblade/inject-network HTTP/1.1" 200 -
+2020-01-08 02:03:46,828 - INFO - SUCCESS - Method : chaos_inject_network() - - {'position': 'network', 'start_time': u'2020-01-08 02:03:45.391071', 'cmd': u'./blade create network delay --interface enp3s0 --time 3000 --timeout 600', 'cmd_id': '2a3e382a90065203', 'ip': u'192.168.199.44'}
+2020-01-08 02:03:46,830 - INFO - 127.0.0.1 - - [08/Jan/2020 02:03:46] "POST /tool/api/v1.0/chaosblade/inject-network HTTP/1.1" 200 -
+2020-01-08 02:08:32,711 - ERROR - FAILED - Method : chaos_inject_network() - - {'ip': u'192.168.199.45', 'message': u'non-zero return code', 'cmd': u'./blade create network delay --interface enp3s0 --time 3000 --timeout 600600', 'position': 'network'}
+2020-01-08 02:08:32,714 - INFO - 127.0.0.1 - - [08/Jan/2020 02:08:32] "POST /tool/api/v1.0/chaosblade/inject-network HTTP/1.1" 200 -
+2020-01-08 02:08:32,724 - ERROR - Error on request:
+Traceback (most recent call last):
+  File "/Users/yagotoasa/Documents/Course/软件工程/K8s/github-repository/2019-XLab-KubernetesTools/venv/lib/python2.7/site-packages/werkzeug/serving.py", line 304, in run_wsgi
+    execute(self.server.app)
+  File "/Users/yagotoasa/Documents/Course/软件工程/K8s/github-repository/2019-XLab-KubernetesTools/venv/lib/python2.7/site-packages/werkzeug/serving.py", line 295, in execute
+    write(data)
+  File "/Users/yagotoasa/Documents/Course/软件工程/K8s/github-repository/2019-XLab-KubernetesTools/venv/lib/python2.7/site-packages/werkzeug/serving.py", line 258, in write
+    self.send_header(key, value)
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/BaseHTTPServer.py", line 412, in send_header
+    self.wfile.write("%s: %s\r\n" % (keyword, value))
+IOError: [Errno 32] Broken pipe
+2020-01-08 02:20:16,228 - INFO - NO CHAOS INJECT - Method : stop_all_chaos_inject_on_all_nodes() - - {'host': '192.168.199.42'}
+2020-01-08 02:20:40,605 - INFO - 127.0.0.1 - - [08/Jan/2020 02:20:40] "POST /tool/api/v1.0/chaosblade/stop-all-inject-on-all-nodes HTTP/1.1" 500 -
+2020-01-08 02:24:19,165 - INFO -  * Detected change in '/Users/yagotoasa/Documents/Course/\xe8\xbd\xaf\xe4\xbb\xb6\xe5\xb7\xa5\xe7\xa8\x8b/K8s/github-repository/2019-XLab-KubernetesTools/services/fault_injector.py', reloading
+2020-01-08 02:24:59,364 - INFO - NO CHAOS INJECT - Method : stop_all_chaos_inject_on_all_nodes() - - {'host': '192.168.199.42'}
+2020-01-08 02:25:08,123 - INFO - NO CHAOS INJECT - Method : stop_all_chaos_inject_on_all_nodes() - - {'host': '192.168.199.43'}
+2020-01-08 02:25:15,543 - INFO - NO CHAOS INJECT - Method : stop_all_chaos_inject_on_all_nodes() - - {'host': '192.168.199.44'}
+2020-01-08 02:33:25,570 - INFO - SUCCESS - Method : stop_all_chaos_inject_on_all_nodes() - - {'position': 'destroy', 'start_time': u'2020-01-08 02:33:24.152520', 'cmd': u'./blade destroy 9d041541182ac7af', 'cmd_id': 'command: network delay --help false --time 3000 --debug false --interface enp3s0 --timeout 600', 'ip': '192.168.199.45'}
+2020-01-08 02:33:25,573 - INFO - 127.0.0.1 - - [08/Jan/2020 02:33:25] "POST /tool/api/v1.0/chaosblade/stop-all-inject-on-all-nodes HTTP/1.1" 200 -
