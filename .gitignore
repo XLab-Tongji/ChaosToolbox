@@ -139,3 +139,5 @@ dmypy.json
 pod_log_dir
 record.log
 record.log
+
+.DS_Store

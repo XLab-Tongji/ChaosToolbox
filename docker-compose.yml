@@ -1,14 +1,14 @@
-version: '3'
+version: "3"
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile.web.dev
-    user: "${USER_ID}:${GROUP_ID}"
-    environment:
-      - FLASK_APP=helloworld.py
-      - FLASK_DEBUG=1
-    ports:
-      - 8080:8080
-    volumes: 
-      - "./chaostoolbox:/code/chaostoolbox:rw"
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile.web.dev
+        user: "${USER_ID}:${GROUP_ID}"
+        environment:
+            - FLASK_APP=/code/chaostoolbox/helloworld.py
+            - FLASK_DEBUG=1
+        ports:
+            - 8080:8080
+        volumes:
+            - "./chaostoolbox:/code/chaostoolbox:rw"
