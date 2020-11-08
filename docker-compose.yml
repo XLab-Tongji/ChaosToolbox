@@ -13,3 +13,5 @@ services:
         volumes:
             - "./chaostoolbox:/code/chaostoolbox:rw"
             - "./.config/ansible:/etc/ansible:rw"
+            - "./.config/ssh:/home/code/.ssh"
+

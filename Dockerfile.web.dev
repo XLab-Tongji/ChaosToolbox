@@ -1,7 +1,8 @@
 FROM python:3.8-buster
 ENV PYTHONUNBUFFERED=1
-ENV HOME=/code
+ENV HOME=/home/code
 
+RUN mkdir -p /home/code
 RUN mkdir /code
 
 # Use Tencent Cloud mirrors for debian 10 (buster)
@@ -21,8 +22,10 @@ RUN pip install -r /code/dev.txt
 
 # To acquire permissions
 COPY ./chown.sh /code/chown.sh
+COPY ./useradd.sh /code/useradd.sh
 COPY ./entrypoint.sh /code/entrypoint.sh
 RUN chmod 777 /code/chown.sh
+RUN chmod 777 /code/useradd.sh
 RUN chmod 777 /code/entrypoint.sh
 RUN echo 'root:mypasswd' | chpasswd
 
