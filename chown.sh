@@ -8,7 +8,7 @@ echo "user:group - $USER_ID:$GROUP_ID"
 echo "root:passwd - root:$PASSWD"
 echo "dir - $DIR"
 
-su <<< $PASSWD -c "chown -R $USER_ID:$GROUP_ID $DIR"
+su <<<$PASSWD -c "chown -R $USER_ID:$GROUP_ID $DIR"
 
 if [ $? -ne 0 ]; then
   echo failed to chown
