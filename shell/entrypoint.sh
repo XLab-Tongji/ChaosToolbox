@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/code/chown.sh `id -u` `id -g` /code mypasswd
+/code/shell/chown.sh `id -u` `id -g` /code mypasswd
 
 if [ $? -ne 0 ]; then
   return -1

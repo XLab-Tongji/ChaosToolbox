@@ -20,11 +20,11 @@ RUN pip config set global.index-url https://mirrors.cloud.tencent.com/pypi/simpl
 RUN pip install -r /code/dev.txt
 
 # To acquire permissions
-COPY ./chown.sh /code/chown.sh
-COPY ./entrypoint.sh /code/entrypoint.sh
-RUN chmod 777 /code/chown.sh
-RUN chmod 777 /code/entrypoint.sh
+COPY ./shell/chown.sh /code/shell/chown.sh
+COPY ./shell/entrypoint.sh /code/shell/entrypoint.sh
+RUN chmod 777 /code/shell/chown.sh
+RUN chmod 777 /code/shell/entrypoint.sh
 RUN echo 'root:mypasswd' | chpasswd
 
 WORKDIR /code
-ENTRYPOINT [ "/code/entrypoint.sh" ]
+ENTRYPOINT [ "/code/shell/entrypoint.sh" ]
