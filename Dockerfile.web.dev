@@ -18,7 +18,7 @@ COPY ./requirements/dev.txt /code
 # Use Tencent Cloud mirrors for python pip
 RUN pip install pip -U
 RUN pip config set global.index-url https://mirrors.cloud.tencent.com/pypi/simple
-RUN pip install -r /code/requirements.txt
+RUN pip install -r /code/requirements/dev.txt
 
 # To acquire permissions
 <<<<<<< HEAD
