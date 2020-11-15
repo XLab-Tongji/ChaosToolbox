@@ -141,3 +141,6 @@ record.log
 record.log
 
 .DS_Store
+
+# config
+.config
