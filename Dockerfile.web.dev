@@ -14,26 +14,20 @@ RUN apt update && \
     apt autoremove && \
     apt autoclean
 
-COPY ./requirements/dev.txt /code
+COPY ./requirements/dev.txt /code/requirements/dev.txt
 # Use Tencent Cloud mirrors for python pip
 RUN pip install pip -U
 RUN pip config set global.index-url https://mirrors.cloud.tencent.com/pypi/simple
 RUN pip install -r /code/requirements/dev.txt
 
 # To acquire permissions
-<<<<<<< HEAD
-COPY ./chown.sh /code/chown.sh
-COPY ./useradd.sh /code/useradd.sh
-COPY ./entrypoint.sh /code/entrypoint.sh
-RUN chmod 777 /code/chown.sh
-RUN chmod 777 /code/useradd.sh
-RUN chmod 777 /code/entrypoint.sh
-=======
 COPY ./shell/chown.sh /code/shell/chown.sh
 COPY ./shell/entrypoint.sh /code/shell/entrypoint.sh
+COPY ./shell/useradd.sh /code/shell/useradd.sh
 RUN chmod 777 /code/shell/chown.sh
 RUN chmod 777 /code/shell/entrypoint.sh
->>>>>>> cfa095d1b3c2c1b01fec1d420a3833dfaf0dbea5
+RUN chmod 777 /code/shell/useradd.sh
+
 RUN echo 'root:mypasswd' | chpasswd
 
 WORKDIR /code
