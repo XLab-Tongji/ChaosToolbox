@@ -1,12 +1,12 @@
 #!/bin/bash
 
-/code/chown.sh `id -u` `id -g` /code mypasswd
+/code/shell/chown.sh `id -u` `id -g` /code mypasswd
 if [ $? -ne 0 ]; then
   echo "failed to chown /code"
   return -1
 fi
 
-/code/chown.sh `id -u` `id -g` /home/code mypasswd
+/code/shell/chown.sh `id -u` `id -g` /home/code mypasswd
 if [ $? -ne 0 ]; then
   echo "failed to chown /home/code"
   return -1
@@ -30,7 +30,7 @@ if [ $? -ne 0 ]; then
   return -1
 fi
 
-/code/useradd.sh `id -u` `id -g` code mypasswd
+/code/shell/useradd.sh `id -u` `id -g` code mypasswd
 if [ $? -ne 0 ]; then
   echo "failed to useradd code"
   return -1
