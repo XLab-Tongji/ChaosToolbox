@@ -1,6 +1,5 @@
 #!/bin/bash
 
-<<<<<<< HEAD:entrypoint.sh
 /code/chown.sh `id -u` `id -g` /code mypasswd
 if [ $? -ne 0 ]; then
   echo "failed to chown /code"
@@ -30,9 +29,6 @@ if [ $? -ne 0 ]; then
   echo "failed to chmod 700 /home/code/.ssh"
   return -1
 fi
-=======
-/code/shell/chown.sh `id -u` `id -g` /code mypasswd
->>>>>>> cfa095d1b3c2c1b01fec1d420a3833dfaf0dbea5:shell/entrypoint.sh
 
 /code/useradd.sh `id -u` `id -g` code mypasswd
 if [ $? -ne 0 ]; then
