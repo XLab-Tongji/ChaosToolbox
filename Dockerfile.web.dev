@@ -18,16 +18,23 @@ COPY ./requirements/dev.txt /code
 # Use Tencent Cloud mirrors for python pip
 RUN pip install pip -U
 RUN pip config set global.index-url https://mirrors.cloud.tencent.com/pypi/simple
-RUN pip install -r /code/dev.txt
+RUN pip install -r /code/requirements.txt
 
 # To acquire permissions
+<<<<<<< HEAD
 COPY ./chown.sh /code/chown.sh
 COPY ./useradd.sh /code/useradd.sh
 COPY ./entrypoint.sh /code/entrypoint.sh
 RUN chmod 777 /code/chown.sh
 RUN chmod 777 /code/useradd.sh
 RUN chmod 777 /code/entrypoint.sh
+=======
+COPY ./shell/chown.sh /code/shell/chown.sh
+COPY ./shell/entrypoint.sh /code/shell/entrypoint.sh
+RUN chmod 777 /code/shell/chown.sh
+RUN chmod 777 /code/shell/entrypoint.sh
+>>>>>>> cfa095d1b3c2c1b01fec1d420a3833dfaf0dbea5
 RUN echo 'root:mypasswd' | chpasswd
 
 WORKDIR /code
-ENTRYPOINT [ "/code/entrypoint.sh" ]
+ENTRYPOINT [ "/code/shell/entrypoint.sh" ]
