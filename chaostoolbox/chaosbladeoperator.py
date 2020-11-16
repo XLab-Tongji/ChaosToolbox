@@ -51,9 +51,9 @@ class ResultsCollectorJSONCallback(CallbackBase):
 
 
 def main():
-    host_list = ['localhost', 'www.example.com', 'www.google.com']
+    host_list = ['192.168.199.32', '192.168.199.31', 'www.baidu.com']
     # since the API is constructed for CLI it expects certain options to always be set in the context object
-    context.CLIARGS = ImmutableDict(connection='smart', module_path=['/to/mymodules', '/usr/share/ansible'], forks=10, become=None,
+    context.CLIARGS = ImmutableDict(connection='smart', module_path=[None, '/usr/share/ansible'], forks=10, become=None,
                                     become_method=None, become_user=None, check=False, diff=False)
     # required for
     # https://github.com/ansible/ansible/blob/devel/lib/ansible/inventory/manager.py#L204
@@ -63,15 +63,17 @@ def main():
 
     # initialize needed objects
     loader = DataLoader()  # Takes care of finding and reading yaml, json and ini files
-    passwords = dict(vault_pass='secret')
+    passwords = dict(vault_pass=None)
 
     # Instantiate our ResultsCollectorJSONCallback for handling results as they come in. Ansible expects this to be one of its main display outlets
     results_callback = ResultsCollectorJSONCallback()
 
     # create inventory, use path to host config file as source or hosts in a comma separated string
+    # 创建清单，使用路径将配置文件作为源或以逗号分隔的字符串作为主机
     inventory = InventoryManager(loader=loader, sources=sources)
 
     # variable manager takes care of merging all the different sources to give you a unified view of variables available in each context
+    # 变量管理器负责合并所有不同的源，以便为您提供每种情况下可用变量的统一视图
     variable_manager = VariableManager(loader=loader, inventory=inventory)
 
     # instantiate task queue manager, which takes care of forking and setting up all objects to iterate over host list and tasks
