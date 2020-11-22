@@ -1,0 +1,34 @@
+FROM python:3.8-buster
+ENV PYTHONUNBUFFERED=1
+ENV HOME=/home/code
+
+RUN mkdir -p /home/code
+RUN mkdir /code
+
+# Use Tencent Cloud mirrors for debian 10 (buster)
+RUN rm /etc/apt/sources.list
+COPY ./sources.list /etc/apt/sources.list
+RUN apt update && \
+    apt upgrade -y && \
+    apt install -y tcl tk && \
+    apt autoremove && \
+    apt autoclean
+
+COPY ./requirements/dev.txt /code/requirements/dev.txt
+# Use Tencent Cloud mirrors for python pip
+RUN pip install pip -U
+RUN pip config set global.index-url https://mirrors.cloud.tencent.com/pypi/simple
+RUN pip install -r /code/requirements/dev.txt
+
+# To acquire permissions
+COPY ./shell/chown.sh /code/shell/chown.sh
+COPY ./shell/entrypoint.sh /code/shell/entrypoint.sh
+COPY ./shell/useradd.sh /code/shell/useradd.sh
+RUN chmod 777 /code/shell/chown.sh
+RUN chmod 777 /code/shell/entrypoint.sh
+RUN chmod 777 /code/shell/useradd.sh
+
+RUN echo 'root:mypasswd' | chpasswd
+
+WORKDIR /code
+ENTRYPOINT [ "/code/shell/entrypoint.sh" ]
