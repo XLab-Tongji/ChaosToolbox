@@ -14,14 +14,6 @@ def hello_world():
 
 @app.route('/pod', methods = ['POST'])
 def get_pods():
-
-    #TODO: Input check
-    """
-    {
-    "host":"Lab409_master",
-    "namespace":"sock-shop"
-    }
-    """
     dto = {
         'host' : request.json['host'],
         'namespace' : request.json['namespace']
