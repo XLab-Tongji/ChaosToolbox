@@ -1,5 +1,5 @@
 ---
-- hosts: Lab409-master
+- hosts: Lab409_master
   remote_user: root
   tasks:
   - name: Get a list of all pods from any namespace

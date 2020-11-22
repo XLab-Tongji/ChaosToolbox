@@ -13,6 +13,8 @@ from ansible.executor.playbook_executor import PlaybookExecutor  # 执行 playbo
 from ansible.inventory.host import Group                           #对 主机组 执行操作 ，可以给组添加变量等操作，扩展
 from ansible.inventory.host import Host                            #对 主机 执行操作 ，可以给主机添加变量等操作，扩展
 
+from view_model.k8s_repository import K8sRepository
+#from services.k8s_observer import K8sObserver
 
 import time
 import datetime
@@ -138,13 +140,13 @@ class ResultCallback(CallbackBase):
     #     print(play.name)
 
 
-class MyAnsiable():
+class MyAnsible():
 
     #自定义类的一些初始化信息,在下面的context.CLIARGS初始化函数中使用这些初始化属性
     # 在初始化的这个类时候可以传参，以便覆盖默认选项的值,我们可以自己传参数，否则使用定义的默认值
     def __init__(self,
                  connection='ssh',  # 连接方式 local 本地方式，smart ssh方式
-                 remote_user="None",  # 远程用户
+                 remote_user="root",  # 远程用户
                  ack_pass=None,  # 提示输入密码
                  sudo=None, sudo_user=None, ask_sudo_pass=None,
                  module_path=None,  # 模块路径，可以指定一个自定义模块的路径
@@ -153,13 +155,13 @@ class MyAnsiable():
                  become_user=None,  # 提权后，要成为的用户，并非登录用户
                  check=False, diff=False,
                  listhosts=None, listtasks=None, listtags=None,
-                 forks=5,      #同时执行的主机数量
+                 forks=1,      #同时执行的主机数量
                  tags=[],      #执行的tags列表
                  skip_tags=[], #skip跳过的tags列表
                  verbosity=3,
                  syntax=None,
                  start_at_task=None,
-                 inventory=None,
+                 inventory='/etc/ansible/hosts',
                  passwords=None):
 
 
@@ -307,11 +309,19 @@ class MyAnsiable():
                 self.inv_obj.add_host(host=hostip)
 
 if __name__ == '__main__':
+    pass
         #实例化
-    ansible1 = MyAnsiable(inventory='/code/chaostoolbox/hosts', remote_user="root",connection='ssh',forks=1,passwords=None)
+    #ansible1 = MyAnsible(inventory='/etc/ansible/hosts', remote_user="root",connection='ssh',forks=1,passwords=None)
     #执行 ad-hoc
-    print("执行ad-hoc的结果")
-    ansible1.run(hosts= "remote", module="shell", args='pwd')
+    #print("执行ad-hoc的结果")
+    #ansible1.playbook(playbooks=['./static/playbook/get_pod.yaml'], extra_vars={'namespace':'sock-shop'})
+    #ansible1.run(hosts= "Lab409_master", module="shell", args='kubectl get pods --namespace sock-shop')
     #打印结果
-    print(ansible1.get_result())
-    print(ansible1.results_callback.host_all_info)
+    #result_dict = ansible1.get_result()
+    #print(result_dict)
+    #K8sObserver.get_pod_name_list("sock-shop")
+    #result_json_str = json.dumps(result_dict)
+    #print(result_json_str)
+    #print(K8sRepository.create_k8s_pods_view_model(result_dict))
+    
+    #print(ansible1.results_callback.host_all_info)
