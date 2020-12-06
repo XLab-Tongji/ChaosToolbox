@@ -30,8 +30,6 @@ class Injector:
             cpu_percent = dto['cpu_percent']
             args = "blade create k8s node-cpu load " + "--cpu-percent " + cpu_percent + " --names " + target + " --kubeconfig ~/.kube/config" 
 
-        
-
         r = MyAnsible()
         r.run(
             hosts = host,
