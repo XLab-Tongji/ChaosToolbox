@@ -11,12 +11,14 @@ class K8sObserver:
     
     @staticmethod
     def get_info(dto):
-        host = dto['host']
-
-        if dto.get('namespace') == None:
+        host = dto.get('host')
+        namespace = dto.get('namespace')
+        if namespace == None:
             args = "kubectl get nodes"
+        elif namespace == 'all':
+            args = 'kubectl get pods --all-namespaces'
         else:
-            args = "kubectl get pods --namespace " + dto["namespace"]
+            args = "kubectl get pods --namespace " + namespace
         
 
         r = MyAnsible()
