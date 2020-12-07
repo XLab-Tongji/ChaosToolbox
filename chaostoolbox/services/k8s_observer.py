@@ -3,6 +3,7 @@ import json
 
 sys.path.append('../')
 from ansible_runner import MyAnsible
+from config.command import Command
 
 
 class K8sObserver:
@@ -11,14 +12,14 @@ class K8sObserver:
     
     @staticmethod
     def get_info(dto):
-        host = dto.get('host')
-        namespace = dto.get('namespace')
+        (host, namespace) = (dto.get('host'), dto.get('namespace'))
+        
         if namespace == None:
-            args = "kubectl get nodes"
+            args = Command.get_command('kubernetes_info', 'node_info')
         elif namespace == 'all':
-            args = 'kubectl get pods --all-namespaces'
+            args = Command.get_command('kubernetes_info', 'pod_info') + " --all-namespaces"
         else:
-            args = "kubectl get pods --namespace " + namespace
+            args = Command.get_command('kubernetes_info', 'pod_info') + " --namespace " + namespace
         
 
         r = MyAnsible()
