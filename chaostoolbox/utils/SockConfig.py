@@ -8,7 +8,7 @@ class Config(object):
     PROMETHEUS_RESOLUTION = '10'  # default: 10s
 
     PROMETHEUS_HW_CONFIG = {
-        'url': 'http://192.168.199.31:31090',
+        'url': 'http://10.60.38.174:31090',
         'auth_user': 'admin',
         'auth_password': 'admin',
         'query_api': '/api/v1/query_range'
@@ -16,7 +16,7 @@ class Config(object):
 
 
     PROMETHEUS_VM_CONFIG = {
-        'url': 'http://10.60.38.181:30003',
+        'url': 'http://10.60.38.174:30003',
         'auth_user': 'admin',
         'auth_password': 'admin',
         'query_api': '/api/v1/query_range'

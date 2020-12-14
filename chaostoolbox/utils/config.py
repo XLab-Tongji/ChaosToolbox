@@ -12,14 +12,14 @@ class Config(object):
     # prometheus config
 
     PROMETHEUS_CONFIG1 = {
-        'url': 'http://10.60.38.181:13002',
+        'url': 'http://10.60.38.174:13002',
         'auth_user': 'admin',
         'auth_password': 'admin',
         'query_api': '/api/v1/query_range'
     }
 
     PROMETHEUS_CONFIG2 = {
-        'url': 'http://10.60.38.181:13001',
+        'url': 'http://10.60.38.174:13001',
         'auth_user': 'admin',
         'auth_password': 'admin',
         'query_api': '/api/v1/query_range'
