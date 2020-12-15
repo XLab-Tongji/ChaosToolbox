@@ -102,7 +102,7 @@ def main():
                                                                               resolution=Config.PROMETHEUS_RESOLUTION,
                                                                               start_time=start_time,
                                                                               end_time=end_time)
-    dirs = "/root/data/" + curr_time.strftime("%Y-%m")
+    dirs = "/code/chaostoolbox/data/prometheus/" + curr_time.strftime("%Y-%m")
     if not os.path.exists(dirs):
         os.makedirs(dirs)
     target_file = dirs + "/" + START_STR.replace("-", "").replace(":", "").replace(" ", "_") + "_SockShopPerformance.csv"
