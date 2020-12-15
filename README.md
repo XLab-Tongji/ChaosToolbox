@@ -5,7 +5,7 @@ Perturbation injection, chaos information arrangement and performance data colle
 ## Run Docker
 
 ```bash
-GROUP_ID='id -g' USER_ID='id -u' docker compose build
+GROUP_ID=`id -g` USER_ID=`id -u` docker-compose build
 ```
 
 
