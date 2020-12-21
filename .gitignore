@@ -144,3 +144,7 @@ record.log
 
 # config
 .config
+.vscode
+
+# data_log
+data/
