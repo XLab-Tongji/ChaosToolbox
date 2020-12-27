@@ -6,7 +6,10 @@ import random
 sys.path.append('../')
 from ansible_runner import MyAnsible
 from services.k8s_observer import K8sObserver
+from services.runner import Runner
+from services.handler import Handler
 from config.command import Command
+
 
 
 '''
@@ -41,24 +44,13 @@ class Injector:
             cpu_percent = dto['cpu_percent']
             args = Command.get_command('node_injection', "cpu_load") + "--cpu-percent " + cpu_percent + " --names " + target + Command.get_command('config_info', 'kube_config')
 
-        # Run command and get result
-        r = MyAnsible()
-        r.run(
-            hosts = host,
-            module = 'shell',
-            args = args
-        )
-        r_result_dict = r.get_result()
-        print(r_result_dict)
-        r_success_dict = r_result_dict["success"]
+
+        r_success_dict = Runner.run_adhoc(host, args)
 
         # Handle result
-        if len(r_success_dict) > 0:
-            transform_ip = list(r_success_dict.keys())[0]
-            res_info = r_success_dict[transform_ip]["stdout_lines"]
-            return res_info
-        else:
-            return None
+
+        return Handler.get_stdout_info(r_success_dict)
+
 
 
 
