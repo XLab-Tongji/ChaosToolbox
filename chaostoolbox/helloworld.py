@@ -82,7 +82,38 @@ def inject_node_network_delay(host):
         'offset' : request.json.get('offset'),
         'interface' : ''
     }
-    return jsonify(Injector.inject_node_network(dto))
+    return jsonify(Injector.inject_node_network_delay(dto))
+
+@app.route('/<host>/inject/node/network/loss', methods = ['POST'])
+def inject_node_network_loss(host):
+
+    dto = {
+        'host' : host,
+        'names' : request.json.get('names'),
+        'percent' : request.json.get('percent'),
+        'interface' : ''
+    }
+    return jsonify(Injector.inject_node_network_loss(dto))
+
+@app.route('/<host>/inject/node/disk', methods = ['POST'])
+def inject_node_disk(host):
+
+    dto = {
+        'host' : host,
+        'names' : request.json.get('names'),
+        'percent' : request.json.get('percent')
+    }
+    return jsonify(Injector.inject_node_disk(dto))
+
+@app.route('/<host>/inject/node/process', methods = ['POST'])
+def inject_node_process(host):
+
+    dto = {
+        'host' : host,
+        'process' : request.json.get('process'),
+        'percent' : request.json.get('names')
+    }
+    return jsonify(Injector.inject_node_process(dto))
 
 
 @app.route('/<host>/inject/pod/random', methods = ['POST'])

@@ -93,7 +93,7 @@ class K8sObserver:
             START_STR = str(curr_time.date()) + " " + str(curr_time.hour - 1) + ":30:00"
             END_STR = str(curr_time.date()) + " " + str(curr_time.hour) + ":00:00"
 
-        RESOLUTION = Config.PROMETHEUS_RESOLUTION
+        #RESOLUTION = Config.PROMETHEUS_RESOLUTION
 
         end_time = Utils.datetime_timestamp(END_STR)
         start_time = Utils.datetime_timestamp(START_STR)
