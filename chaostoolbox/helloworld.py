@@ -52,22 +52,50 @@ def get_nodes(host):
 
 
 @app.route('/<host>/inject/node/random', methods = ['POST'])
-def inject_random_node(host):
+def inject_node_random(host):
 
     dto = {
         'host' : host,
-        'cpu_percent' : request.json.get('cpu_percent')
+        'cpu-percent' : request.json.get('cpu-percent')
     }
     return jsonify(Injector.inject_random(dto))
 
+@app.route('/<host>/inject/node/cpu', methods = ['POST'])
+def inject_node_cpu(host):
+
+    dto = {
+        
+        'host' : host,
+        'names' : request.json.get('names'),
+        'cpu-percent': request.json.get('cpu-percent') 
+    }
+    return jsonify(Injector.inject_node_cpu(dto))
+
+@app.route('/<host>/inject/node/network/delay', methods = ['POST'])
+def inject_node_network_delay(host):
+
+    dto = {
+        'host' : host,
+        'names' : request.json.get('names'),
+        'local-port' : request.json.get('local-port'),
+        'time' : request.json.get('time'),
+        'offset' : request.json.get('offset'),
+        'interface' : ''
+    }
+    return jsonify(Injector.inject_node_network(dto))
+
+
 @app.route('/<host>/inject/pod/random', methods = ['POST'])
-def inject_random_pod(host):
+def inject_pod_random(host):
 
     dto = {
         'host' : host,
         'namespace' : request.json.get('namespace')
     }
     return jsonify(Injector.inject_random(dto))
+
+
+
 
 @app.route('/prometheus/log', methods=['GET'])
 def get_prometheus_log():
@@ -80,6 +108,7 @@ def get_prometheus_log():
 def get_weavescope_topology_info():
     result = K8sObserver.get_weavescope_topology_info()
     return jsonify(result)
+
 
 
 

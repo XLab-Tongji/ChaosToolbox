@@ -6,7 +6,7 @@ import os
 
 sys.path.append('../')
 from ansible_runner import MyAnsible
-from config.command import Command
+from configs.command import Command
 from utils.SockConfig import Config
 from utils.utils import Utils
 from controller.prometheus.PerformanceDataPicker import PerformanceDataPicker

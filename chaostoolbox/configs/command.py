@@ -63,7 +63,19 @@ class Command:
         else:
             return None
 
-            
+    
+    @staticmethod
+    def parser(dto_dict:dict):
+        res = " "
+        for key in dto_dict.keys():
+            if key == 'host':
+                continue
+            res += "--" + key + " " + dto_dict[key]+ " "
+
+        return res
         
+    @staticmethod
+    def get_config():
+        return Command.get_command('config_info', 'kube_config')
 
 
