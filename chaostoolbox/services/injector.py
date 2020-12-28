@@ -29,13 +29,9 @@ class Injector:
         
         
         host = dto['host']
-        # Get name list according to given dto
-        name_list = K8sObserver.get_names(dto)
 
-        # Generate random injection target
-        k = random.randint(0,len(name_list) - 1)
-        target = name_list[k]
-
+        target = K8sObserver.get_random_name(dto)
+        
         if dto.get('cpu_percent') == None: 
             # Inject Pod
             namespace = dto['namespace']
@@ -122,6 +118,26 @@ class Injector:
         r_success_dict = Runner.run_adhoc(host, args)
 
         return Handler.get_stdout_info(r_success_dict)
+
+    @staticmethod
+    def inject_pod_delete_by_label(dto):
+        pass
+
+    @staticmethod
+    def inject_pod_delete_by_name(dto):
+        host = dto['host']
+
+        args = Command.get_command('pod_injection', 'pod_delete') \
+            + Command.parser(dto) \
+            + Command.get_config()
+
+        #print(args)
+
+        r_success_dict = Runner.run_adhoc(host, args)
+
+        return Handler.get_stdout_info(r_success_dict)
+        
+
 
 
 

@@ -10,6 +10,7 @@ from flask_cors import CORS
 
 
 
+
 app = Flask(__name__)
 
 
@@ -125,6 +126,21 @@ def inject_pod_random(host):
     }
     return jsonify(Injector.inject_random(dto))
 
+@app.route('/<host>/inject/pod/delete/label', methods = ['POST'])
+def inject_pod_delete_by_label(host):
+
+    pass
+
+@app.route('/<host>/inject/pod/delete/name', methods = ['POST'])
+def inject_pod_delete_by_name(host):
+    dto = {
+        'host' : host,
+        'names' : request.json.get('names'),
+        'namespace' : request.json.get('namespace'),
+        'evict-count' : request.json.get('evict-count')
+    }
+    return jsonify(Injector.inject_pod_delete_by_name(dto))
+    
 
 
 
