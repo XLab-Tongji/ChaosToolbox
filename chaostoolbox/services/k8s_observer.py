@@ -6,11 +6,13 @@ import os
 
 sys.path.append('../')
 from ansible_runner import MyAnsible
-from config.command import Command
+from configs.command import Command
 from utils.SockConfig import Config
 from utils.utils import Utils
 from controller.prometheus.PerformanceDataPicker import PerformanceDataPicker
 from controller.prometheus.PerformanceDataWriter import PerformanceDataWriter
+from services.handler import Handler
+from services.runner import Runner
 
 '''
 This class gets kubernetes information
@@ -37,25 +39,12 @@ class K8sObserver:
             args = Command.get_command('kubernetes_info', 'pod_info') + " --namespace " + namespace
         
         # Run ansible
-        r = MyAnsible()
-        r.run(
-            hosts=host,
-            module="shell",
-            args=args
-        )
-        r_result_dict = r.get_result()
-        r_success_dict = r_result_dict["success"]
+        r_success_dict = Runner.run_adhoc(host,args)
+
         
         # Handle return result
-        if len(r_success_dict) > 0:
-            
-            transform_ip = list(r_success_dict.keys())[0]
-            res_info = r_success_dict[transform_ip]["stdout_lines"]
+        return Handler.get_stdout_info(r_success_dict)
 
-            return res_info
-
-        else:
-            return "Injection failed"
 
 
     '''
@@ -104,7 +93,7 @@ class K8sObserver:
             START_STR = str(curr_time.date()) + " " + str(curr_time.hour - 1) + ":30:00"
             END_STR = str(curr_time.date()) + " " + str(curr_time.hour) + ":00:00"
 
-        RESOLUTION = Config.PROMETHEUS_RESOLUTION
+        #RESOLUTION = Config.PROMETHEUS_RESOLUTION
 
         end_time = Utils.datetime_timestamp(END_STR)
         start_time = Utils.datetime_timestamp(START_STR)
