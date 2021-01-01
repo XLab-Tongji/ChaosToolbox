@@ -136,6 +136,42 @@ class Injector:
         r_success_dict = Runner.run_adhoc(host, args)
 
         return Handler.get_stdout_info(r_success_dict)
+
+    @staticmethod
+    def inject_pod_network_delay(dto):
+        host = dto['host']
+
+        args = Command.get_command('pod_injection', 'pod_network_delay') \
+            + Command.parser(dto) \
+            + Command.get_config()
+        
+        r_success_dict = Runner.run_adhoc(host, args)
+
+        return Handler.get_stdout_info(r_success_dict)
+
+    @staticmethod
+    def inject_pod_network_loss(dto):
+        host = dto['host']
+        
+        args = Command.get_command('pod_injection', 'pod_network_loss') \
+            + Command.parser(dto) \
+            + Command.get_config()
+
+        r_success_dict = Runner.run_adhoc(host, args)
+        return Handler.get_stdout_info(r_success_dict)
+
+
+    @staticmethod
+    def inject_pod_network_dns(dto):
+        host = dto['host']
+
+        args = Command.get_command('pod_injection', 'pod_network_dns') \
+            + Command.parser(dto) \
+            + Command.get_config()
+
+        r_success_dict = Runner.run_adhoc(host, args)
+        return Handler.get_stdout_info(r_success_dict)
+        
         
 
 

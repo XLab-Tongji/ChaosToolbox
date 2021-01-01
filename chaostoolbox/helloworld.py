@@ -141,6 +141,44 @@ def inject_pod_delete_by_name(host):
     }
     return jsonify(Injector.inject_pod_delete_by_name(dto))
     
+@app.route('/<host>/inject/pod/network/delay', methods = ['POST'])
+def inject_pod_network_delay(host):
+
+    dto = {
+        'host' : host,
+        'names' : request.json.get('names'),
+        'namespace' : request.json.get('sock-shop'),
+        'local-port' : request.json.get('local-port'),
+        'interface' : request.json.get('interface'),
+        'time' : request.json.get('time'),
+        'offset' : request.json.get('offset')
+    }
+    return jsonify(Injector.inject_pod_network_delay(dto))
+
+@app.route('/<host>/inject/pod/network/loss', methods = ['POST'])
+def inject_pod_network_loss(host):
+
+    dto = {
+        'host' : host,
+        'names' : request.json.get('names'),
+        'namespace' : request.json.get('sock-shop'),
+        'local-port' : request.json.get('local-port'),
+        'interface' : request.json.get('interface'),
+        'percent' : request.json.get('percent')
+    } 
+    return jsonify(Injector.inject_pod_network_loss(dto))
+
+@app.route('/<host>/inject/pod/network/dns', methods = ['POST'])
+def inject_pod_network_dns(host):
+
+    dto = {
+        'host' : host,
+        'namespace' : request.json.get('namespace'),
+        'names' : request.json.get('names'),
+        'domain' : request.json.get('domain'),
+        'ip' : request.json.get('ip')
+    }
+    return jsonify(Injector.inject_pod_network_dns(dto))
 
 
 
