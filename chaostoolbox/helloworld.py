@@ -180,7 +180,21 @@ def inject_pod_network_dns(host):
     }
     return jsonify(Injector.inject_pod_network_dns(dto))
 
+@app.route('/<host>/destroy', methods = ['POST'])
+def destroy_injection(host):
+    dto = {
+        'host' : host,
+        'uid' : request.json.get('uid')
+    }
+    return jsonify(Injector.destroy_injection(dto))
 
+
+@app.route('/<host>/destroy/all', methods = ['POST'])
+def destroy_all(host):
+    dto = {
+        'host' : host
+    }
+    return jsonify(Injector.destroy_all(dto))
 
 @app.route('/prometheus/log', methods=['GET'])
 def get_prometheus_log():
@@ -193,6 +207,7 @@ def get_prometheus_log():
 def get_weavescope_topology_info():
     result = K8sObserver.get_weavescope_topology_info()
     return jsonify(result)
+
 
 
 

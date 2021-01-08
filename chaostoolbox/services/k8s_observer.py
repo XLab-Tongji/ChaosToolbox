@@ -41,10 +41,11 @@ class K8sObserver:
         
         # Run ansible
         r_success_dict = Runner.run_adhoc(host,args)
-
-        
         # Handle return result
-        return Handler.get_stdout_info(r_success_dict)
+        ip = list(r_success_dict.keys())[0]
+        return r_success_dict[ip]["stdout_lines"]
+        
+        
 
 
 
