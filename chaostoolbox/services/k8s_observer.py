@@ -3,6 +3,7 @@ import json
 import requests
 import datetime
 import os
+import random
 
 sys.path.append('../')
 from ansible_runner import MyAnsible
@@ -40,10 +41,11 @@ class K8sObserver:
         
         # Run ansible
         r_success_dict = Runner.run_adhoc(host,args)
-
-        
         # Handle return result
-        return Handler.get_stdout_info(r_success_dict)
+        ip = list(r_success_dict.keys())[0]
+        return r_success_dict[ip]["stdout_lines"]
+        
+        
 
 
 
@@ -68,6 +70,15 @@ class K8sObserver:
             res_name_list.append(name)
 
         return res_name_list
+
+    @staticmethod
+    def get_random_name(dto):
+        name_list = K8sObserver.get_names(dto)
+
+        index = random.randint(0, len(name_list) - 1)
+        
+        return name_list[index]
+
     
     @staticmethod
     def get_weavescope_topology_info():

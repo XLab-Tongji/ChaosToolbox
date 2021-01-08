@@ -9,7 +9,7 @@ from ansible_runner import MyAnsible
 from services.k8s_observer import K8sObserver
 from services.runner import Runner
 from services.handler import Handler
-
+from utils.logger import Logger
 
 
 
@@ -29,14 +29,10 @@ class Injector:
         
         
         host = dto['host']
-        # Get name list according to given dto
-        name_list = K8sObserver.get_names(dto)
 
-        # Generate random injection target
-        k = random.randint(0,len(name_list) - 1)
-        target = name_list[k]
-
-        if dto.get('cpu_percent') == None: 
+        target = K8sObserver.get_random_name(dto)
+        
+        if dto.get('cpu-percent') == None: 
             # Inject Pod
             namespace = dto['namespace']
             args = Command.get_command('pod_injection', 'pod_delete') \
@@ -45,7 +41,7 @@ class Injector:
                 + Command.get_config()
         else:
             # Inject Node
-            cpu_percent = dto['cpu_percent']
+            cpu_percent = dto['cpu-percent']
             args = Command.get_command('node_injection', 'cpu_load') \
                 + "--cpu-percent " + cpu_percent \
                 + " --names " + target \
@@ -122,6 +118,88 @@ class Injector:
         r_success_dict = Runner.run_adhoc(host, args)
 
         return Handler.get_stdout_info(r_success_dict)
+
+    @staticmethod
+    def inject_pod_delete_by_label(dto):
+        pass
+
+    @staticmethod
+    def inject_pod_delete_by_name(dto):
+        host = dto['host']
+
+        args = Command.get_command('pod_injection', 'pod_delete') \
+            + Command.parser(dto) \
+            + Command.get_config()
+
+        #print(args)
+
+        r_success_dict = Runner.run_adhoc(host, args)
+
+        return Handler.get_stdout_info(r_success_dict)
+
+    @staticmethod
+    def inject_pod_network_delay(dto):
+        host = dto['host']
+
+        args = Command.get_command('pod_injection', 'pod_network_delay') \
+            + Command.parser(dto) \
+            + Command.get_config()
+        
+        r_success_dict = Runner.run_adhoc(host, args)
+
+        return Handler.get_stdout_info(r_success_dict)
+
+    @staticmethod
+    def inject_pod_network_loss(dto):
+        host = dto['host']
+        
+        args = Command.get_command('pod_injection', 'pod_network_loss') \
+            + Command.parser(dto) \
+            + Command.get_config()
+
+        r_success_dict = Runner.run_adhoc(host, args)
+        return Handler.get_stdout_info(r_success_dict)
+
+
+    @staticmethod
+    def inject_pod_network_dns(dto):
+        host = dto['host']
+
+        args = Command.get_command('pod_injection', 'pod_network_dns') \
+            + Command.parser(dto) \
+            + Command.get_config()
+
+        r_success_dict = Runner.run_adhoc(host, args)
+        return Handler.get_stdout_info(r_success_dict)
+
+    @staticmethod
+    def destroy_injection(dto):
+        host = dto['host']
+
+        args = Command.get_command('destroy', 'destroy_injection') \
+            + dto['uid']
+
+        r_success_dict = Runner.run_adhoc(host, args)
+        return Handler.get_stdout_info(r_success_dict)
+        
+    
+    @staticmethod
+    def destroy_all(dto):
+        host = dto['host']
+
+        uids = Logger.get_uid_list()
+        for uid in uids:
+            args = Command.get_command('destroy', 'destroy_injection' ) \
+            + uid
+
+            Runner.run_adhoc(host, args)
+        
+        Logger.clear_uid_file()
+        
+        return "Destroyed all injections successfully"
+
+
+
 
 
 

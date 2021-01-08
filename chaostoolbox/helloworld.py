@@ -10,6 +10,7 @@ from flask_cors import CORS
 
 
 
+
 app = Flask(__name__)
 
 
@@ -125,8 +126,75 @@ def inject_pod_random(host):
     }
     return jsonify(Injector.inject_random(dto))
 
+@app.route('/<host>/inject/pod/delete/label', methods = ['POST'])
+def inject_pod_delete_by_label(host):
+
+    pass
+
+@app.route('/<host>/inject/pod/delete/name', methods = ['POST'])
+def inject_pod_delete_by_name(host):
+    dto = {
+        'host' : host,
+        'names' : request.json.get('names'),
+        'namespace' : request.json.get('namespace'),
+        'evict-count' : request.json.get('evict-count')
+    }
+    return jsonify(Injector.inject_pod_delete_by_name(dto))
+    
+@app.route('/<host>/inject/pod/network/delay', methods = ['POST'])
+def inject_pod_network_delay(host):
+
+    dto = {
+        'host' : host,
+        'names' : request.json.get('names'),
+        'namespace' : request.json.get('sock-shop'),
+        'local-port' : request.json.get('local-port'),
+        'interface' : request.json.get('interface'),
+        'time' : request.json.get('time'),
+        'offset' : request.json.get('offset')
+    }
+    return jsonify(Injector.inject_pod_network_delay(dto))
+
+@app.route('/<host>/inject/pod/network/loss', methods = ['POST'])
+def inject_pod_network_loss(host):
+
+    dto = {
+        'host' : host,
+        'names' : request.json.get('names'),
+        'namespace' : request.json.get('sock-shop'),
+        'local-port' : request.json.get('local-port'),
+        'interface' : request.json.get('interface'),
+        'percent' : request.json.get('percent')
+    } 
+    return jsonify(Injector.inject_pod_network_loss(dto))
+
+@app.route('/<host>/inject/pod/network/dns', methods = ['POST'])
+def inject_pod_network_dns(host):
+
+    dto = {
+        'host' : host,
+        'namespace' : request.json.get('namespace'),
+        'names' : request.json.get('names'),
+        'domain' : request.json.get('domain'),
+        'ip' : request.json.get('ip')
+    }
+    return jsonify(Injector.inject_pod_network_dns(dto))
+
+@app.route('/<host>/destroy', methods = ['POST'])
+def destroy_injection(host):
+    dto = {
+        'host' : host,
+        'uid' : request.json.get('uid')
+    }
+    return jsonify(Injector.destroy_injection(dto))
 
 
+@app.route('/<host>/destroy/all', methods = ['POST'])
+def destroy_all(host):
+    dto = {
+        'host' : host
+    }
+    return jsonify(Injector.destroy_all(dto))
 
 @app.route('/prometheus/log', methods=['GET'])
 def get_prometheus_log():
@@ -139,6 +207,7 @@ def get_prometheus_log():
 def get_weavescope_topology_info():
     result = K8sObserver.get_weavescope_topology_info()
     return jsonify(result)
+
 
 
 
