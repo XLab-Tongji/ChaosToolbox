@@ -6,8 +6,8 @@ services:
             dockerfile: Dockerfile.web.dev
         user: "${USER_ID}:${GROUP_ID}"
         environment:
-            - FLASK_APP=/code/chaostoolbox/helloworld.py
-            - FLASK_DEBUG=1
+            - FLASK_APP=/code/chaostoolbox/app.py
+            - FLASK_DEBUG=0
         ports:
             - 8080:8080
         volumes:
